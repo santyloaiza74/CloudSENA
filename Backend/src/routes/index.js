@@ -10,9 +10,9 @@ function routerApi(app){
     app.use('/api/v1',router)
     router.use('/login',loginRouter)
     router.use('/aprendiz',aprendizRouter)
-    router.use('ficha',fichaRouter)
-    router.use('gestor',gestorRouter)
-    router.use('proyecto',proyectoRouter)
+    router.use('/ficha',fichaRouter)
+    router.use('/gestor',gestorRouter)
+    router.use('/proyecto',proyectoRouter)
 }
 
 module.exports = routerApi
