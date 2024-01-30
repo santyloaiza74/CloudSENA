@@ -1,5 +1,5 @@
 const LoginService=require('../services/login.service')
-
+const generateAcessToken=require('../function/jwt/createToken')
 class LoginController{
     constructor(){
         this.service= new LoginService
@@ -28,6 +28,21 @@ class LoginController{
     async update(id,values){
         const user= await this.service.update(id,values)
         return user
+    }
+    async validateUser(username,password){
+        const user= await this.service.validateUser(username)
+        if(user){
+            if(password==user.password){
+                const accessToken= generateAcessToken(user)
+                return {accessToken,user}
+            }
+            else{
+                throw new Error('Contraseña incorrecta')
+            }
+        }
+        else{
+            throw new Error('Usuario no registrado')
+        }
     }
 }
 module.exports=LoginController

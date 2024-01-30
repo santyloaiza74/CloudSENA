@@ -29,6 +29,10 @@ class LoginService{
         const user= await this.model.findOneAndUpdate(id,values)
         return user
     }
+    async validateUser(username){
+        const user= await this.model.findOne({username})
+        return user
+    }
 }
 
 module.exports= LoginService

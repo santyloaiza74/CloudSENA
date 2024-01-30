@@ -51,4 +51,14 @@ router.delete('/:id', async (req, res) => {
         res.status(404).json({ message: error.message })
     }
 })
+router.post('/', async (req, res) => {
+    try {
+        const { username, password } = req.body
+        const { accessToken } = await controller.validateUser(username, password)
+        res.header('authorization', accessToken).json({ message: 'Usuario autenticado', token: accessToken })
+    }
+    catch (error) {
+        res.status(404).json({message: error.message})
+    }
+})
 module.exports = router
