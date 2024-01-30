@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const LoginController = require('../controllers/login.controller')
 const loginSchema = require('../database/models/login.model')
+const bcrypt=require('bcrypt')
 const controller = new LoginController
 
 router.get('/', async (req, res) => {
@@ -10,9 +11,10 @@ router.get('/', async (req, res) => {
 
 router.post('/register', async (req, res) => {
     const { username, password, nombre,documento,ficha} = req.body
+    const passwordhash=bcrypt.hashSync(password,8)
     const user = new loginSchema({
         username: username,
-        password: password,
+        password: passwordhash,
         nombre: nombre,
         documento: documento,
         ficha: ficha

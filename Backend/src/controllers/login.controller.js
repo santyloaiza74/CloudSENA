@@ -1,5 +1,6 @@
 const LoginService=require('../services/login.service')
 const generateAcessToken=require('../function/jwt/createToken')
+const bcrypt=require('bcrypt')
 class LoginController{
     constructor(){
         this.service= new LoginService
@@ -32,7 +33,7 @@ class LoginController{
     async validateUser(username,password){
         const user= await this.service.validateUser(username)
         if(user){
-            if(password==user.password){
+            if(bcrypt.compare(password,user.password)){
                 const accessToken= generateAcessToken(user)
                 return {accessToken,user}
             }
