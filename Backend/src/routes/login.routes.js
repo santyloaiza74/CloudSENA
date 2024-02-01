@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
 
 router.post('/register', async (req, res) => {
     const { username, password, nombre,documento,ficha} = req.body
-    const passwordhash=bcrypt.hashSync(password,8)
+    const passwordhash=await bcrypt.hash(password,8)
     const user = new loginSchema({
         username: username,
         password: passwordhash,

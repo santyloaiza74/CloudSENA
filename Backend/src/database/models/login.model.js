@@ -1,4 +1,5 @@
 const mongoose= require('mongoose')
+const rolSchema=require('./roles.model')
 
 const loginSchema = new mongoose.Schema({
     username: {
@@ -20,7 +21,10 @@ const loginSchema = new mongoose.Schema({
     ficha:{
         type: String,
         allowNull: true
-    }
+    },
+    rol:[
+      
+    ]
   });
   
   const Login = mongoose.model('login', loginSchema);

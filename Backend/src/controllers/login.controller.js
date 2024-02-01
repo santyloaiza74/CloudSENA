@@ -33,7 +33,7 @@ class LoginController{
     async validateUser(username,password){
         const user= await this.service.validateUser(username)
         if(user){
-            if(bcrypt.compare(password,user.password)){
+            if(await bcrypt.compare(password,user.password)){
                 const accessToken= generateAcessToken(user)
                 return {accessToken,user}
             }

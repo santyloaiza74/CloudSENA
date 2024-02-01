@@ -1,26 +1,16 @@
 const mongoose= require('mongoose')
+const {dbHost,dbPort,dbName,dbNameCloud,dbUsername,dbPassword } = require('../config/config')
 
-//mongodb://localhost:27017/
-
-const DB_URI='mongodb://localhost:27017/cloud'
-
-module.exports=()=>{
-    const connect=()=>{
-        mongoose.connect(DB_URI,
-            {
-                keppAlive: true,
-                useNewUrlParser: true,
-                useUnifiedTopology: true
-            },
-            (err)=>{
-                if(err){
-                    console.log("Error en la conexion, "+err)
-                }
-                else{
-                    console.log("conexion correacta")
-                }
-            }
-        )
+const DB_URICLOUD=`mongodb+srv://${dbUsername}:${dbPassword}@${dbNameCloud}.pkkyfqz.mongodb.net/`
+const DB_URI=`mongodb://${dbHost}:${dbPort}/${dbName}`
+const connect=()=>{
+    
+    try {
+        mongoose.connect(DB_URI)
+        console.log("DB CONNECT!!!!!")
+    } catch (error) {
+        console.log(`Error en la conexion: ${error}`)
     }
-    connect()
 }
+
+module.exports=connect

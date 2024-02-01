@@ -1,6 +1,6 @@
 const jwt=require('jsonwebtoken')
-const secret="cloudsena"
+const {secretjwt}=require('../../config/config')
 function generateAcessToken(user) {
-    return jwt.sign({user},secret)
+    return jwt.sign({user},secretjwt)
 }
 module.exports=generateAcessToken
