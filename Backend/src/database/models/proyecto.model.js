@@ -7,11 +7,15 @@ const proyectoSchema = new mongoose.Schema({
     Autores:{
         type: String
     },
-    idficha:{
-        type: String
-    },
+    ficha:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ficha'
+    }],
     fecha:{
         type:Date
+    },
+    ruta:{
+        type: String
     }
   });
   
