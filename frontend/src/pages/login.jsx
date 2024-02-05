@@ -70,8 +70,7 @@ function Login() {
                                 <br/>
 
                                 <center>
-                                <Button className="Buttonn btn" onClick={handleSubmit}>Login</Button>
-                                <button className="Buttonn btn" onClick={handleSubmit}>Log in</button>
+                                <Button className="Buttonn btn" onClick={handleSubmit}>Log in</Button>
                                 </center>
                             </Form>
                         </Card.Body>
