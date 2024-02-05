@@ -14,7 +14,7 @@ router.post('/register', async (req, res) => {
     const { email, password, nombre,documento,ficha,gestor} = req.body
     const emaildup= await loginSchema.findOne({email: email })
     if(emaildup)return res.status(201).json({message: "El email ya se encuentra registrado"})
-    const role = await rolSchema.findOne({ name: "aprendiz" })
+    const role = await rolSchema.findOne({ name: "user" })
     const rolid = [role._id]
     const passwordhash=await bcrypt.hash(password,8)
     const user = new loginSchema({

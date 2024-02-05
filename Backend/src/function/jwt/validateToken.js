@@ -60,7 +60,7 @@ const verifyIsSuperAdmin=async(req,res,next)=>{
             return;
           }
         }
-        return res.status(403).json({ message: "Debe tener permiso de Super Usuario" });
+        return res.status(403).json({ message: "Debe tener permiso de SUPER ADMIN" });
       } catch (error) {
         return res.status(500).send({ message: error });
       }
@@ -79,5 +79,20 @@ const verifyIsAprendiz=async(req,res,next)=>{
       } catch (error) {
         return res.status(500).send({ message: error });
       }
+}
+const verifyIsUser=async(req,res,next)=>{
+  try {
+      const user = await loginSchema.findById(req.userId);
+      const roles = await rolSchema.find({ _id: { $in: user.rol } });
+      for (let i = 0; i < roles.length; i++) {
+        if (roles[i].name === "user") {
+          next();
+          return;
+        }
+      }
+      return res.status(403).json({ message: "Debe estar registrado" });
+    } catch (error) {
+      return res.status(500).send({ message: error });
+    }
 }
 module.exports =validateToken
