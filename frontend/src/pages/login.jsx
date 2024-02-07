@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import validateUser from "../services/login/validate";
+import API_URL_LOGIN from '../constants/api'
 import { Button, Card, Col, Container, Form, Row, Image, Alert } from "react-bootstrap"
 import { useNavigate } from 'react-router-dom'
 import './login.css'
@@ -14,23 +14,14 @@ function Login() {
     const navigate = useNavigate()
     const handleSubmit = async () => {
         try {
-            axios.post('http://127.0.0.1:3300/login',login)
-            .then(function(response){
-                console.log(response.data)
-            })
-            .catch(function(error){
-                console.log(error.response.data)
-            })
-            
-            // const { token } = await validateUser(login)
-            // const accesstoken = token
-            // console.log(accesstoken)
-            // localStorage.setItem('token', accesstoken)
-            // setLogin({
-            //     email: '',
-            //     password: ''
-            // })
-            // console.log(login)
+            axios.post(API_URL_LOGIN.LOGIN, login)
+                .then(function (response) {
+                    console.log(response.data)
+                    localStorage.setItem("token", response.data.token)
+                })
+                .catch(function (error) {
+                    console.log(error.response.data)
+                })
         } catch (error) {
             console.log(error)
         }
