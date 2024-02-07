@@ -4,6 +4,7 @@ import { Button, Card, Col, Container, Form, Row, Image, Alert } from "react-boo
 import { useNavigate } from 'react-router-dom'
 import './login.css'
 import logo1 from './../img/logo1.png'
+import axios from 'axios'
 
 function Login() {
     const [login, setLogin] = useState({
@@ -13,15 +14,23 @@ function Login() {
     const navigate = useNavigate()
     const handleSubmit = async () => {
         try {
-            const { token } = await validateUser(login)
-            const accesstoken = token
-            console.log(accesstoken)
-            localStorage.setItem('token', accesstoken)
-            setLogin({
-                email: '',
-                password: ''
+            axios.post('http://127.0.0.1:3300/login',login)
+            .then(function(response){
+                console.log(response.data)
             })
-            console.log(login)
+            .catch(function(error){
+                console.log(error.response.data)
+            })
+            
+            // const { token } = await validateUser(login)
+            // const accesstoken = token
+            // console.log(accesstoken)
+            // localStorage.setItem('token', accesstoken)
+            // setLogin({
+            //     email: '',
+            //     password: ''
+            // })
+            // console.log(login)
         } catch (error) {
             console.log(error)
         }
@@ -68,7 +77,7 @@ function Login() {
                                     <br />
 
                                     <center>
-                                        <Button className="Buttonn btn" type="submit" onClick={handleSubmit}>Log in</Button>
+                                        <Button className="Buttonn btn" onClick={handleSubmit}>Log in</Button>
                                     </center>
                                 </Form>
                             </Card.Body>
