@@ -9,7 +9,7 @@ const validateToken=async(req,res,next)=>{
     if (!accessToken) return res.status(404).json({ message: "No hay token" });
   
     try {
-      const userverify = jwt.verify(token, secretjwt);
+      const userverify = jwt.verify(accessToken, secretjwt);
       req.userId = userverify.id;
   
       const user = await loginSchema.findById(req.userId, { password: 0 });
@@ -21,6 +21,7 @@ const validateToken=async(req,res,next)=>{
     }
 }
 const verifyIsGestor=async(req,res,next)=>{
+  console.log("si esta entrando")
     try {
         const user = await loginSchema.findById(req.userId);
         const roles = await rolSchema.find({ _id: { $in: user.rol } });
@@ -95,4 +96,4 @@ const verifyIsUser=async(req,res,next)=>{
       return res.status(500).send({ message: error });
     }
 }
-module.exports =validateToken
+module.exports =[validateToken,verifyIsAdmin,verifyIsUser,verifyIsSuperAdmin,verifyIsGestor,verifyIsAprendiz]

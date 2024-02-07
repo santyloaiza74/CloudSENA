@@ -3,7 +3,8 @@ const loginRouter=require('./login.routes')
 const fichaRouter=require('./ficha.routes')
 const gestorRouter=require('./gestor.routes')
 const proyectoRouter=require('./proyecto.routes')
-const validateToken=require('../function/jwt/validateToken')
+const validateToken=require('../function/jwt/proteccionrutas')
+const verifyIsGestor=require('../function/jwt/proteccionrutas')
 function routerApi(app){
     const router = Router()
 
