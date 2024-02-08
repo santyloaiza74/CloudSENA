@@ -96,4 +96,4 @@ const verifyIsUser=async(req,res,next)=>{
       return res.status(500).send({ message: error });
     }
 }
-module.exports =[validateToken,verifyIsAdmin,verifyIsUser,verifyIsSuperAdmin,verifyIsGestor,verifyIsAprendiz]
+module.exports ={validateToken,verifyIsAdmin,verifyIsUser,verifyIsSuperAdmin,verifyIsGestor,verifyIsAprendiz}

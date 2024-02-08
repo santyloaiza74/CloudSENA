@@ -12,8 +12,8 @@ router.get('/', async (req, res) => {
     res.json({ proyectos })
 })
 
-router.post('/multer',uploads.single('multer'),async(req,res)=>{
-    saveimage(req.file)
+router.post('/multer',uploads.array('multer',5),async(req,res)=>{
+    req.files.map(saveimage)
     res.status(200).json({message: 'guardado'})
 })
 function saveimage(file){
