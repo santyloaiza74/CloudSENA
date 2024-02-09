@@ -1,6 +1,7 @@
 import { CDBContainer } from 'cdbreact';
 import Sidebar from "../components/Sidebar/Sidebar"
 import Navbar from "../components/Navbar/Navbar"
+import List from '../components/Principal/List';
 
 function principal(){
     return(
@@ -20,6 +21,7 @@ function principal(){
           <div style={{ display:'flex', padding: '20px' }}>
             <CDBContainer>
               <h1>su mama</h1>
+              <List></List>
             </CDBContainer>
           </div>
         </div>

@@ -4,7 +4,7 @@ const proyectoSchema = new mongoose.Schema({
     nombre:{
         type: String
     },
-    Autores:{
+    autores:{
         type: String
     },
     ficha:[{

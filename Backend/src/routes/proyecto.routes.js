@@ -44,12 +44,13 @@ router.post('/upload', uploads.array('files', 5), (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { nombre, autores, ficha, fecha } = req.body
+    const { nombre, autores, ficha, fecha,ruta } = req.body
     const proyecto = new proyectoSchema({
         nombre: nombre,
         autores: autores,
         ficha: [ficha],
-        fecha: fecha
+        fecha: fecha,
+        ruta:ruta
     })
     await controller.create(proyecto)
     res.status(201).json({ proyecto })

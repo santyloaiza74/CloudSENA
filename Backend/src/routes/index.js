@@ -7,7 +7,7 @@ const {validateToken}=require('../function/jwt/proteccionrutas')
 function routerApi(app){
     const router = Router()
 
-    app.use('/api/v1',[validateToken],router)
+    app.use('/api/v1',router)
     router.use('/login',loginRouter)
     router.use('/ficha',fichaRouter)
     router.use('/gestor',gestorRouter)
