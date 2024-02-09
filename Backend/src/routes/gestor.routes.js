@@ -9,12 +9,13 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const {nombre,documento,celular,correo} = req.body
+    const {nombre,documento,celular,correo,ficha} = req.body
     const gestor = new gestorSchema({
         nombre:nombre,
         documento:documento,
         celular:celular,
-        correo:correo
+        correo:correo,
+        ficha:[ficha]
     })
     await controller.create(gestor)
     res.status(201).json({ gestor })

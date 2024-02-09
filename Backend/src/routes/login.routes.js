@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const LoginController = require('../controllers/login.controller')
 const loginSchema = require('../database/models/login.model')
+const rolSchema=require('../database/models/roles.model')
 const bcrypt=require('bcrypt')
 const controller = new LoginController
 
@@ -10,14 +11,20 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/register', async (req, res) => {
-    const { username, password, nombre,documento,ficha} = req.body
+    const { email, password, nombre,documento,ficha,gestor} = req.body
+    const emaildup= await loginSchema.findOne({email: email })
+    if(emaildup)return res.status(201).json({message: "El email ya se encuentra registrado"})
+    const role = await rolSchema.findOne({ name: "user" })
+    const rolid = [role._id]
     const passwordhash=await bcrypt.hash(password,8)
     const user = new loginSchema({
-        username: username,
+        email: email,
         password: passwordhash,
         nombre: nombre,
         documento: documento,
-        ficha: ficha
+        ficha: [ficha],
+        gestor: [gestor],
+        rol: rolid
     })
     await controller.create(user)
     res.status(201).json({ user })
@@ -30,12 +37,19 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const { id } = req.params
-    const { username, password, status, date } = req.body
+    const { email, password, nombre, documento, ficha, gestor,rol} = req.body
     const values = {}
-    if (username) values.username = username
-    if (password) values.password = password
-    if (status) values.status = status
-    if (date) values.date = date
+    if (email) values.email = email
+    if (password) values.password = await bcrypt.hash(password,8)
+    if (nombre) values.nombre = nombre
+    if (documento) values.documento =documento
+    if (ficha)values.ficha=[ficha]
+    if(gestor)values.gestor=[gestor]
+    if(rol){
+        const foundRoles = await rolSchema.find({ name: { $in: rol } });
+        rol = foundRoles.map((role) => role._id);
+        values.rol=rol
+    }
     try {
         const user = await controller.update(id, values)
         res.status(200).json({ user })
@@ -55,8 +69,8 @@ router.delete('/:id', async (req, res) => {
 })
 router.post('/', async (req, res) => {
     try {
-        const { username, password } = req.body
-        const { accessToken } = await controller.validateUser(username, password)
+        const { email, password } = req.body
+        const { accessToken } = await controller.validateUser(email, password)
         res.header('authorization', accessToken).json({ message: 'Usuario autenticado', token: accessToken })
     }
     catch (error) {

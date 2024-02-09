@@ -12,7 +12,11 @@ const gestorSchema = new mongoose.Schema({
     },
     correo:{
         type: String
-    }
+    },
+    ficha:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ficha'
+    }]
   });
   
 const Gestor = mongoose.model('gestor', gestorSchema);

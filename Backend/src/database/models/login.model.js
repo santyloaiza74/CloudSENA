@@ -1,8 +1,7 @@
 const mongoose= require('mongoose')
-const rolSchema=require('./roles.model')
 
 const loginSchema = new mongoose.Schema({
-    username: {
+    email: {
       type: String,
       allowNull: true
     },
@@ -18,13 +17,18 @@ const loginSchema = new mongoose.Schema({
         type: String,
         allowNull: true
     },
-    ficha:{
-        type: String,
-        allowNull: true
-    },
-    rol:[
-      
-    ]
+    ficha:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'ficha'
+    }],
+    rol:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'roles'
+    }],
+    gestor:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'gestor'
+    }]
   });
   
   const Login = mongoose.model('login', loginSchema);
