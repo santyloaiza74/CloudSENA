@@ -13,14 +13,16 @@ function List() {
         <Table striped bordered hover>
             <thead>
                 <th>Nombre</th>
+                <th>Autores</th>
                 <th>Ficha</th>
                 <th>Fecha</th>
                 <th>Ruta</th>
             </thead>
             <tbody>
-                {proyecto.map(({ _id, nombre, ficha, fecha, ruta}) => (
+                {proyecto.map(({ _id, nombre,autores, ficha, fecha, ruta}) => (
                     <tr key={`user-row-${_id}`}>
                         <td>{nombre}</td>
+                        <td>{autores}</td>
                         <td>{ficha[0].nombre}</td>
                         <td>{fecha}</td>
                         <td>{ruta}</td>
