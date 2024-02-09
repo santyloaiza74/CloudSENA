@@ -5,7 +5,7 @@ class gestorService{
         this.model= gestorSchema
     }
     async get(){
-        const gestors=await this.model.find()
+        const gestors=await this.model.find().populate("ficha")
         return gestors
     }
     async post(gestor){
@@ -13,7 +13,7 @@ class gestorService{
         return gestors
     }
     async getOne(id){
-        const gestor=await this.model.findById(id)
+        const gestor=await this.model.findById(id).populate("ficha")
         return gestor
     }
     async delete(id){

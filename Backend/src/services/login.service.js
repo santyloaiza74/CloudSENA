@@ -6,7 +6,7 @@ class LoginService{
     }
 
     async get(){
-        const users= await this.model.find().populate("rol")
+        const users= await this.model.find().populate("rol").populate("ficha").populate("gestor")
         return users
     }
 
@@ -16,7 +16,7 @@ class LoginService{
     }
 
     async getOne(id){
-        const user= await this.model.findById(id)
+        const user= await this.model.findById(id).populate("rol").populate("ficha").populate("gestor")
         return user
     }
 

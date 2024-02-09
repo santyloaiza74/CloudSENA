@@ -5,7 +5,7 @@ class proyectoService{
         this.model=proyectoSchema
     }
     async get(){
-        const proyectos=await this.model.find()
+        const proyectos=await this.model.find().populate("ficha")
         return proyectos
     }
     async post(proyecto){

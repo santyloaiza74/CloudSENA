@@ -22,8 +22,8 @@ router.post('/register', async (req, res) => {
         password: passwordhash,
         nombre: nombre,
         documento: documento,
-        ficha: ficha,
-        gestor: gestor,
+        ficha: [ficha],
+        gestor: [gestor],
         rol: rolid
     })
     await controller.create(user)
@@ -43,8 +43,8 @@ router.put('/:id', async (req, res) => {
     if (password) values.password = await bcrypt.hash(password,8)
     if (nombre) values.nombre = nombre
     if (documento) values.documento =documento
-    if (ficha)values.ficha=ficha
-    if(gestor)values.gestor=gestor
+    if (ficha)values.ficha=[ficha]
+    if(gestor)values.gestor=[gestor]
     if(rol){
         const foundRoles = await rolSchema.find({ name: { $in: rol } });
         rol = foundRoles.map((role) => role._id);
