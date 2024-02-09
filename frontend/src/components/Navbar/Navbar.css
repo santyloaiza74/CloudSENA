@@ -1,0 +1,7 @@
+.navbar-nav:not(.sc-eBMEME) {
+    justify-content: flex-end !important;
+  }
+
+.navbarStyle{
+    border-bottom: 5px solid #00ff00;
+}

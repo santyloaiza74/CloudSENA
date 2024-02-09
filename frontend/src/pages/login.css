@@ -1,6 +1,8 @@
 body {
+
+  display: block !important;
     /* fallback for old browsers */
-    background: #fff;
+    background: #fff !important;
   
     /* Chrome 10-25, Safari 5.1-6 */
     /* background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));

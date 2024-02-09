@@ -9,7 +9,8 @@ const URL={
     PRODUCTOS: `${API_URL}/productos`,
     PUJAS: `${API_URL}/pujas`,
     SUBASTAS: `${API_URL}/subastas`,
-    VENTAS:`${API_URL}/ventas`
+    VENTAS:`${API_URL}/ventas`,
+    REGISTER: `${API_URL_LOGIN}/login/register`,
 }
 
 export default URL
