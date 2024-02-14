@@ -9,7 +9,7 @@ const controller = new proyectoController
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         const projectName = req.body.projectName; // Obtenemos el nombre del proyecto del cuerpo de la solicitud
-        const projectPath = path.join(__dirname, '../../public/upload', projectName);
+        const projectPath = path.join(__dirname, '../../public', projectName);
         fs.mkdirSync(projectPath, { recursive: true });
         cb(null, projectPath);
     },
