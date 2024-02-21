@@ -15,6 +15,7 @@ body {
   background-color: #ffffff;
   color: #00ff00; Texto verde */
   border-right: 5px solid #00ff00;
+  height: 90rem !important; 
 
 }
 
@@ -51,6 +52,7 @@ body {
 .sidebar-footer {
   padding: 10px;
   border-top: 1px solid #ddd;
+  height: auto;
 }
 
 /* img{

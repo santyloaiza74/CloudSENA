@@ -1,0 +1,66 @@
+.custom-card {
+    max-width: 1000px;
+    max-height: 1000px;
+    /* Puedes ajustar este valor según tus necesidades */
+    width: 900px;
+    height: 475px;
+    margin: 5px;
+    margin-bottom: 30px;
+    border: 2px solid #00ff00;
+    border-radius: 25px;
+    
+    
+    /*display: flex;
+  flex-direction: row;
+  justify-content: space-between;*/
+    
+}
+.titulo{
+    color: #00ff00;
+    font-size: 30px;
+    margin-left: 20px;
+}
+
+/* styles.css (o el nombre que hayas dado a tu archivo de estilos) */
+.card-row {
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /*Otra opción puede ser 'space-around' o 'space-evenly' */
+    
+    
+}
+.fields{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    
+    
+}
+.input-field{
+    display: flex;
+    flex-direction: column;
+    width: calc(90% / 2 );
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+
+.form-label{
+    margin-top: 10px;
+}
+
+
+
+
+
+.Buttonn{
+    background: #00ff00;
+    border-color: #00ff00;
+    transition: #ffff;
+    margin-bottom: 15px;
+    margin-left:15px ;
+
+    
+}

@@ -22,9 +22,9 @@ const Sidebar = () => {
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-            <NavLink exact to="/" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="columns" style={{ color: '#00ff00' }}>
-                <span style={{ color: '#000000' }}>Dashboard</span>
+            <NavLink exact to="/proyecto" activeClassName="activeClicked">
+              <CDBSidebarMenuItem icon="fa-solid fa-plus" style={{ color: '#00ff00' }}>
+                <span style={{ color: '#000000' }}>Crear Proyecto</span>
               </CDBSidebarMenuItem>
             </NavLink>
             <NavLink exact to="/" activeClassName="activeClicked">

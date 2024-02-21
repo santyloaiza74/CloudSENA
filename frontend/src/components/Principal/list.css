@@ -1,11 +1,12 @@
 .custom-card-style {
-    max-width: 300px;
     /* Puedes ajustar este valor según tus necesidades */
-    width: 280px;
-    margin: 5px;
+    width: 17rem;
+    height: 24rem;
+    margin: 0.7%;
     margin-bottom: 30px;
     border: 2px solid #00ff00;
     border-radius: 25px;
+    object-fit: cover;
 }
 
 
@@ -22,4 +23,23 @@
     transition: #ffff;
     margin-bottom: 15px;
     
+}
+
+.active>.page-link {
+    z-index: 3;
+    color: #ffff;
+    background-color: #00ff00;
+    border-color: #00ff00;
+}
+
+.page-link {
+    position: relative;
+    display: block;
+    padding: var(--bs-pagination-padding-y) var(--bs-pagination-padding-x);
+    font-size: var(--bs-pagination-font-size);
+    color: #00ff00;
+    text-decoration: none;
+    background-color: var(--bs-pagination-bg);
+    border: var(--bs-pagination-border-width) solid var(--bs-pagination-border-color);
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
