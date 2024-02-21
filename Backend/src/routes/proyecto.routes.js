@@ -5,14 +5,10 @@ const multer = require('multer')
 const fs = require('node:fs')
 const path = require('path')
 const controller = new proyectoController
+const publicDir = path.resolve(__dirname, '../../public');
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const projectName = req.body.projectName; // Obtenemos el nombre del proyecto del cuerpo de la solicitud
-        const projectPath = path.join(__dirname, '../../public', projectName);
-        fs.mkdirSync(projectPath, { recursive: true });
-        cb(null, projectPath);
-    },
+    destination:'./public',
     filename: (req, file, cb) => {
         const originalFilename = file.originalname;
         const extension = path.extname(originalFilename);
@@ -21,19 +17,35 @@ const storage = multer.diskStorage({
     }
 });
 
-const uploads = multer({ storage })
 
-router.get('/', async (req, res) => {
-    const proyectos = await controller.index()
-    res.json({ proyectos })
-})
-router.post('/upload', uploads.array('files', 5), (req, res) => {
+const upload = multer({ storage })
+
+router.post('/upload', upload.array('files', 5), (req, res) => {
+    console.log(req.files)
+    // Obtener los nombres de los archivos en la carpeta pública
+    const files = fs.readdirSync('/public/');
+
+    // Recorrer cada archivo
+    req.files.forEach(file => {
+        // Obtener la extensión del archivo
+        const ext = path.extname(file.originalname);
+
+        // Mover el archivo a la carpeta según su extensión
+        if (ext === '.jpg' || ext === '.jpeg' || ext === '.png') {
+            fs.renameSync(path.join(publicDir, file.filename), path.join(publicDir, '/Img', file.filename));
+        } else if (ext === '.mp4') {
+            fs.renameSync(path.join(publicDir, file.filename), path.join(publicDir, '/Video', file.filename));
+        } else if (ext === '.pdf' || ext === '.docx') {
+            fs.renameSync(path.join(publicDir, file.filename), path.join(publicDir, '/Doc', file.filename));
+        }
+    });
+
     // Verificar si se subieron archivos
     if (!req.files || req.files.length === 0) {
         return res.status(400).send('No se subieron archivos.');
     }
 
-    // Procesar los archivos subidos
+    // Procesar los archivos subidos (opcional)
     req.files.forEach(file => {
         console.log('Archivo subido:', file.filename);
         // Aquí puedes guardar el archivo en la base de datos, en el sistema de archivos, etc.
@@ -43,14 +55,19 @@ router.post('/upload', uploads.array('files', 5), (req, res) => {
     res.status(200).send('Archivos subidos exitosamente.');
 });
 
+router.get('/', async (req, res) => {
+    const proyectos = await controller.index()
+    res.json({ proyectos })
+})
+
 router.post('/', async (req, res) => {
-    const { nombre, autores, ficha, fecha,ruta } = req.body
+    const { nombre, autores, ficha, fecha, descripcion } = req.body
     const proyecto = new proyectoSchema({
         nombre: nombre,
         autores: autores,
         ficha: [ficha],
         fecha: fecha,
-        ruta:ruta
+        descripcion: descripcion
     })
     await controller.create(proyecto)
     res.status(201).json({ proyecto })
@@ -63,12 +80,13 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const { id } = req.params
-    const { nombre, autores, idficha, fecha } = req.body
+    const { nombre, autores, ficha, fecha, descripcion } = req.body
     const values = {}
     if (nombre) values.nombre = nombre
     if (autores) values.autores = autores
-    if (idficha) values.idficha = idficha
+    if (ficha) values.idficha = ficha
     if (fecha) values.fecha = fecha
+    if (descripcion) values.descripcion = descripcion
     try {
         const proyecto = await controller.update(id, values)
         res.status(200).json({ proyecto })
