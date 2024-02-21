@@ -2,6 +2,7 @@ import { CDBContainer } from 'cdbreact';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Navbar from "../../components/Navbar/Navbar"
 import List from '../../components/Fichas/List';
+import { Button } from 'react-bootstrap';
 
 function fichas(){
     return(
