@@ -15,16 +15,16 @@ const proyectoSchema = new mongoose.Schema({
         type:Date
     },
     documentacion:{
-        type: String
+        type: Array
     },
     descripcion:{
         type: String
     },
     imagenes:{
-        type:String
+        type: Array
     },
     video:{
-        type:String
+        type: Array
     }
   });
   

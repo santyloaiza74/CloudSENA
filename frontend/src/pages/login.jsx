@@ -20,7 +20,7 @@ function Login() {
             axios.post('http://127.0.0.1:3300/login',login)
             .then(function(response){
                 console.log(response.data)
-                navigate('/')
+                navigate('/principal')
             })
             .catch(function(error){
                 alert("Usuario o contraseña Incorrecta")

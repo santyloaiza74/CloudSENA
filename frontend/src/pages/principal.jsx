@@ -20,7 +20,6 @@ function principal(){
           {/* Contenido de la página */}
           <div style={{ display:'flex', padding: '20px' }}>
             <CDBContainer>
-              <h1>su mama</h1>
               <List></List>
             </CDBContainer>
           </div>
