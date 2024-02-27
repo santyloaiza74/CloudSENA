@@ -20,45 +20,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage })
 
-// router.post('/upload', upload.array('files', 5), (req, res) => {
-//     console.log(req.files)
-//     // Obtener los nombres de los archivos en la carpeta pública
-//     const files = fs.readdirSync('/public/');
-
-//     // Recorrer cada archivo
-//     req.files.forEach(file => {
-//         // Obtener la extensión del archivo
-//         const ext = path.extname(file.originalname);
-
-//         // Mover el archivo a la carpeta según su extensión
-//         if (ext === '.jpg' || ext === '.jpeg' || ext === '.png') {
-//             fs.renameSync(path.join(publicDir, file.filename), path.join(publicDir, '/Img', file.filename));
-//             qwe.push(`http://localhost:3300/Img/${file.filename}`)
-//         } else if (ext === '.mp4') {
-//             fs.renameSync(path.join(publicDir, file.filename), path.join(publicDir, '/Video', file.filename));
-//             asd.push(`http://localhost:3300/Video/${file.filename}`)
-//         } else if (ext === '.pdf' || ext === '.docx') {
-//             fs.renameSync(path.join(publicDir, file.filename), path.join(publicDir, '/Doc', file.filename));
-//             zxc.push(`http://localhost:3300/Doc/${file.filename}`)
-//         }
-//     });
-
-//     // Verificar si se subieron archivos
-//     if (!req.files || req.files.length === 0) {
-//         return res.status(400).send('No se subieron archivos.');
-//     }
-
-//     // Procesar los archivos subidos (opcional)
-//     req.files.forEach(file => {
-//         console.log('Archivo subido:', file.filename);
-//         // Aquí puedes guardar el archivo en la base de datos, en el sistema de archivos, etc.
-//     });
-
-//     // Responder al cliente con un mensaje de éxito
-//     res.status(200).send('Archivos subidos exitosamente.');
-//     console.log(qwe,asd,zxc)
-// });
-
 router.get('/', async (req, res) => {
     const proyectos = await controller.index()
     res.json({ proyectos })
@@ -133,6 +94,9 @@ router.post('/', upload.array('files', 5), async (req, res) => {
                 console.log('Archivos eliminados')
             })
         });
+        qwe.length=0
+        asd.length=0
+        zxc.length=0
         return res.status(400).json({ message: "El nombre ya se encuentra registrado" })
     }
     else {
@@ -147,9 +111,9 @@ router.post('/', upload.array('files', 5), async (req, res) => {
             video: video
         })
         await controller.create(proyecto)
-        qwe.length = 0
-        asd.length = 0
-        zxc.length = 0
+        img.length = 0
+        video.length = 0
+        doc.length = 0
         res.status(201).json({ proyecto, message: "Archivos subidos exitosamente." })
     }
 })
