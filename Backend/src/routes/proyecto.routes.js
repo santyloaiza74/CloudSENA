@@ -65,12 +65,19 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', upload.array('files', 5), async (req, res) => {
-    const qwe=[]
-    const asd=[]
-    const zxc=[]
-    let a=''
-    let b=''
-    let c=''
+    const { nombre, autores, ficha, fecha, descripcion } = req.body
+    const qwe = []
+    const asd = []
+    const zxc = []
+    const img = []
+    const doc = []
+    const video = []
+    let a = ''
+    let b = ''
+    let c = ''
+    let rut1 = ''
+    let rut2 = ''
+    let rut3 = ''
     const files = fs.readdirSync('/public/');
 
     // Recorrer cada archivo
@@ -81,48 +88,75 @@ router.post('/', upload.array('files', 5), async (req, res) => {
         // Mover el archivo a la carpeta según su extensión
         if (ext === '.jpg' || ext === '.jpeg' || ext === '.png') {
             fs.renameSync(path.join(publicDir, file.filename), path.join(publicDir, '/Img', file.filename));
-            a=`http://localhost:3300/Img/${file.filename}`
-            qwe.push(a)
+            a = `http://localhost:3300/Img/${file.filename}`
+            rut1 = `${publicDir}/Img/${file.filename}`
+            img.push(a)
+            qwe.push(rut1)
         } else if (ext === '.mp4') {
             fs.renameSync(path.join(publicDir, file.filename), path.join(publicDir, '/Video', file.filename));
-            b=`http://localhost:3300/Video/${file.filename}`
-            asd.push(b)
+            b = `http://localhost:3300/Video/${file.filename}`
+            rut2 = `${publicDir}/Video/${file.filename}`
+            video.push(b)
+            asd.push(rut2)
         } else if (ext === '.pdf' || ext === '.docx') {
             fs.renameSync(path.join(publicDir, file.filename), path.join(publicDir, '/Doc', file.filename));
-            c=`http://localhost:3300/Doc/${file.filename}`
-            zxc.push(c)
+            c = `http://localhost:3300/Doc/${file.filename}`
+            rut3 = `${publicDir}/Doc/${file.filename}`
+            doc.push(c)
+            zxc.push(rut3)
         }
     });
-
     //Verificar si se subieron archivos
     if (!req.files || req.files.length === 0) {
         return res.status(400).send('No se subieron archivos.');
     }
-
-    // // Responder al cliente con un mensaje de éxito
-    // res.status(200).send('Archivos subidos exitosamente.');
-    console.log(qwe,asd,zxc)
-    const { nombre, autores, ficha, fecha, descripcion } = req.body
-    const proyecto = new proyectoSchema({
-        nombre: nombre,
-        autores: autores,
-        ficha: [ficha],
-        fecha: fecha,
-        descripcion: descripcion,
-        documentacion: zxc,
-        imagenes: qwe,
-        video: asd
-    })
-    await controller.create(proyecto)
-    qwe.length = 0
-    asd.length = 0
-    zxc.length = 0
-    res.status(201).json({ proyecto,message: "Archivos subidos exitosamente."  })
+    const nombredup = await proyectoSchema.findOne({ nombre: nombre })
+    if (nombredup) {
+        img.length = 0
+        video.length = 0
+        doc.length = 0
+        qwe.forEach(element => {
+            fs.unlink(element, errors => {
+                if (errors) throw errors
+                console.log('Archivos eliminados')
+            })
+        });
+        asd.forEach(element => {
+            fs.unlink(element, errors => {
+                if (errors) throw errors
+                console.log('Archivos eliminados')
+            })
+        });
+        zxc.forEach(element => {
+            fs.unlink(element, errors => {
+                if (errors) throw errors
+                console.log('Archivos eliminados')
+            })
+        });
+        return res.status(400).json({ message: "El nombre ya se encuentra registrado" })
+    }
+    else {
+        const proyecto = new proyectoSchema({
+            nombre: nombre,
+            autores: autores,
+            ficha: [ficha],
+            fecha: fecha,
+            descripcion: descripcion,
+            documentacion: doc,
+            imagenes: img,
+            video: video
+        })
+        await controller.create(proyecto)
+        qwe.length = 0
+        asd.length = 0
+        zxc.length = 0
+        res.status(201).json({ proyecto, message: "Archivos subidos exitosamente." })
+    }
 })
 router.get('/:id', async (req, res) => {
     const { id } = req.params
     const proyecto = await controller.getById(id)
-    res.json({ proyecto})
+    res.json({ proyecto })
 })
 
 router.put('/:id', async (req, res) => {
