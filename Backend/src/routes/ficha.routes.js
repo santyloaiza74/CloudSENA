@@ -10,9 +10,15 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const { nombre, codigo, fecha_fin, fecha_inicio, tipo } = req.body;
-    const codigodup = await fichaSchema.findOne({ codigo})
+    const codigodup = await fichaSchema.findOne({ codigo })
     if (codigodup) {
         return res.status(400).json({ message: "El código ya se encuentra registrado" })
+    }
+    if (!fecha_fin) {
+        return res.status(404).json({ message: "La fecha de fin debe ser obligatoria" })
+    }
+    if (!fecha_inicio) {
+        return res.status(404).json({ message: "La fecha de inicio debe ser obligatoria" })
     }
     const fechaInicio = new Date(fecha_inicio);
     const fechaFin = new Date(fecha_fin);
@@ -45,17 +51,17 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const { id } = req.params
-    const {nombre,codigo,fecha_fin,fecha_inicio,tipo} = req.body
-    const codigodup = await fichaSchema.findOne({ codigo})
+    const { nombre, codigo, fecha_fin, fecha_inicio, tipo } = req.body
+    const codigodup = await fichaSchema.findOne({ codigo })
     if (codigodup) {
         return res.status(400).json({ message: "El código ya se encuentra registrado" })
     }
     const values = {}
     if (nombre) values.nombre = nombre
-    if(codigo)values.codigo=codigo
+    if (codigo) values.codigo = codigo
     if (fecha_fin) values.fecha_fin = fecha_fin
     if (fecha_inicio) values.fecha_inicio = fecha_inicio
-    if(tipo)values.tipo=tipo
+    if (tipo) values.tipo = tipo
     try {
         const ficha = await controller.update(id, values)
         res.status(200).json({ ficha })
