@@ -14,8 +14,17 @@ const proyectoSchema = new mongoose.Schema({
     fecha:{
         type:Date
     },
-    ruta:{
+    documentacion:{
+        type: Array
+    },
+    descripcion:{
         type: String
+    },
+    imagenes:{
+        type: Array
+    },
+    video:{
+        type: Array
     }
   });
   

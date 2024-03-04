@@ -8,6 +8,8 @@ import proyecto from './pages/Proyectos/CrearProyecto'
 import edieli from './pages/Proyectos/EditarProyecto'
 import Cficha from './pages/Fichas/CrearFicha'
 import fichas from './pages/Fichas/Fichas'
+import usuarios from './pages/Usuarios/Usuario'
+import EF from './pages/Fichas/EditarFicha'
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path='/edel' Component={edieli}></Route>
         <Route path='/ficha' Component={Cficha}></Route>
         <Route path='/fichas' Component={fichas}></Route>
+        <Route path='/users' Component={usuarios}></Route>
+        <Route path='/editarFicha/:id' Component={EF}></Route>
       </Routes>
     </BrowserRouter>
   )

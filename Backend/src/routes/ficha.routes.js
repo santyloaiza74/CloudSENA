@@ -9,11 +9,13 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const {nombre,fecha_fin,fecha_inicio} = req.body
+    const {nombre,codigo,fecha_fin,fecha_inicio,tipo} = req.body
     const ficha = new fichaSchema({
         nombre:nombre,
+        codigo: codigo,
         fecha_inicio:fecha_inicio,
-        fecha_fin:fecha_fin
+        fecha_fin:fecha_fin,
+        tipo:tipo
     })
     await controller.create(ficha)
     res.status(201).json({ ficha })
@@ -26,11 +28,13 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const { id } = req.params
-    const {nombre,fecha_fin,fecha_inicio} = req.body
+    const {nombre,codigo,fecha_fin,fecha_inicio,tipo} = req.body
     const values = {}
     if (nombre) values.nombre = nombre
+    if(codigo)values.codigo=codigo
     if (fecha_fin) values.fecha_fin = fecha_fin
     if (fecha_inicio) values.fecha_inicio = fecha_inicio
+    if(tipo)values.tipo=tipo
     try {
         const ficha = await controller.update(id, values)
         res.status(200).json({ ficha })
