@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', upload.array('files', 5), async (req, res) => {
-    const { nombre, autores, ficha, fecha, descripcion } = req.body
+    const { projectName, autores, ficha, fecha, descripcion } = req.body
     const qwe = []
     const asd = []
     const zxc = []
@@ -71,7 +71,7 @@ router.post('/', upload.array('files', 5), async (req, res) => {
     if (!req.files || req.files.length === 0) {
         return res.status(400).send('No se subieron archivos.');
     }
-    const nombredup = await proyectoSchema.findOne({ nombre: nombre })
+    let nombredup = await proyectoSchema.findOne({ nombre: projectName });
     if (nombredup) {
         img.length = 0
         video.length = 0
@@ -101,7 +101,7 @@ router.post('/', upload.array('files', 5), async (req, res) => {
     }
     else {
         const proyecto = new proyectoSchema({
-            nombre: nombre,
+            nombre: projectName,
             autores: autores,
             ficha: [ficha],
             fecha: fecha,

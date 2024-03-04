@@ -10,7 +10,6 @@ function SubirArchivos() {
         fecha: "",
         descripcion: "",
     });
-
     const [documentacionFiles, setDocumentacionFiles] = useState([]);
     const [imagenFiles, setImagenFiles] = useState([]);
     const [videoFiles, setVideoFiles] = useState([]);
@@ -71,15 +70,15 @@ function SubirArchivos() {
         formData.append("descripcion", projectData.descripcion);
 
         documentacionFiles.forEach((file) => {
-            formData.append("documentacionFiles", file);
+            formData.append("files", file);
         });
 
         imagenFiles.forEach((file) => {
-            formData.append("imagenFiles", file);
+            formData.append("files", file);
         });
 
         videoFiles.forEach((file) => {
-            formData.append("videoFiles", file);
+            formData.append("files", file);
         });
 
         axios.post('http://127.0.0.1:3300/api/v1/proyecto', formData)
