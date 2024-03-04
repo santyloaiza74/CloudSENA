@@ -18,10 +18,14 @@
 }
 
 .Buttonn{
-    background: #00ff00;
-    border-color: #00ff00;
-    transition: #ffff;
-    margin-bottom: 15px;
+    background: #00ff00 !important;
+    border-color: #00ff00 !important;
+    transition: #ffff !important;
+    margin-bottom: 15px !important;
+    --bs-btn-active-bg: #fffff !important;
+    --bs-btn-active-border-color: #00ff00 !important;
+    --bs-btn-disabled-border-color: #00ff00 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
     
 }
 

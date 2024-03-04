@@ -1,10 +1,10 @@
 import { CDBContainer } from 'cdbreact';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Navbar from "../../components/Navbar/Navbar"
-import List from '../../components/Fichas/List';
+import List from '../../components/Usuario/List';
 import { Button } from 'react-bootstrap';
 
-function fichas(){
+function usuarios(){
     return(
         <div style={{ display: 'block', height: '100vh' }}>
         {/* Navbar */}
@@ -29,4 +29,4 @@ function fichas(){
     )
 }
 
-export default fichas
+export default usuarios

@@ -1,37 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Button, Spinner, Row, Col, Pagination } from 'react-bootstrap';
-import { CDBBtn, CDBIcon, CDBContainer } from "cdbreact";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'
-import './list.css'; // Asegúrate de tener el archivo CSS correcto
-import logo1 from './../../img/logo1.png';
+import './list.css'
 
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 
-function EditarF() {
-    const [ficha, setFicha] = useState([]);
+function List() {
+    const [usuario, setUsuario] = useState([]);
     const [loading, setLoading] = useState(true);
     const itemsPerPage = 8; // Define la cantidad deseada de elementos por página
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
-        axios
-            .get('http://127.0.0.1:3300/api/v1/ficha')
+        axios.get('http://127.0.0.1:3300/login')
             .then((response) => {
-                setFicha(response.data.fichas);
+                setUsuario(response.data.users);
                 console.log(response.data)
                 setLoading(false);
             })
             .catch((error) => {
-                console.error('Error fetching fichas:', error);
+                console.error('Error fetching projects:', error);
                 setLoading(false);
             });
     }, []);
 
-    const totalPages = Math.ceil(ficha.length / itemsPerPage);
+    const totalPages = Math.ceil(usuario.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const currentItems = ficha.slice(startIndex, endIndex);
+    const currentItems = usuario.slice(startIndex, endIndex);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -45,14 +41,7 @@ function EditarF() {
         setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
     };
 
-    const navigate = useNavigate();
-
-const handleEdit = (id) => {
-    navigate(`/editarFicha/${id}`);
-};  
-
     return (
-
         <div className="list-container">
             {loading ? (
                 <Spinner animation="border" role="status">
@@ -60,31 +49,19 @@ const handleEdit = (id) => {
                 </Spinner>
             ) : (
                 <div>
-                    <center>
-                        <CDBBtn className='Buttonn' href='/ficha'>
-                            <CDBIcon icon="fa-solid fa-plus" className="ms-1" />
-                            Crear Fichas
-                        </CDBBtn>
-                    </center>
                     <Row>
-                        {currentItems.map(({ _id, nombre, fecha_inicio, fecha_fin }) => (
+                        {currentItems.map(({ _id, email, nombre, ficha, documento, rol }) => (
                             <Col key={_id} md={6}>
                                 <Card className="mb-3">
-                                    {/* <Card.Img variant="top" src={logo1} alt={`${nombre} Image`} /> */}
                                     <Card.Body>
                                         <Card.Title>{nombre}</Card.Title>
+                                        <Card.Subtitle className="mb-2 text-muted">{email}</Card.Subtitle>
                                         <Card.Text>
-                                            <strong>Fecha Inicio:</strong> {fecha_inicio}<br />
-                                            <strong>Fecha Fin:</strong> {fecha_fin}<br />
+                                            <strong>Documento:</strong> {documento}<br />
+                                            <strong>Ficha:</strong> {ficha?.[0]?.nombre}<br/>
+                                            <strong>Rol:</strong> {rol?.[0]?.name}<br/>
                                         </Card.Text>
-                                        <CDBBtn className='Buttonn'>
-                                            <CDBIcon icon="fa-solid fa-eye" className="ms-1" />
-                                            Ver Detalles
-                                        </CDBBtn>
-                                        <CDBBtn className='Buttonn' onClick={() => handleEdit(_id)}>
-                                            <CDBIcon icon="fa-solid fa-edit" className="ms-1" />
-                                            Editar
-                                        </CDBBtn>
+                                        <Button className='Buttonn'>Ver Detalles</Button>
                                     </Card.Body>
                                 </Card>
                             </Col>
@@ -111,4 +88,4 @@ const handleEdit = (id) => {
     );
 }
 
-export default EditarF;
+export default List;
