@@ -9,29 +9,30 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const { nombre, codigo, fecha_fin, fecha_inicio, tipo } = req.body
+    const { nombre, codigo, fecha_fin, fecha_inicio, tipo } = req.body;
 
-    const fechaInicioSinHora = new Date(fecha_inicio)
-    fechaInicioSinHora.setHours(0, 0, 0, 0)
+    const fechaInicio = new Date(fecha_inicio);
+    const fechaFin = new Date(fecha_fin);
 
-    const fechaFinSinHora = new Date(fecha_fin)
-    fechaFinSinHora.setHours(0, 0, 0, 0)
+    const fechaInicioFormatoString = fechaInicio.toISOString().substring(0, 10);
+    const fechaFinFormatoString = fechaFin.toISOString().substring(0, 10);
 
     const ficha = new fichaSchema({
         nombre: nombre,
         codigo: codigo,
-        fecha_inicio: fechaInicioSinHora,
-        fecha_fin: fechaFinSinHora,
+        fecha_inicio: fechaInicioFormatoString,
+        fecha_fin: fechaFinFormatoString,
         tipo: tipo
     });
 
     try {
-        await controller.create(ficha)
-        res.status(201).json({ ficha })
+        await controller.create(ficha);
+        res.status(201).json({ ficha });
     } catch (error) {
-        res.status(500).json({ error: 'Error al guardar la ficha.' })
+        res.status(500).json({ error: 'Error al guardar la ficha.' });
     }
 });
+
 
 router.get('/:id', async (req, res) => {
     const { id } = req.params

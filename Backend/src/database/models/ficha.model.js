@@ -8,10 +8,10 @@ const fichaSchema = new mongoose.Schema({
         type: String
     },
     fecha_inicio:{
-        type: Date
+        type: String
     },
     fecha_fin:{
-        type: Date
+        type: String
     },
     tipo:{
         type:String

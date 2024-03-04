@@ -100,11 +100,14 @@ router.post('/', upload.array('files', 5), async (req, res) => {
         return res.status(400).json({ message: "El nombre ya se encuentra registrado" })
     }
     else {
+    const fecha1 = new Date(fecha);
+
+    const fechaInicioFormatoString = fecha1.toISOString().substring(0, 10);
         const proyecto = new proyectoSchema({
             nombre: projectName,
             autores: autores,
             ficha: [ficha],
-            fecha: fecha,
+            fecha: fechaInicioFormatoString,
             descripcion: descripcion,
             documentacion: doc,
             imagenes: img,
@@ -125,9 +128,13 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const { id } = req.params
-    const { nombre, autores, ficha, fecha, descripcion } = req.body
+    const { projectName, autores, ficha, fecha, descripcion } = req.body
     const values = {}
-    if (nombre) values.nombre = nombre
+    let nombredup = await proyectoSchema.findOne({ nombre: projectName });
+    if (nombredup) {
+        return res.status(400).json({ message: "El nombre ya se encuentra registrado" })
+    }
+    if (projectName) values.projectName = projectName
     if (autores) values.autores = autores
     if (ficha) values.idficha = ficha
     if (fecha) values.fecha = fecha

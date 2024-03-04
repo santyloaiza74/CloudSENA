@@ -12,7 +12,7 @@ const proyectoSchema = new mongoose.Schema({
         ref: 'ficha'
     }],
     fecha:{
-        type:Date
+        type:String
     },
     documentacion:{
         type: Array
