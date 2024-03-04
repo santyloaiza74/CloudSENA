@@ -5,13 +5,16 @@ const fichaSchema = new mongoose.Schema({
         type: String
     },
     codigo:{
-        type: String
+        type: String,
+        required: true
     },
     fecha_inicio:{
-        type: String
+        type: String,
+        required: true
     },
     fecha_fin:{
-        type: String
+        type: String,
+        required: true
     },
     tipo:{
         type:String

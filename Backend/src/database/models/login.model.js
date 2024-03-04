@@ -3,19 +3,19 @@ const mongoose= require('mongoose')
 const loginSchema = new mongoose.Schema({
     email: {
       type: String,
-      allowNull: true
+      required: true
     },
     password: {
       type: String,
-      allowNull: true
+      required: true
     },
     nombre:{
         type: String,
-        allowNull: true
+        required: true
     },
     documento:{
         type: String,
-        allowNull: true
+        required: true
     },
     ficha:[{
       type: mongoose.Schema.Types.ObjectId,

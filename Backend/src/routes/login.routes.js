@@ -14,6 +14,8 @@ router.post('/register', async (req, res) => {
     const { email, password, nombre,documento,ficha,gestor} = req.body
     const emaildup= await loginSchema.findOne({email: email })
     if(emaildup)return res.status(201).json({message: "El email ya se encuentra registrado"})
+    const documentodup = await loginSchema.findOne({documento: documento})
+    if(documentodup)return res.status(201).json({message: "El documento ya se encuentra registrado"})
     const role = await rolSchema.findOne({ name: "user" })
     const rolid = [role._id]
     const passwordhash=await bcrypt.hash(password,8)
@@ -38,6 +40,10 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
     const { id } = req.params
     const { email, password, nombre, documento, ficha, gestor,rol} = req.body
+    const emaildup= await loginSchema.findOne({email: email })
+    if(emaildup)return res.status(201).json({message: "El email ya se encuentra registrado"})
+    const documentodup = await loginSchema.findOne({documento: documento})
+    if(documentodup)return res.status(201).json({message: "El documento ya se encuentra registrado"})
     const values = {}
     if (email) values.email = email
     if (password) values.password = await bcrypt.hash(password,8)

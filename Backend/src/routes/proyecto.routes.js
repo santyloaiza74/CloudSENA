@@ -130,7 +130,7 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params
     const { projectName, autores, ficha, fecha, descripcion } = req.body
     const values = {}
-    let nombredup = await proyectoSchema.findOne({ nombre: projectName });
+    const nombredup = await proyectoSchema.findOne({ nombre: projectName });
     if (nombredup) {
         return res.status(400).json({ message: "El nombre ya se encuentra registrado" })
     }
