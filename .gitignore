@@ -3,4 +3,5 @@ Backend/.env
 Backend/.babelrc
 Backend/build
 frontend/node_modules
+Backend/public
 .gitignore
