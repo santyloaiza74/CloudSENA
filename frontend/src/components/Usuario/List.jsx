@@ -20,6 +20,7 @@ function List() {
                 setUsuario(response.data.users);
                 setSearchResults(response.data.users);
                 setLoading(false);
+                console.log(usuario)
             })
             .catch((error) => {
                 console.error('Error fetching projects:', error);
