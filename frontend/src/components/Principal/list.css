@@ -1,5 +1,29 @@
 .custom-card-style {
     /* Puedes ajustar este valor según tus necesidades */
+    width: 280px;
+    margin: 5px;
+    margin-bottom: 30px;
+    border: 2px solid #00ff00;
+    border-radius: 25px;
+}
+
+
+/* styles.css (o el nombre que hayas dado a tu archivo de estilos) */
+.card-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Otra opción puede ser 'space-around' o 'space-evenly' */
+}
+
+.Buttonn{
+    background: #00ff00;
+    border-color: #00ff00;
+    transition: #ffff;
+    margin-bottom: 15px;
+    
+}
+.custom-card-style {
+    /* Puedes ajustar este valor según tus necesidades */
     width: 17rem;
     height: 24rem;
     margin: 0.7%;
