@@ -39,7 +39,7 @@ router.post('/', upload.array('files', 5), async (req, res) => {
     let rut1 = ''
     let rut2 = ''
     let rut3 = ''
-    const files = fs.readdirSync('/public/');
+    const files = fs.readdirSync('./public/');
 
     // Recorrer cada archivo
     req.files.forEach(file => {
