@@ -22,7 +22,7 @@ const fichaSchema = new mongoose.Schema({
     }],
     aprendiz:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref:'login'
+        ref:'aprendiz'
     }]
   });
   

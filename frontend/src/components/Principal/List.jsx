@@ -50,10 +50,10 @@ function List() {
       ) : (
         <>
           <div className="card-row">
-            {currentProjects.map(({ _id, nombre, autores, ficha, fecha, ruta }) => (
+            {currentProjects.map(({ _id, nombre, autores, ficha, fecha, imagenes, ruta }) => (
               <Card key={_id} className="custom-card-style">
                 <Card.Body>
-                  <Card.Img variant="top" src={logo1} alt={`${nombre} Image`} />
+                  <Card.Img crossorigin="anonymous" variant="top" src={imagenes} alt={`${nombre} Image`}/>
                   <Card.Title>{nombre}</Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">{autores}</Card.Subtitle>
                   <Card.Text>

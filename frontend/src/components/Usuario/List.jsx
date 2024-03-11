@@ -2,20 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { Card, Button, Spinner, Row, Col, Pagination } from 'react-bootstrap';
 import axios from 'axios';
 import './list.css'
+import { CDBBtn, CDBIcon, CDBContainer, CDBInput } from "cdbreact";
 
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 
 function List() {
     const [usuario, setUsuario] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState(true);
-    const itemsPerPage = 8; // Define la cantidad deseada de elementos por página
+    const itemsPerPage = 8;
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         axios.get('http://127.0.0.1:3300/login')
             .then((response) => {
                 setUsuario(response.data.users);
-                console.log(response.data)
+                setSearchResults(response.data.users);
                 setLoading(false);
             })
             .catch((error) => {
@@ -24,10 +27,18 @@ function List() {
             });
     }, []);
 
-    const totalPages = Math.ceil(usuario.length / itemsPerPage);
+    useEffect(() => {
+        const filteredResults = usuario.filter(({ nombre, documento }) => (
+            nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            documento.toLowerCase().includes(searchTerm.toLowerCase())
+        ));
+        setSearchResults(filteredResults);
+    }, [searchTerm, usuario]);
+
+    const totalPages = Math.ceil(searchResults.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const currentItems = usuario.slice(startIndex, endIndex);
+    const currentItems = searchResults.slice(startIndex, endIndex);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -43,6 +54,17 @@ function List() {
 
     return (
         <div className="list-container">
+            <center>
+            <div>   
+                <CDBInput placeholder="Buscar por nombre o documento" icon={<i className="fa fa-search text-dark"></i>} 
+                    type='text'
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                    className='searchC'
+                />
+                
+            </div>
+            </center>
             {loading ? (
                 <Spinner animation="border" role="status">
                     <span className="sr-only">Loading...</span>
@@ -52,7 +74,7 @@ function List() {
                     <Row>
                         {currentItems.map(({ _id, email, nombre, ficha, documento, rol }) => (
                             <Col key={_id} md={6}>
-                                <Card className="mb-3">
+                                <Card className="mb-3" style={{minWidth:'17rem'}}>
                                     <Card.Body>
                                         <Card.Title>{nombre}</Card.Title>
                                         <Card.Subtitle className="mb-2 text-muted">{email}</Card.Subtitle>

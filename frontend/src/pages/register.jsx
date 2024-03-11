@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logo1 from './../img/logo1.png';
 import './register.css'
+import { CDBBtn, CDBIcon, CDBContainer } from "cdbreact";
 
 function Register() {
     const [register, setRegister] = useState({
@@ -71,7 +72,7 @@ function Register() {
         <Container fluid>
             <Row>
                 <Col md={{ span: 6, offset: 3 }}>
-                    <center>
+                    
                     <Card className='bg-light text-dark my-5 mx-autocar' style={{ borderRadius: '1rem', maxWidth: '800px' }}>
                         <Card.Body className='p-5 d-flex flex-column align-items-center mx-auto w-100'>
                             <img src={logo1} alt="Logo"></img>
@@ -81,24 +82,23 @@ function Register() {
                             <Form>
                                 <Row>
                                     <Col md={6}>
-                                        <Form.Group className="input" controlId="formBasicEmail" style={{ borderRadius: '1rem', maxWidth: '500px' }}>
-                                            <center>
+                                        <Form.Group className="inputt" controlId="formBasicEmail" style={{ borderRadius: '1rem', maxWidth: '500px' }}>
+                                        
                                                 <Form.Label>Email</Form.Label>
-                                            </center>
+
                                             <Form.Control type="email" placeholder="Ingrese su Email" name="email" onChange={handleChange} />
                                         </Form.Group>
 
-                                        <Form.Group className="input">
-                                            <center>
+                                        <Form.Group className="inputt">
+                                            
                                                 <Form.Label>Nombre</Form.Label>
-                                            </center>
+                                            
                                             <Form.Control type="input" name="nombre" onChange={handleChange} placeholder="Ingrese su nombre" />
                                         </Form.Group>
 
-                                        <Form.Group className="input">
-                                            <center>
+                                        <Form.Group className="inputt">
                                                 <Form.Label>Ficha</Form.Label>
-                                            </center>
+                                            
                                             <Form.Control as="select" name="ficha" onChange={handleChange}>
                                                 <option value="">Seleccione una ficha</option>
                                                 {fichas.map(ficha => (
@@ -109,24 +109,24 @@ function Register() {
                                     </Col>
 
                                     <Col md={6}>
-                                        <Form.Group className="input" >
-                                            <center>
+                                        <Form.Group className="inputt" >
+                                        
                                                 <Form.Label> Contraseña </Form.Label>
-                                            </center>
+                                            
                                             <Form.Control type="Password" name="password" onChange={handleChange} placeholder="Ingrese su Contraseña" />
                                         </Form.Group>
 
-                                        <Form.Group className="input" >
-                                            <center>
+                                        <Form.Group className="inputt" >
+                                            
                                                 <Form.Label>Documento</Form.Label>
-                                            </center>
+                                            
                                             <Form.Control type="input" name="documento" onChange={handleChange} placeholder="Ingrese su documento" />
                                         </Form.Group>
 
-                                        <Form.Group className="input">
-                                            <center>
+                                        <Form.Group className="inputt">
+                                            
                                                 <Form.Label>Gestor</Form.Label>
-                                            </center>
+                                            
                                             <Form.Control as="select" name="gestor" onChange={handleChange}>
                                                 <option value="">Seleccione un gestor</option>
                                                 {gestores.map(gestor => (
@@ -139,14 +139,16 @@ function Register() {
                                 <br/>
 
                                 <center>
-                                    <Button className="Buttonn btn" onClick={handleSubmit}>Registrarse</Button>
-                                    <br />
+                                    <CDBBtn className='Buttonn' onClick={handleSubmit}>
+                                            <CDBIcon icon="fa-solid fa-user" className="" onClick={handleSubmit} />
+                                            Registrarse
+                                        </CDBBtn>
                                     <Card.Link onClick={handleNavigate}>Si ya tiene una cuenta Inicie Sesión</Card.Link>
                                 </center>
                             </Form>
                         </Card.Body>
                     </Card>
-                    </center>
+                    
                 </Col>
             </Row>
         </Container>
