@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import './login.css'
 import logo1 from './../img/logo1.png'
 import axios from 'axios'
+import { CDBBtn, CDBIcon, CDBContainer } from "cdbreact";
 
 function Login() {
     const [login, setLogin] = useState({
@@ -68,7 +69,7 @@ function Login() {
                                         <center>
                                             <Form.Label>Email</Form.Label>
                                         </center>
-                                        <Form.Control type="email" placeholder="Enter email" name="email" onChange={handleChange} />
+                                        <Form.Control className="inputtt" type="email" placeholder="Enter email" name="email" onChange={handleChange} />
                                     </Form.Group>
                                     <Form.Group>
                                         <center>
@@ -76,14 +77,16 @@ function Login() {
                                                 Contraseña
                                             </Form.Label>
                                         </center>
-                                        <Form.Control type="Password" name="password" onChange={handleChange} placeholder="Enter password" />
+                                        <Form.Control className="inputtt" type="Password" name="password" onChange={handleChange} placeholder="Enter password" />
                                     </Form.Group>
 
                                     <br />
 
                                     <center>
-                                        <Button className="Buttonn btn" onClick={handleSubmit}>Iniciar Sesion</Button>
-                                        <br/>
+                                        <CDBBtn className='Buttonn' onClick={handleSubmit}>
+                                            <CDBIcon icon="fa-solid fa-user" className="" onClick={handleSubmit} />
+                                            Iniciar Sesion
+                                        </CDBBtn>
                                         <Card.Link onClick={handleNavigate}>Si no tiene cuenta Registrese</Card.Link>
                                     </center>
                                 </Form>

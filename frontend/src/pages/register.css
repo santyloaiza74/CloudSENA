@@ -21,6 +21,7 @@ body {
 }
 
 
+
 img{
   height: 200px;
   width: 300px;
@@ -45,7 +46,7 @@ img{
 }
 
 .input{
-  width: 350px;
-  margin-right: 400px;
-  margin-bottom: 10px;
+  width: 250px !important;
+  margin-bottom: 10px !important;
+  margin-right: 0px !important;
 }

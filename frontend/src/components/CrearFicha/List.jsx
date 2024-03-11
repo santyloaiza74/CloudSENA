@@ -1,43 +1,39 @@
 import { useState, useEffect } from 'react';
-import { Card, Button, Form } from 'react-bootstrap';
+import { Card, Button, Form, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import '../EditarProyecto/list.css';
 
 function List() {
-    // Estado para almacenar los valores del formulario y las opciones de gestores y usuarios
-    const [ficha, setFIcha] = useState({
+    const [ficha, setFicha] = useState({
         nombre: '',
         codigo: '',
         tipo: '',
         fecha_inicio: '',
         fecha_fin: '',
-        gestor: '', // Nuevo campo para el gestor seleccionado
-        usuario: '', // Nuevo campo para el usuario seleccionado
+        gestor: '',
+        usuario: '',
     });
 
     const [gestores, setGestores] = useState([]);
     const [usuarios, setUsuarios] = useState([]);
 
     useEffect(() => {
-        // Cargar opciones de gestores y usuarios al montar el componente
-        axios.get('http://127.0.0.1:3300/api/v1/gestor')  // Reemplaza '/api/gestores' con tu endpoint real
+        axios.get('http://127.0.0.1:3300/api/v1/gestor')
             .then(response => setGestores(response.data.gestors))
             .catch(error => console.error('Error fetching gestores:', error));
 
-        axios.get('http://127.0.0.1:3300/login')  // Reemplaza '/api/usuarios' con tu endpoint real
+        axios.get('http://127.0.0.1:3300/login')
             .then(response => setUsuarios(response.data.users))
             .catch(error => console.error('Error fetching usuarios:', error));
     }, []);
 
-    // Función de manejo de cambios para los campos del formulario
     const handleInputChange = (e) => {
-        setFormData({
-            ...formData,
+        setFicha({
+            ...ficha,
             [e.target.name]: e.target.value,
         });
     };
 
-    // Función para manejar el envío del formulario
     const handleSubmit = async () => {
         try {
             axios.post('http://127.0.0.1:3300/api/v1/ficha', ficha)
@@ -52,114 +48,107 @@ function List() {
         } catch (error) {
             console.log(error);
         }
-    }
-
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFIcha(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
     };
 
     return (
-        <div className="cardp">
-            <div className="card-row">
-                <Card className="custom-card">
-                    <Card.Body className="p">
-                        <br />
-                        <Card.Title className="titulo">Create</Card.Title>
-                        <div className="fields">
-                            <div className="input-field">
-                                <Form.Label>Nombre</Form.Label>
-                                <Form.Control
-                                    type="input"
-                                    placeholder="Nombre de la ficha"
-                                    name="nombre"
-                                    onChange={handleChange}
-                                />
-                            </div>
+        <Container fluid>
+            <Row>
+                <Col md={{ span: 6, offset: 3 }}>
+                    <Card className='cardddd' style={{ borderRadius: '1rem', maxWidth: '90000px' }}>
+                        <Card.Body className='p-5 d-flex flex-column align-items-center mx-auto w-100'>
+                            <h2 className="fw-bold mb-2 text-uppercase">Crear Ficha</h2>
+                            <p className="text-dark-50 mb-5">Ingrese los siguientes campos</p>
+                            <div className="fields">
+                                <Row>
+                                    <Col md={6}>
+                                        <Form.Group className="mb-3" controlId="formNombre">
+                                            <Form.Label>Nombre</Form.Label>
+                                            <Form.Control
+                                                name="nombre"
+                                                value={ficha.nombre}
+                                                onChange={handleInputChange}
+                                            />
+                                        </Form.Group>
 
-                            <div className="input-field">
-                                <Form.Label>Codigo</Form.Label>
-                                <Form.Control
-                                    type="input"
-                                    placeholder="Codigo de la ficha"
-                                    name="codigo"
-                                    onChange={handleChange}
-                                />
-                            </div>
+                                        <Form.Group className="mb-3" controlId="formCodigo">
+                                            <Form.Label>Codigo</Form.Label>
+                                            <Form.Control
+                                                name="codigo"
+                                                value={ficha.codigo}
+                                                onChange={handleInputChange}
+                                            />
+                                        </Form.Group>
 
-                            <div className="input-field">
-                                <Form.Label>Tipo</Form.Label>
-                                <Form.Control
-                                    type="input"
-                                    placeholder="Tipo de la ficha"
-                                    name="tipo"
-                                    onChange={handleChange}
-                                />
-                            </div>
+                                        <Form.Group className="mb-3" controlId="formTipo">
+                                            <Form.Label>Tipo</Form.Label>
+                                            <Form.Control
+                                                name="tipo"
+                                                value={ficha.tipo}
+                                                onChange={handleInputChange}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" controlId="formUsuario">
+                                            <Form.Label>Usuario</Form.Label>
+                                            <Form.Control as="select"
+                                                name="usuario"
+                                                value={ficha.usuario}
+                                                onChange={handleInputChange}
+                                            >
+                                                <option>Seleccione Usuario</option>
+                                                {usuarios.map(u => (
+                                                    <option key={u._id} value={u._id}>{u.nombre}</option>
+                                                ))}
+                                            </Form.Control>
+                                        </Form.Group>
+                                    </Col>
 
-                            <div className="input-field">
-                                <Form.Label> Fecha Inicio </Form.Label>
-                                <Form.Control
-                                    type="date"
-                                    name="fecha_inicio"
-                                    onChange={handleChange}
-                                />
-                            </div>
+                                    <Col md={6}>
+                                        <Form.Group className="mb-3" controlId="formFechaInicio">
+                                            <Form.Label>Fecha de Inicio</Form.Label>
+                                            <Form.Control
+                                                name="fecha_inicio"
+                                                value={ficha.fecha_inicio}
+                                                onChange={handleInputChange}
+                                                type="date"
+                                            />
+                                        </Form.Group>
 
-                            <div className="input-field">
-                                <Form.Label> Fecha Fin </Form.Label>
-                                <Form.Control
-                                    type="date"
-                                    name="fecha_fin"
-                                    onChange={handleChange}
-                                />
-                            </div>
+                                        <Form.Group className="mb-3" controlId="formFechaFin">
+                                            <Form.Label>Fecha de Fin</Form.Label>
+                                            <Form.Control
+                                                name="fecha_fin"
+                                                value={ficha.fecha_fin}
+                                                onChange={handleInputChange}
+                                                type="date"
+                                            />
+                                        </Form.Group>
 
-                            <div className="input-field">
-                                <Form.Label>Gestor</Form.Label>
-                                <Form.Control
-                                    as="select"
-                                    name="gestor"
-                                    onChange={handleChange}
-                                >
-                                    <option value="">Seleccionar Gestor</option>
-                                    {gestores.map(gestor => (
-                                        <option key={gestor._id} value={gestor._id}>
-                                            {gestor.nombre}
-                                        </option>
-                                    ))}
-                                </Form.Control>
-                            </div>
+                                        <Form.Group className="mb-3" controlId="formGestor">
+                                            <Form.Label>Gestor</Form.Label>
+                                            <Form.Control as="select"
+                                                name="gestor"
+                                                value={ficha.gestor}
+                                                onChange={handleInputChange}
+                                            >
+                                                <option>Seleccione Gestor</option>
+                                                {gestores.map(g => (
+                                                    <option key={g._id} value={g._id}>{g.nombre}</option>
+                                                ))}
+                                            </Form.Control>
+                                        </Form.Group>
 
-                            <div className="input-field">
-                                <Form.Label>Usuario</Form.Label>
-                                <Form.Control
-                                    as="select"
-                                    name="usuario"
-                                    onChange={handleChange}
-                                >
-                                    <option value="">Seleccionar Usuario</option>
-                                    {usuarios.map(usuario => (
-                                        <option key={usuario._id} value={usuario._id}>
-                                            {usuario.nombre}
-                                        </option>
-                                    ))}
-                                </Form.Control>
+                                       
+                                    </Col>
+                                </Row>
                             </div>
-                        </div>
-                        <br />
-                        <center>
-                            <Button className="Buttonn" onClick={handleSubmit}>
+                            <Button variant="primary" type="submit" onClick={handleSubmit}>
                                 Crear
                             </Button>
-                        </center>
-                    </Card.Body>
-                </Card>
-            </div>
-        </div>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 

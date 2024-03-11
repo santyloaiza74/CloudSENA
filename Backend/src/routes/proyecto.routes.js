@@ -71,7 +71,7 @@ router.post('/', upload.array('files', 5), async (req, res) => {
     if (!req.files || req.files.length === 0) {
         return res.status(400).send('No se subieron archivos.');
     }
-    let nombredup = await proyectoSchema.findOne({ nombre: projectName });
+    let nombredup = await proyectoSchema.findOne({ nombre: projectName.toUpperCase() });
     if (nombredup) {
         img.length = 0
         video.length = 0
@@ -104,7 +104,7 @@ router.post('/', upload.array('files', 5), async (req, res) => {
 
     const fechaInicioFormatoString = fecha1.toISOString().substring(0, 10);
         const proyecto = new proyectoSchema({
-            nombre: projectName,
+            nombre: projectName.toUpperCase(),
             autores: autores,
             ficha: [ficha],
             fecha: fechaInicioFormatoString,
@@ -130,11 +130,11 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params
     const { projectName, autores, ficha, fecha, descripcion } = req.body
     const values = {}
-    const nombredup = await proyectoSchema.findOne({ nombre: projectName });
+    const nombredup = await proyectoSchema.findOne({ nombre: projectName.toUpperCase() });
     if (nombredup) {
         return res.status(400).json({ message: "El nombre ya se encuentra registrado" })
     }
-    if (projectName) values.projectName = projectName
+    if (projectName) values.projectName = projectName.toUpperCase()
     if (autores) values.autores = autores
     if (ficha) values.idficha = ficha
     if (fecha) values.fecha = fecha

@@ -14,7 +14,7 @@ const Sidebar = () => {
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
       <CDBSidebar textColor="#000000" backgroundColor="#ffffff" className='custom-sidebar'>
-        <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large" style={{ color: '#00ff00' }}></i>}>
+        <CDBSidebarHeader  prefix={<i className="fa fa-bars fa-large" style={{ color: '#00ff00' }}></i>}>
           <a className="text-decoration-none" style={{ color: '#000000' }}>
             Menú
           </a>

@@ -10,6 +10,7 @@ import Cficha from './pages/Fichas/CrearFicha'
 import fichas from './pages/Fichas/Fichas'
 import usuarios from './pages/Usuarios/Usuario'
 import EF from './pages/Fichas/EditarFicha'
+import pdetail from './pages/Proyectos/Detalles'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path='/fichas' Component={fichas}></Route>
         <Route path='/users' Component={usuarios}></Route>
         <Route path='/editarFicha/:id' Component={EF}></Route>
+        <Route path="/details/:id" Component={pdetail} />
       </Routes>
     </BrowserRouter>
   )

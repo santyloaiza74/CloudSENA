@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Button, Spinner, Pagination } from 'react-bootstrap';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './list.css';
 import logo1 from './../../img/logo1.png';
 
@@ -11,6 +12,7 @@ function List() {
   const [loading, setLoading] = useState(true);
   const itemsPerPage = 5; // Número de elementos por página
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate()
 
   useEffect(() => {
     axios
@@ -40,6 +42,9 @@ function List() {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  const handleDetailsClick = (projectId) => {
+    navigate(`/details/${projectId}`);
+  };
 
   return (
     <div className="card-container">
@@ -50,10 +55,10 @@ function List() {
       ) : (
         <>
           <div className="card-row">
-            {currentProjects.map(({ _id, nombre, autores, ficha, fecha, ruta }) => (
+            {currentProjects.map(({ _id, nombre, autores, ficha, fecha, imagenes, ruta }) => (
               <Card key={_id} className="custom-card-style">
                 <Card.Body>
-                  <Card.Img variant="top" src={logo1} alt={`${nombre} Image`} />
+                  <Card.Img crossorigin="anonymous" variant="top" src={imagenes} alt={`${nombre} Image`}/>
                   <Card.Title>{nombre}</Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">{autores}</Card.Subtitle>
                   <Card.Text>
@@ -61,7 +66,7 @@ function List() {
                     <strong>Fecha:</strong> {fecha}<br />
                     <strong>Ruta:</strong> {ruta}
                   </Card.Text>
-                  <Button className="Buttonn">Ver Detalles</Button>
+                  <Button className="Buttonn" onClick={() => handleDetailsClick(_id)}>Ver Detalles</Button>
                 </Card.Body>
               </Card>
             ))}
