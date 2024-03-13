@@ -56,7 +56,7 @@ function List() {
         <>
           <div className="card-row">
             {currentProjects.map(({ _id, nombre, autores, ficha, fecha, imagenes, ruta }) => (
-              <Card key={_id} className="custom-card-style">
+              <Card key={_id} className="custom-card-style" style={{maxWidth: '900000px'}}>
                 <Card.Body>
                   <Card.Img crossorigin="anonymous" variant="top" src={imagenes} alt={`${nombre} Image`}/>
                   <Card.Title>{nombre}</Card.Title>
