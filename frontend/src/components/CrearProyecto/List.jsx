@@ -97,7 +97,7 @@ function SubirArchivos() {
                 <Col md={{ span: 6, offset: 3 }}>
                     <Card className='cardddd' style={{ borderRadius: '1rem', maxWidth: '90000px' }}>
                         <Card.Body className='p-5 d-flex flex-column align-items-center mx-auto w-100'>
-                            <h2 className="fw-bold mb-2 text-uppercase">Crear Proyecyo</h2>
+                            <h2 className="fw-bold mb-2 text-uppercase">Crear Proyecto</h2>
                             <p className="text-dark-50 mb-5">Ingrese los siguientes campos</p>
                             <Row>
                                 <Col md={6}>

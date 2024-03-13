@@ -12,13 +12,15 @@ body {
   }
 
 .Buttonn{
-    background: #6CAF45;
-    border-color: #6CAF45;
-    transition: #ffff;
-    margin-bottom: 15px;
+    background: #00ff00 !important;
+    border-color: #00ff00 !important;
+    transition: #ffff !important;
+    margin-bottom: 15px !important;
     
     
 }
+
+
 
 img{
   height: 200px;
