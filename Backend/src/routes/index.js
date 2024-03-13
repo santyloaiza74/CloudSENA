@@ -3,6 +3,7 @@ const loginRouter=require('./login.routes')
 const fichaRouter=require('./ficha.routes')
 const gestorRouter=require('./gestor.routes')
 const proyectoRouter=require('./proyecto.routes')
+const rolRouter=require('./rol.routes')
 const {validateToken}=require('../function/jwt/proteccionrutas')
 function routerApi(app){
     const router = Router()
@@ -12,6 +13,7 @@ function routerApi(app){
     router.use('/ficha',fichaRouter)
     router.use('/gestor',gestorRouter)
     router.use('/proyecto',proyectoRouter)
+    router.use('/rol',rolRouter)
     app.use('/login',loginRouter)
 }
 

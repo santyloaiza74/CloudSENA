@@ -33,7 +33,7 @@ router.post('/register', async (req, res) => {
 })
 router.get('/:id', async (req, res) => {
     const { id } = req.params
-    const user = await controller.getById(id)
+    const user = await controller.getOne(id)
     res.json({ user })
 })
 
