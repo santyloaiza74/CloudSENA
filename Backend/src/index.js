@@ -17,9 +17,6 @@ app.use(express.json())
 app.use(express.static('public'))
 app.use(cors())
 app.use(helmet())
-app.get('/',async(res)=>{
-    res.send('Hello World')
-})
 routerApi(app)
 
 
