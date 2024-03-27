@@ -52,9 +52,7 @@ router.put('/:id', async (req, res) => {
     if (ficha)values.ficha=[ficha]
     if(gestor)values.gestor=[gestor]
     if(rol){
-        const foundRoles = await rolSchema.find({ name: { $in: rol } });
-        rol = foundRoles.map((role) => role._id);
-        values.rol=rol
+        values.rol=[rol]
     }
     try {
         const user = await controller.update(id, values)
