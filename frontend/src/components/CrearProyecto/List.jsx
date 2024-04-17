@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Dropdown, Container, Row, Col, Card } from "react-bootstrap";
+import { CDBBtn, CDBIcon, CDBContainer } from "cdbreact";
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
 function SubirArchivos() {
@@ -10,7 +12,7 @@ function SubirArchivos() {
         fecha: "",
         descripcion: "",
     });
-
+    const navigate = useNavigate()
     const [documentacionFiles, setDocumentacionFiles] = useState([]);
     const [imagenFiles, setImagenFiles] = useState([]);
     const [videoFiles, setVideoFiles] = useState([]);
@@ -85,6 +87,8 @@ function SubirArchivos() {
         axios.post('http://127.0.0.1:3300/api/v1/proyecto', formData)
             .then(response => {
                 console.log(response.data);
+                alert("Proyecto creado con exito")
+                    navigate('/');
             })
             .catch(error => {
                 console.error("Error:", error);
@@ -120,7 +124,7 @@ function SubirArchivos() {
                                         >
                                             <option value="">Seleccionar Ficha</option>
                                             {fichas.map(ficha => (
-                                                <option key={ficha._id} value={ficha._id}>{ficha.nombre}</option>
+                                                <option key={ficha._id} value={ficha._id} >{ficha.nombre}</option>
                                             ))}
                                         </Form.Control>
 
@@ -153,8 +157,12 @@ function SubirArchivos() {
                             </Row>
                             <br/>
                             <Button variant="primary" type="submit" onClick={handleSubmit}> 
-                                Subir Archivos
+                                Crear Proyecto
                             </Button>
+                            <CDBBtn className='Buttonn' type="submit" onClick={handleSubmit}>
+                                            <CDBIcon icon="fa-solid fa-plus" className="ms-1" />
+                                            Crear Proyecto
+                                        </CDBBtn>
                         </Card.Body>
 
                     </Card>

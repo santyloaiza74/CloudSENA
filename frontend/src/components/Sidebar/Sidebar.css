@@ -13,9 +13,10 @@ body {
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
-  color: #00ff00; Texto verde */
-  border-right: 5px solid #00ff00;
-  height: 90rem !important; 
+  color: #39A900; Texto verde */
+  border-right: 5px solid #39A900;
+  min-height: 200vh !important;
+  border-bottom: 5px solid #39A900;;
 
 }
 

@@ -11,6 +11,7 @@ import fichas from './pages/Fichas/Fichas'
 import usuarios from './pages/Usuarios/Usuario'
 import EF from './pages/Fichas/EditarFicha'
 import pdetail from './pages/Proyectos/Detalles'
+import usuariosE from './pages/Usuarios/EditU'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path='/users' Component={usuarios}></Route>
         <Route path='/editarFicha/:id' Component={EF}></Route>
         <Route path="/details/:id" Component={pdetail} />
+        <Route path='/login/:id' Component={usuariosE}></Route>
       </Routes>
     </BrowserRouter>
   )

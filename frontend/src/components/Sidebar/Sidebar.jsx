@@ -14,7 +14,7 @@ const Sidebar = () => {
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
       <CDBSidebar textColor="#000000" backgroundColor="#ffffff" className='custom-sidebar'>
-        <CDBSidebarHeader  prefix={<i className="fa fa-bars fa-large" style={{ color: '#00ff00' }}></i>}>
+        <CDBSidebarHeader  prefix={<i className="fa fa-bars fa-large" style={{ color: '#39A900' }}></i>}>
           <a className="text-decoration-none" style={{ color: '#000000' }}>
             Menú
           </a>
@@ -23,35 +23,24 @@ const Sidebar = () => {
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
             <NavLink exact to="/proyecto" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="fa-solid fa-plus" style={{ color: '#00ff00' }}>
+              <CDBSidebarMenuItem icon="fa-solid fa-plus" style={{ color: '#39A900' }}>
                 <span style={{ color: '#000000' }}>Crear Proyecto</span>
               </CDBSidebarMenuItem>
             </NavLink>
             <NavLink exact to="/fichas" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="table" style={{ color: '#00ff00' }}>
+              <CDBSidebarMenuItem icon="table" style={{ color: '#39A900' }}>
               <span style={{ color: '#000000' }}>Fichas</span>
               </CDBSidebarMenuItem>
             </NavLink>
             <NavLink exact to="/users" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="user" style={{ color: '#00ff00' }}>
+              <CDBSidebarMenuItem icon="user" style={{ color: '#39A900' }}>
               <span style={{ color: '#000000' }}>Usuarios</span>
-              </CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="chart-line" style={{ color: '#00ff00' }}>
-              <span style={{ color: '#000000' }}>Dashboard</span>
-              </CDBSidebarMenuItem>
-            </NavLink>
-
-            <NavLink exact to="/" target="_blank" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="fa-solid fa-book" style={{ color: '#00ff00' }}>
-              <span style={{ color: '#000000' }}>Dashboard</span>
               </CDBSidebarMenuItem>
             </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>
 
-        <CDBSidebarFooter style={{ textAlign: 'center', color: '#00ff00' }}>
+        <CDBSidebarFooter style={{ textAlign: 'center', color: '#39A900' }}>
           <div
             style={{
               padding: '20px 5px',

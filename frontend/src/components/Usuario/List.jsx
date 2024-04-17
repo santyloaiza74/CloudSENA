@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Button, Spinner, Row, Col, Pagination } from 'react-bootstrap';
+import { Card, Button, Spinner, Row, Col, Pagination, Form } from 'react-bootstrap';
 import axios from 'axios';
 import './list.css'
 import { CDBBtn, CDBIcon, CDBContainer, CDBInput } from "cdbreact";
+import { useNavigate } from 'react-router-dom';
 
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 
@@ -13,6 +14,7 @@ function List() {
     const [loading, setLoading] = useState(true);
     const itemsPerPage = 8;
     const [currentPage, setCurrentPage] = useState(1);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get('http://127.0.0.1:3300/login')
@@ -52,19 +54,26 @@ function List() {
     const handleNextPage = () => {
         setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
     };
+    const handleEdit = (id) => {
+        navigate(`/login/${id}`);
+    };
 
     return (
         <div className="list-container">
             <center>
-            <div>   
-                <CDBInput placeholder="Buscar por nombre o documento" icon={<i className="fa fa-search text-dark"></i>} 
-                    type='text'
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)} 
-                    className='searchC'
-                />
-                
-            </div>
+                <div>
+                    <Form.Group controlId="searchForm">
+                        <Form.Control
+                            className='buscarp'
+                            type="text"
+                            placeholder="Buscar proyecto..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                        <br />
+                    </Form.Group>
+
+                </div>
             </center>
             {loading ? (
                 <Spinner animation="border" role="status">
@@ -75,16 +84,19 @@ function List() {
                     <Row>
                         {currentItems.map(({ _id, email, nombre, ficha, documento, rol }) => (
                             <Col key={_id} md={6}>
-                                <Card className="mb-3" style={{minWidth:'17rem'}}>
+                                <Card className="mb-3" style={{ minWidth: '17rem' }}>
                                     <Card.Body>
                                         <Card.Title>{nombre}</Card.Title>
                                         <Card.Subtitle className="mb-2 text-muted">{email}</Card.Subtitle>
                                         <Card.Text>
                                             <strong>Documento:</strong> {documento}<br />
-                                            <strong>Ficha:</strong> {ficha?.[0]?.nombre}<br/>
-                                            <strong>Rol:</strong> {rol?.[0]?.name}<br/>
+                                            <strong>Ficha:</strong> {ficha?.[0]?.nombre}<br />
+                                            <strong>Rol:</strong> {rol?.[0]?.name}<br />
                                         </Card.Text>
-                                        <Button className='Buttonn'>Ver Detalles</Button>
+                                        <CDBBtn className='Buttonn' onClick={() => handleEdit(_id)}>
+                                            <CDBIcon icon="fa-solid fa-edit" className="ms-1" />
+                                            Editar
+                                        </CDBBtn>
                                     </Card.Body>
                                 </Card>
                             </Col>
