@@ -77,7 +77,7 @@ function List() {
               <Card key={_id} className="custom-card-style" style={{ maxWidth: '900000px' }}>
                 <Card.Body>
                   <Card.Img crossorigin="anonymous" variant="top" src={imagenes} alt={`${nombre} Image`} />
-                  <Card.Title>{nombre}</Card.Title>
+                  <Card.Title>{nombre} </Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">{autores}</Card.Subtitle>
                   <Card.Text>
                     <strong>Ficha:</strong> {ficha[0].nombre}<br />

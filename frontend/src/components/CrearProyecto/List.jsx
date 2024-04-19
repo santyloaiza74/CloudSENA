@@ -156,9 +156,7 @@ function SubirArchivos() {
                                 </Col>
                             </Row>
                             <br/>
-                            <Button variant="primary" type="submit" onClick={handleSubmit}> 
-                                Crear Proyecto
-                            </Button>
+                    
                             <CDBBtn className='Buttonn' type="submit" onClick={handleSubmit}>
                                             <CDBIcon icon="fa-solid fa-plus" className="ms-1" />
                                             Crear Proyecto

@@ -37,6 +37,11 @@ const Sidebar = () => {
               <span style={{ color: '#000000' }}>Usuarios</span>
               </CDBSidebarMenuItem>
             </NavLink>
+            <NavLink exact to="/gestor" activeClassName="activeClicked">
+              <CDBSidebarMenuItem icon="users" style={{ color: '#39A900' }}>
+              <span style={{ color: '#000000' }}>Gestores</span>
+              </CDBSidebarMenuItem>
+            </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>
 
