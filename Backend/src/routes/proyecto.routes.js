@@ -6,6 +6,38 @@ const fs = require('node:fs')
 const path = require('path')
 const controller = new proyectoController
 const publicDir = path.resolve(__dirname, '../../public');
+const nodemailer = require('nodemailer')
+const crypto = require('crypto')
+
+// Configuración del transporte SMTP
+
+const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: process.env.ADDRESS_EMAIL,
+        pass: process.env.PASSWORD_EMAIL
+    }
+});
+
+// Función para enviar correo electrónico
+const sendEmail = async (to, subject, text) => {
+    try {
+        await transporter.sendMail({
+            from: process.env.ADDRESS_EMAIL,
+            to,
+            subject,
+            text
+        });
+        console.log('Correo enviado con éxito');
+    } catch (error) {
+        console.error('Error al enviar el correo:', error);
+    }
+};
+//Genrar codigo de confirmacion
+
+const generateConfirmationCode = () => {
+    return crypto.randomBytes(20).toString('hex');
+};
 
 const storage = multer.diskStorage({
     destination: './public',
@@ -30,100 +62,58 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', upload.array('files', 5), async (req, res) => {
-    const { projectName, autores, ficha, fecha, descripcion } = req.body
-    const qwe = []
-    const asd = []
-    const zxc = []
-    const img = []
-    const doc = []
-    const video = []
-    let a = ''
-    let b = ''
-    let c = ''
-    let rut1 = ''
-    let rut2 = ''
-    let rut3 = ''
-    const files = fs.readdirSync('./public/');
+    const { projectName, autores, ficha, fecha, descripcion } = req.body;
+    const img = [];
+    const doc = [];
+    const video = [];
 
-    // Recorrer cada archivo
     req.files.forEach(file => {
-        // Obtener la extensión del archivo
         const ext = path.extname(file.originalname);
+        const filePath = path.join(publicDir, ext === '.jpg' || ext === '.jpeg' || ext === '.png' ? '/Img' :
+            (ext === '.mp4' ? '/Video' : '/Doc'), file.filename);
 
-        // Mover el archivo a la carpeta según su extensión
+        fs.renameSync(path.join(publicDir, file.filename), filePath);
+
         if (ext === '.jpg' || ext === '.jpeg' || ext === '.png') {
-            fs.renameSync(path.join(publicDir, file.filename), path.join(publicDir, '/Img', file.filename));
-            a = `http://localhost:3300/Img/${file.filename}`
-            rut1 = `${publicDir}/Img/${file.filename}`
-            img.push(a)
-            qwe.push(rut1)
+            img.push(`http://localhost:3300/Img/${file.filename}`);
         } else if (ext === '.mp4') {
-            fs.renameSync(path.join(publicDir, file.filename), path.join(publicDir, '/Video', file.filename));
-            b = `http://localhost:3300/Video/${file.filename}`
-            rut2 = `${publicDir}/Video/${file.filename}`
-            video.push(b)
-            asd.push(rut2)
+            video.push(`http://localhost:3300/Video/${file.filename}`);
         } else if (ext === '.pdf' || ext === '.docx') {
-            fs.renameSync(path.join(publicDir, file.filename), path.join(publicDir, '/Doc', file.filename));
-            c = `http://localhost:3300/Doc/${file.filename}`
-            rut3 = `${publicDir}/Doc/${file.filename}`
-            doc.push(c)
-            zxc.push(rut3)
+            doc.push(`http://localhost:3300/Doc/${file.filename}`);
         }
     });
-    //Verificar si se subieron archivos
+
     if (!req.files || req.files.length === 0) {
         return res.status(400).send('No se subieron archivos.');
     }
-    let nombredup = await proyectoSchema.findOne({ nombre: projectName.toUpperCase() });
-    if (nombredup) {
-        img.length = 0
-        video.length = 0
-        doc.length = 0
-        qwe.forEach(element => {
-            fs.unlink(element, errors => {
-                if (errors) throw errors
-                console.log('Archivos eliminados')
-            })
-        });
-        asd.forEach(element => {
-            fs.unlink(element, errors => {
-                if (errors) throw errors
-                console.log('Archivos eliminados')
-            })
-        });
-        zxc.forEach(element => {
-            fs.unlink(element, errors => {
-                if (errors) throw errors
-                console.log('Archivos eliminados')
-            })
-        });
-        qwe.length=0
-        asd.length=0
-        zxc.length=0
-        return res.status(400).json({ message: "El nombre ya se encuentra registrado" })
-    }
-    else {
-    const fecha1 = new Date(fecha);
 
-    const fechaInicioFormatoString = fecha1.toISOString().substring(0, 10);
+    const existingProject = await proyectoSchema.findOne({ nombre: projectName.toUpperCase() });
+    if (existingProject) {
+        await deleteFiles([...img, ...video, ...doc]);
+        return res.status(400).json({ message: "El nombre ya se encuentra registrado" });
+    } else {
+        // Formatear la fecha a DD/MM/AAAA
+        const fecha1 = new Date(fecha);
+        const formattedDate = `${fecha1.getDate()}/${fecha1.getMonth() + 1}/${fecha1.getFullYear()}`;
+
         const proyecto = new proyectoSchema({
             nombre: projectName.toUpperCase(),
-            autores: autores,
+            autores,
             ficha: [ficha],
-            fecha: fechaInicioFormatoString,
-            descripcion: descripcion,
+            fecha: formattedDate, // Guardar la fecha formateada
+            descripcion,
             documentacion: doc,
             imagenes: img,
-            video: video
-        })
-        await controller.create(proyecto)
-        img.length = 0
-        video.length = 0
-        doc.length = 0
-        res.status(201).json({ proyecto, message: "Archivos subidos exitosamente." })
+            video
+        });
+
+        await controller.create(proyecto);
+        img.length = 0;
+        video.length = 0;
+        doc.length = 0;
+        res.status(201).json({ proyecto, message: "Archivos subidos exitosamente." });
     }
-})
+});
 router.get('/:id', async (req, res) => {
     const { id } = req.params
     const proyecto = await controller.getById(id)
@@ -151,13 +141,49 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
-    const { id } = req.params
+router.post('/:id/send-code', async (req, res) => {
+    const { id } = req.params;
+
     try {
-        const proyecto = await controller.remove(id)
-        res.status(200).json({ proyecto })
+        const proyecto = await controller.getById(id);
+        if (!proyecto) {
+            return res.status(404).json({ message: 'Proyecto no encontrado' });
+        }
+
+        // Generar código de confirmación
+        const confirmationCode = generateConfirmationCode();
+        await proyectoSchema.updateOne({ _id: id }, { confirmationCode });
+
+        // Enviar correo de confirmación
+        const email = 'martin.ortizg10@gmail.com'; // Correo del destinatario
+        const subject = 'Confirmación de eliminación de proyecto'; // Asunto del correo
+        const text = `Para eliminar el proyecto, utiliza el siguiente código: ${confirmationCode}`; // Cuerpo del correo
+        await sendEmail(email, subject, text);
+
+        return res.status(200).json({ message: 'Código de confirmación enviado con éxito' });
     } catch (error) {
-        res.status(404).json({ message: error.message })
+        res.status(500).json({ message: 'Error al enviar el código de confirmación' });
     }
-})
+});
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    const confirmationCode = req.query.confirmationCode;
+
+    try {
+        const proyecto = await controller.getById(id);
+        if (!proyecto) {
+            return res.status(404).json({ message: 'Proyecto no encontrado' });
+        }
+
+        // Verificar si el código de confirmación coincide
+        if (confirmationCode === proyecto.confirmationCode) {
+            await controller.remove(id);
+            return res.status(200).json({ message: 'Proyecto eliminado exitosamente' });
+        } else {
+            return res.status(400).json({ message: 'Código de confirmación incorrecto' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Error al eliminar el proyecto' });
+    }
+});
 module.exports = router
