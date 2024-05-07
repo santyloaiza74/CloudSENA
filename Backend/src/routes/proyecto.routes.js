@@ -8,17 +8,21 @@ const controller = new proyectoController
 const publicDir = path.resolve(__dirname, '../../public');
 
 const storage = multer.diskStorage({
-    destination:'./public',
+    destination: './public',
     filename: (req, file, cb) => {
-        const originalFilename = file.originalname;
-        const extension = path.extname(originalFilename);
-        const filename = `${Date.now()}${extension}`;
-        cb(null, filename);
+        const originalFilename = file.originalname
+        const extension = path.extname(originalFilename)
+        const filename = `${Date.now()}${extension}`
+        cb(null, filename)
     }
-});
+})
 
+const limits = {
+    files: 5,
+    fileSize: 150 * 1024 * 1024
+}
 
-const upload = multer({ storage })
+const upload = multer({ storage, limits })
 
 router.get('/', async (req, res) => {
     const proyectos = await controller.index()
