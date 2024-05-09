@@ -39,6 +39,30 @@ const generateConfirmationCode = () => {
     return crypto.randomBytes(20).toString('hex');
 };
 
+const deleteFiles = async (filePaths) => {
+    try {
+        for (const filePath of filePaths) {
+            const ext = path.extname(filePath);
+            let folder;
+            if (ext === '.jpg' || ext === '.jpeg' || ext === '.png') {
+                folder = 'Img';
+            } else if (ext === '.mp4') {
+                folder = 'Video';
+            } else if (ext === '.pdf' || ext === '.docx') {
+                folder = 'Doc';
+            }
+            const fullPath = path.join(publicDir, folder, path.basename(filePath));
+            await fs.promises.unlink(fullPath);
+        }
+        console.log('Archivos eliminados con éxito');
+    } catch (error) {
+        console.error('Error al eliminar archivos:', error);
+    }
+};
+
+
+
+
 const storage = multer.diskStorage({
     destination: './public',
     filename: (req, file, cb) => {
@@ -87,7 +111,7 @@ router.post('/', upload.array('files', 5), async (req, res) => {
         return res.status(400).send('No se subieron archivos.');
     }
 
-    const existingProject = await proyectoSchema.findOne({ nombre: projectName.toUpperCase() });
+    const existingProject = await proyectoSchema.findOne({ nombre: projectName });
     if (existingProject) {
         await deleteFiles([...img, ...video, ...doc]);
         return res.status(400).json({ message: "El nombre ya se encuentra registrado" });
@@ -97,14 +121,14 @@ router.post('/', upload.array('files', 5), async (req, res) => {
         const formattedDate = `${fecha1.getDate()}/${fecha1.getMonth() + 1}/${fecha1.getFullYear()}`;
 
         const proyecto = new proyectoSchema({
-            nombre: projectName.toUpperCase(),
+            nombre: projectName,
             autores,
             ficha: [ficha],
             fecha: formattedDate, // Guardar la fecha formateada
             descripcion,
             documentacion: doc,
             imagenes: img,
-            video
+            video: video
         });
 
         await controller.create(proyecto);
@@ -124,11 +148,11 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params
     const { projectName, autores, ficha, fecha, descripcion } = req.body
     const values = {}
-    const nombredup = await proyectoSchema.findOne({ nombre: projectName.toUpperCase() });
+    const nombredup = await proyectoSchema.findOne({ nombre: projectName });
     if (nombredup) {
         return res.status(400).json({ message: "El nombre ya se encuentra registrado" })
     }
-    if (projectName) values.projectName = projectName.toUpperCase()
+    if (projectName) values.projectName = projectName
     if (autores) values.autores = autores
     if (ficha) values.idficha = ficha
     if (fecha) values.fecha = fecha
