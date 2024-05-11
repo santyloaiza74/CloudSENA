@@ -36,7 +36,7 @@ const sendEmail = async (to, subject, text) => {
 //Genrar codigo de confirmacion
 
 const generateConfirmationCode = () => {
-    return crypto.randomBytes(20).toString('hex');
+    return crypto.randomBytes(3).toString('dec');
 };
 
 const deleteFiles = async (filePaths) => {
