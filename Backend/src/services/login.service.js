@@ -26,7 +26,7 @@ class LoginService{
     }
 
     async update(id,values){
-        const user= await this.model.findOneAndUpdate(id,values)
+        const user= await this.model.findByIdAndUpdate(id,values)
         return user
     }
     async validateUser(email){
