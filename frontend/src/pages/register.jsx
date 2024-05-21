@@ -82,24 +82,24 @@ function Register() {
                             <Form>
                                 <Row>
                                     <Col md={6}>
-                                        <Form.Group className="inputt" controlId="formBasicEmail" style={{ borderRadius: '1rem', maxWidth: '500px' }}>
+                                        <Form.Group controlId="formBasicEmail" style={{ borderRadius: '1rem', maxWidth: '500px' }}>
                                         
                                                 <Form.Label>Email</Form.Label>
 
-                                            <Form.Control type="email" placeholder="Ingrese su Email" name="email" onChange={handleChange} />
+                                            <Form.Control className="inputt" type="email" placeholder="Ingrese su Email" name="email" onChange={handleChange} />
                                         </Form.Group>
 
-                                        <Form.Group className="inputt">
+                                        <Form.Group >
                                             
                                                 <Form.Label>Nombre</Form.Label>
                                             
-                                            <Form.Control type="input" name="nombre" onChange={handleChange} placeholder="Ingrese su nombre" />
+                                            <Form.Control className="inputt" type="input" name="nombre" onChange={handleChange} placeholder="Ingrese su nombre" />
                                         </Form.Group>
 
-                                        <Form.Group className="inputt">
+                                        <Form.Group >
                                                 <Form.Label>Ficha</Form.Label>
                                             
-                                            <Form.Control as="select" name="ficha" onChange={handleChange}>
+                                            <Form.Control className="inputt" as="select" name="ficha" onChange={handleChange}>
                                                 <option value="">Seleccione una ficha</option>
                                                 {fichas.map(ficha => (
                                                     <option key={ficha._id} value={ficha._id}>{ficha.nombre}</option>
@@ -109,25 +109,25 @@ function Register() {
                                     </Col>
 
                                     <Col md={6}>
-                                        <Form.Group className="inputt" >
+                                        <Form.Group  >
                                         
                                                 <Form.Label> Contraseña </Form.Label>
                                             
-                                            <Form.Control type="Password" name="password" onChange={handleChange} placeholder="Ingrese su Contraseña" />
+                                            <Form.Control type="Password" className="inputt" name="password" onChange={handleChange} placeholder="Ingrese su Contraseña" />
                                         </Form.Group>
 
-                                        <Form.Group className="inputt" >
+                                        <Form.Group  >
                                             
                                                 <Form.Label>Documento</Form.Label>
                                             
-                                            <Form.Control type="input" name="documento" onChange={handleChange} placeholder="Ingrese su documento" />
+                                            <Form.Control type="input" className="inputt" name="documento" onChange={handleChange} placeholder="Ingrese su documento" />
                                         </Form.Group>
 
-                                        <Form.Group className="inputt">
+                                        <Form.Group >
                                             
                                                 <Form.Label>Gestor</Form.Label>
                                             
-                                            <Form.Control as="select" name="gestor" onChange={handleChange}>
+                                            <Form.Control as="select" className="inputt" name="gestor" onChange={handleChange}>
                                                 <option value="">Seleccione un gestor</option>
                                                 {gestores.map(gestor => (
                                                     <option key={gestor._id} value={gestor._id}>{gestor.nombre}</option>
