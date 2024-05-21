@@ -12,8 +12,8 @@ body {
   }
 
 .Buttonn{
-    background: #00ff00;
-    border-color: #00ff00;
+    background: #39A900;
+    border-color: #39A900;
     transition: #ffff;
     margin-bottom: 15px;
     
@@ -45,8 +45,9 @@ img{
   width: 22200px !important;
 }
 
-.input{
+.inputt{
   width: 250px !important;
   margin-bottom: 10px !important;
   margin-right: 0px !important;
+  display: contents;
 }

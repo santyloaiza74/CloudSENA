@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Button, Spinner, Pagination } from 'react-bootstrap';
+import { Card, Button, Spinner, Pagination, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './list.css';
+import { CDBBtn, CDBIcon, CDBContainer } from "cdbreact";
 import logo1 from './../../img/logo1.png';
 
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
@@ -10,7 +11,8 @@ axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 function List() {
   const [proyecto, setProyecto] = useState([]);
   const [loading, setLoading] = useState(true);
-  const itemsPerPage = 5; // Número de elementos por página
+  const [searchTerm, setSearchTerm] = useState('');
+  const itemsPerPage = 8; // Número de elementos por página
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate()
 
@@ -19,7 +21,6 @@ function List() {
       .get('http://127.0.0.1:3300/api/v1/proyecto')
       .then((response) => {
         setProyecto(response.data.proyectos);
-        console.log(response)
         setLoading(false);
       })
       .catch((error) => {
@@ -28,45 +29,65 @@ function List() {
       });
   }, []);
 
+  // Función para filtrar proyectos según el término de búsqueda
+  const filteredProjects = proyecto.filter(project =>
+    project.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   // Calcular el índice de inicio y fin de la página actual
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  // Obtener la lista de proyectos para la página actual
-  const currentProjects = proyecto.slice(startIndex, endIndex);
+  // Obtener la lista de proyectos filtrados para la página actual
+  const currentProjects = filteredProjects.slice(startIndex, endIndex);
 
   // Calcular el número total de páginas
-  const totalPages = Math.ceil(proyecto.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredProjects.length / itemsPerPage);
 
   // Manejar el cambio de página
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
   const handleDetailsClick = (projectId) => {
     navigate(`/details/${projectId}`);
   };
 
   return (
     <div className="card-container">
+      <Form.Group controlId="searchForm">
+        <Form.Control
+          className='buscarp'
+          type="text"
+          placeholder="Buscar proyecto..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <br />
+      </Form.Group>
       {loading ? (
         <Spinner animation="border" role="status">
           <span className="sr-only">Loading...</span>
         </Spinner>
       ) : (
         <>
+
           <div className="card-row">
             {currentProjects.map(({ _id, nombre, autores, ficha, fecha, imagenes, ruta }) => (
-              <Card key={_id} className="custom-card-style" style={{maxWidth: '900000px'}}>
+              <Card key={_id} className="custom-card-style" style={{ maxWidth: '900000px' }}>
                 <Card.Body>
-                  <Card.Img crossorigin="anonymous" variant="top" src={imagenes} alt={`${nombre} Image`}/>
-                  <Card.Title>{nombre}</Card.Title>
+                  <Card.Img crossorigin="anonymous" variant="top" src={imagenes} alt={`${nombre} Image`} />
+                  <Card.Title>{nombre} </Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">{autores}</Card.Subtitle>
                   <Card.Text>
                     <strong>Ficha:</strong> {ficha[0].nombre}<br />
                     <strong>Fecha:</strong> {fecha}<br />
                     <strong>Ruta:</strong> {ruta}
                   </Card.Text>
-                  <Button className="Buttonn" onClick={() => handleDetailsClick(_id)}>Ver Detalles</Button>
+                  <CDBBtn className='Buttonn' onClick={() => handleDetailsClick(_id)}>
+                    <CDBIcon icon="fa-solid fa-eye" className="ms-1" /> {/* Cambia el ícono por uno adecuado */}
+                    Ver Detalles
+                  </CDBBtn>
                 </Card.Body>
               </Card>
             ))}
