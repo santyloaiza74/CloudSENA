@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const { nombre, codigo, fecha_fin, fecha_inicio, tipo } = req.body;
+    const { nombre, codigo, fecha_fin, fecha_inicio, tipo, gestor } = req.body;
     const codigodup = await fichaSchema.findOne({ codigo })
     if (codigodup) {
         return res.status(400).json({ message: "El código ya se encuentra registrado" })
@@ -31,7 +31,8 @@ router.post('/', async (req, res) => {
         codigo: codigo,
         fecha_inicio: fechaInicioFormatoString,
         fecha_fin: fechaFinFormatoString,
-        tipo: tipo
+        tipo: tipo,
+        gestor: [gestor]
     });
 
     try {
