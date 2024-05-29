@@ -1,47 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Button, Spinner, Row, Col, Pagination, Form } from 'react-bootstrap';
+import { Card, Button, Spinner, Row, Col, Pagination } from 'react-bootstrap';
+import { CDBBtn, CDBIcon } from "cdbreact";
 import axios from 'axios';
-import './list.css'
-import { CDBBtn, CDBIcon, CDBContainer, CDBInput } from "cdbreact";
 import { useNavigate } from 'react-router-dom';
+import '../Fichas/list.css'; // Asegúrate de tener el archivo CSS correcto
+import logo1 from './../../img/logo1.png';
 
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 
-function List() {
-    const [usuario, setUsuario] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
+function EditarF() {
+    const [gestores, setGestores] = useState([]);
     const [loading, setLoading] = useState(true);
-    const itemsPerPage = 8;
+    const itemsPerPage = 8; // Define la cantidad deseada de elementos por página
     const [currentPage, setCurrentPage] = useState(1);
-    const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:3300/login')
+        axios
+            .get('http://127.0.0.1:3300/api/v1/gestor')
             .then((response) => {
-                setUsuario(response.data.users);
-                setSearchResults(response.data.users);
+                console.log(response.data)
+                if (response.data && response.data.gestors) {
+                    setGestores(response.data.gestors);
+                    
+                }
                 setLoading(false);
-                console.log(usuario)
             })
             .catch((error) => {
-                console.error('Error fetching projects:', error);
+                console.error('Error fetching gestores:', error);
                 setLoading(false);
             });
     }, []);
 
-    useEffect(() => {
-        const filteredResults = usuario.filter(({ nombre, documento }) => (
-            nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            documento.toLowerCase().includes(searchTerm.toLowerCase())
-        ));
-        setSearchResults(filteredResults);
-    }, [searchTerm, usuario]);
-
-    const totalPages = Math.ceil(searchResults.length / itemsPerPage);
+    const totalPages = Math.ceil(gestores.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const currentItems = searchResults.slice(startIndex, endIndex);
+    const currentItems = gestores.slice(startIndex, endIndex);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -54,44 +47,38 @@ function List() {
     const handleNextPage = () => {
         setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
     };
+
+    const navigate = useNavigate();
+
     const handleEdit = (id) => {
-        navigate(`/login/${id}`);
+        navigate(`/editarGestor/${id}`);
     };
 
     return (
         <div className="list-container">
-            <center>
-                <div>
-                    <Form.Group controlId="searchForm">
-                        <Form.Control
-                            className='buscarp'
-                            type="text"
-                            placeholder="Buscar usuario..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                        <br />
-                    </Form.Group>
-
-                </div>
-            </center>
             {loading ? (
                 <Spinner animation="border" role="status">
                     <span className="sr-only">Loading...</span>
                 </Spinner>
             ) : (
                 <div>
+                    <center>
+                        <CDBBtn className='Buttonn' href='/Cgestor'>
+                            <CDBIcon icon="fa-solid fa-plus" className="ms-1" />
+                            Crear Gestor
+                        </CDBBtn>
+                    </center>
                     <Row>
-                        {currentItems.map(({ _id, email, nombre, ficha, documento, rol }) => (
+                        {currentItems.map(({ _id, nombre, documento, celular, correo, ficha }) => (
                             <Col key={_id} md={6}>
                                 <Card className="mb-3" style={{ minWidth: '17rem' }}>
                                     <Card.Body>
                                         <Card.Title>{nombre}</Card.Title>
-                                        <Card.Subtitle className="mb-2 text-muted">{email}</Card.Subtitle>
                                         <Card.Text>
                                             <strong>Documento:</strong> {documento}<br />
+                                            <strong>Celular:</strong> {celular}<br />
+                                            <strong>Correo:</strong> {correo}<br />
                                             <strong>Ficha:</strong> {ficha?.[0]?.nombre}<br />
-                                            <strong>Rol:</strong> {rol?.[0]?.name}<br />
                                         </Card.Text>
                                         <CDBBtn className='Buttonn' onClick={() => handleEdit(_id)}>
                                             <CDBIcon icon="fa-solid fa-edit" className="ms-1" />
@@ -123,4 +110,4 @@ function List() {
     );
 }
 
-export default List;
+export default EditarF;

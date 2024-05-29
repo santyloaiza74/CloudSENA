@@ -98,9 +98,8 @@ function Edit() {
                         value={ficha.usuario}
                         onChange={handleInputChange}
                       >
-                        <option>Seleccione Usuario</option>
                         {usuarios.map(u => (
-                          <option key={u._id} value={u._id}>{u.nombre}</option>
+                          <option key={u._id} value={u._id} selected={ficha.usuario === u._id} >{u.nombre}</option>
                         ))}
                       </Form.Select>
                     </Form.Group>
@@ -134,9 +133,8 @@ function Edit() {
                         value={ficha.gestor}
                         onChange={handleInputChange}
                       >
-                        <option>Seleccione Gestor</option>
                         {gestores.map(g => (
-                          <option key={g._id} value={g._id}>{g.nombre}</option>
+                          <option key={g._id} value={g._id} selected={ficha.gestor === g._id} >{g.nombre}</option>
                         ))}
                       </Form.Select>
                     </Form.Group>
