@@ -26,7 +26,7 @@ const sendEmail = async (to, subject, text) => {
             from: process.env.ADDRESS_EMAIL,
             to,
             subject,
-            text
+            html: text
         });
         console.log('Correo enviado con éxito');
     } catch (error) {
@@ -36,7 +36,7 @@ const sendEmail = async (to, subject, text) => {
 //Genrar codigo de confirmacion
 
 const generateConfirmationCode = () => {
-    return crypto.randomBytes(3).toString('dec');
+    return crypto.randomBytes(3).toString('hex');
 };
 
 const deleteFiles = async (filePaths) => {
@@ -122,10 +122,10 @@ router.post('/', upload.array('files', 5), async (req, res) => {
 
         const proyecto = new proyectoSchema({
             nombre: projectName,
-            autores,
+            autores: autores,
             ficha: [ficha],
             fecha: formattedDate, // Guardar la fecha formateada
-            descripcion,
+            descripcion: descripcion,
             documentacion: doc,
             imagenes: img,
             video: video
@@ -179,14 +179,72 @@ router.post('/:id/send-code', async (req, res) => {
         await proyectoSchema.updateOne({ _id: id }, { confirmationCode });
 
         // Enviar correo de confirmación
-        const email = 'martin.ortizg10@gmail.com'; // Correo del destinatario
+        const email = 'santyloaiza74@gmail.com'; // Correo del destinatario
         const subject = 'Confirmación de eliminación de proyecto'; // Asunto del correo
-        const text = `Para eliminar el proyecto, utiliza el siguiente código: ${confirmationCode}`; // Cuerpo del correo
+        const text =
+        `
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    color: #333;
+                    line-height: 1.6;
+                }
+                .container {
+                    background-color: #f9f9f9;
+                    padding: 20px;
+                    border-radius: 5px;
+                }
+                .header {
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 10px;
+                    text-align: center;
+                    border-radius: 5px 5px 0 0;
+                }
+                .content {
+                    padding: 20px;
+                }
+                .footer {
+                    margin-top: 20px;
+                    text-align: center;
+                    font-size: 0.9em;
+                    color: #777;
+                }
+                .confirmation-code {
+                    font-weight: bold;
+                    color: #d9534f;
+                }
+                .logo {
+                    max-width: 100px;
+                    margin-bottom: 20px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>Eliminación del Proyecto</h1>
+                </div>
+                <div class="content">
+                    <p>Para proceder con la eliminación del proyecto, por favor, utiliza el siguiente código de confirmación:</p>
+                    <p class="confirmation-code">${confirmationCode}</p>
+                </div>
+                <div class="footer">
+                    <p>Saludos cordiales</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        `;
         await sendEmail(email, subject, text);
-
         return res.status(200).json({ message: 'Código de confirmación enviado con éxito' });
     } catch (error) {
-        res.status(500).json({ message: 'Error al enviar el código de confirmación' });
+        res.status(500).json({ message: 'Error al enviar el código de confirmación'+error });
     }
 });
 router.delete('/:id', async (req, res) => {
