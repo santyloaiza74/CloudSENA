@@ -99,11 +99,11 @@ router.post('/', upload.array('files', 5), async (req, res) => {
         fs.renameSync(path.join(publicDir, file.filename), filePath);
 
         if (ext === '.jpg' || ext === '.jpeg' || ext === '.png') {
-            img.push(`http://localhost:3300/Img/${file.filename}`);
+            img.push(`${process.env.HOST}/Img/${file.filename}`);
         } else if (ext === '.mp4') {
-            video.push(`http://localhost:3300/Video/${file.filename}`);
+            video.push(`${process.env.HOST}/Video/${file.filename}`);
         } else if (ext === '.pdf' || ext === '.docx') {
-            doc.push(`http://localhost:3300/Doc/${file.filename}`);
+            doc.push(`${process.env.HOST}/Doc/${file.filename}`);
         }
     });
 
