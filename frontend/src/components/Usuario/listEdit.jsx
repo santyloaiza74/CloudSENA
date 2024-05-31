@@ -22,24 +22,24 @@ function EditU() {
   const [gestores, setGestores] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://127.0.0.1:3300/login/${id}`)
+    axios.get(`${process.env.HOST}/login/${id}`)
       .then(res => {
         setUsuario(res.data.user);
         console.log(res.data.user);
       })
       .catch(err => console.log(err));
 
-    axios.get('http://127.0.0.1:3300/api/v1/ficha')
+    axios.get(`${process.env.HOST}/api/v1/ficha`)
       .then(res => setFichas(res.data.fichas));
 
-    axios.get('http://127.0.0.1:3300/api/v1/rol')
+    axios.get(`${process.env.HOST}/api/v1/rol`)
       .then(res => {
         setRoles(res.data.roles);
         console.log(res.data)
       });
 
 
-    axios.get('http://127.0.0.1:3300/api/v1/gestor')
+    axios.get(`${process.env.HOST}/api/v1/gestor`)
       .then(res => setGestores(res.data.gestors));
   }, []);
 
@@ -54,7 +54,7 @@ function EditU() {
     e.preventDefault();
 
     try {
-      await axios.put(`http://127.0.0.1:3300/login/${id}`, usuario);
+      await axios.put(`${process.env.HOST}/login/${id}`, usuario);
       alert('Usuario actualizado');
     } catch (err) { 
       console.log(err);

@@ -18,13 +18,14 @@ function List() {
     const [usuarios, setUsuarios] = useState([]);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:3300/api/v1/gestor')
+        axios.get(`${process.env.HOST}/api/v1/gestor`)
             .then(response => setGestores(response.data.gestors))
             .catch(error => console.error('Error fetching gestores:', error));
 
-        axios.get('http://127.0.0.1:3300/login')
-            .then(response => setUsuarios(response.data.users))
-            .catch(error => console.error('Error fetching usuarios:', error));
+        axios
+          .get(`${process.env.HOST}/login`)
+          .then((response) => setUsuarios(response.data.users))
+          .catch((error) => console.error("Error fetching usuarios:", error));
     }, []);
 
     const handleInputChange = (e) => {
@@ -36,15 +37,16 @@ function List() {
 
     const handleSubmit = async () => {
         try {
-            axios.post('http://127.0.0.1:3300/api/v1/ficha', ficha)
-                .then(function (response) {
-                    console.log(response.data);
-                    alert("Ficha Creada");
-                })
-                .catch(function (error) {
-                    alert("El Email ya se encuentra registrado");
-                    console.log(error.response.data);
-                });
+            axios
+              .post(axios.get(`${process.env.HOST}/api/v1/ficha`), ficha)
+              .then(function (response) {
+                console.log(response.data);
+                alert("Ficha Creada");
+              })
+              .catch(function (error) {
+                alert("El Email ya se encuentra registrado");
+                console.log(error.response.data);
+              });
         } catch (error) {
             console.log(error);
         }

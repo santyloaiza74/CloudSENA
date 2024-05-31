@@ -17,14 +17,14 @@ function List() {
     const [fichas, setFichas] = useState([]); // Estado para almacenar las fichas
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:3300/api/v1/ficha')
+        axios.get(`${process.env.HOST}/api/v1/ficha`)
             .then(response => setFichas(response.data.fichas))
             .catch(error => console.error('Error fetching fichas:', error));
     }, []);
 
     const handleSubmit = async () => {
         try {
-            axios.post('http://127.0.0.1:3300/api/v1/gestor', gestor)
+            axios.post(`${process.env.HOST}/api/v1/gestor`, gestor)
                 .then(function (response) {
                     console.log(response.data);
                     alert("Gestor Creado");

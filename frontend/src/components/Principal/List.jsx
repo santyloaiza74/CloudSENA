@@ -18,7 +18,7 @@ function List() {
 
   useEffect(() => {
     axios
-      .get('http://127.0.0.1:3300/api/v1/proyecto')
+      .get(`${process.env.HOST}/api/v1/proyecto`)
       .then((response) => {
         setProyecto(response.data.proyectos);
         setLoading(false);
