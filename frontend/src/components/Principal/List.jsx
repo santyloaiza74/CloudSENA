@@ -14,13 +14,14 @@ function List() {
   const [searchTerm, setSearchTerm] = useState('');
   const itemsPerPage = 8; // Número de elementos por página
   const [currentPage, setCurrentPage] = useState(1);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
       .get('https://cloudsena-itj7.onrender.com/api/v1/proyecto')
       .then((response) => {
         setProyecto(response.data.proyectos);
+        console.log(response.data.proyectos);
         setLoading(false);
       })
       .catch((error) => {
@@ -71,7 +72,6 @@ function List() {
         </Spinner>
       ) : (
         <>
-
           <div className="card-row">
             {currentProjects.map(({ _id, nombre, autores, ficha, fecha, imagenes, ruta }) => (
               <Card key={_id} className="custom-card-style" style={{ maxWidth: '900000px' }}>
@@ -80,7 +80,7 @@ function List() {
                   <Card.Title>{nombre} </Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">{autores}</Card.Subtitle>
                   <Card.Text>
-                    <strong>Ficha:</strong> {ficha[0].nombre}<br />
+                    <strong>Ficha:</strong> {ficha.length > 0 ? ficha[0].nombre : 'No disponible'}<br />
                     <strong>Fecha:</strong> {fecha}<br />
                     <strong>Ruta:</strong> {ruta}
                   </Card.Text>
