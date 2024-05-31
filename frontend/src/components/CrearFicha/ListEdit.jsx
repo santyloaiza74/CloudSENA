@@ -22,7 +22,7 @@ function Edit() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.HOST}/api/v1/ficha/${id}`)
+      .get(`https://cloudsena-itj7.onrender.com/api/v1/ficha/${id}`)
       .then((res) => {
         setFicha(res.data.ficha);
         console.log(res.data);
@@ -30,11 +30,11 @@ function Edit() {
       .catch((err) => console.log(err));
 
     axios
-      .get(`${process.env.HOST}/api/v1/gestor`)
+      .get(`https://cloudsena-itj7.onrender.com/api/v1/gestor`)
       .then((res) => setGestores(res.data.gestors));
 
     axios
-      .get(`${process.env.HOST}/api/v1/login`)
+      .get(`https://cloudsena-itj7.onrender.com/api/v1/login`)
       .then((res) => setUsuarios(res.data.users));
   }, []);
 
@@ -49,7 +49,7 @@ function Edit() {
     e.preventDefault();
 
     try {
-      await axios.put(`${process.env.HOST}/api/vq/ficha/${id}`, ficha );
+      await axios.put(`https://cloudsena-itj7.onrender.com/api/vq/ficha/${id}`, ficha );
       alert('Ficha actualizada');
     } catch (err) {
       console.log(err);

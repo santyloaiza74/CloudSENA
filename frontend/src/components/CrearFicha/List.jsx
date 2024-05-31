@@ -18,7 +18,7 @@ function List() {
     const [usuarios, setUsuarios] = useState([]);
 
     useEffect(() => {
-        axios.get(`${process.env.HOST}/api/v1/gestor`)
+        axios.get(`https://cloudsena-itj7.onrender.com/api/v1/gestor`)
             .then(response => setGestores(response.data.gestors))
             .catch(error => console.error('Error fetching gestores:', error));
 
@@ -38,7 +38,7 @@ function List() {
     const handleSubmit = async () => {
         try {
             axios
-              .post(axios.get(`${process.env.HOST}/api/v1/ficha`), ficha)
+              .post(axios.get(`https://cloudsena-itj7.onrender.com/api/v1/ficha`), ficha)
               .then(function (response) {
                 console.log(response.data);
                 alert("Ficha Creada");
