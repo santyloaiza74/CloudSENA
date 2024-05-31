@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import validateUser from "../services/login/validate";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -22,7 +21,7 @@ function Register() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:3300/api/v1/ficha')
+        axios.get('https://cloudsena-itj7.onrender.com/api/v1/ficha')
             .then(response => {
                 setFichas(response.data.fichas);
             })
@@ -30,7 +29,7 @@ function Register() {
                 console.error('Error al obtener las fichas:', error);
             });
 
-        axios.get('http://127.0.0.1:3300/api/v1/gestor')
+        axios.get('https://cloudsena-itj7.onrender.com/api/v1/gestor')
             .then(response => {
                 setGestores(response.data.gestors);
             })
@@ -45,7 +44,7 @@ function Register() {
 
     const handleSubmit = async () => {
         try {
-            axios.post('http://127.0.0.1:3300/login/register', register)
+            axios.post('https://cloudsena-itj7.onrender.com/login/register', register)
                 .then(function (response) {
                     console.log(response.data);
                     alert("Registrado Correctamente, Inicie sesion")

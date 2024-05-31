@@ -19,7 +19,7 @@ function SubirArchivos() {
     const [fichas, setFichas] = useState([]);
 
     useEffect(() => {
-        axios.get(`https://cloudsena-itj7.onrender.com/api/v1/ficha`)
+        axios.get('https://cloudsena-itj7.onrender.com/api/v1/ficha')
             .then(response => {
                 setFichas(response.data.fichas);
             })
@@ -84,7 +84,7 @@ function SubirArchivos() {
             formData.append("files", file);
         });
 
-        axios.post(`https://cloudsena-itj7.onrender.com/api/v1/proyecto`, formData)
+        axios.post('https://cloudsena-itj7.onrender.com/api/v1/proyecto', formData)
             .then(response => {
                 console.log(response.data);
                 alert("Proyecto creado con exito")

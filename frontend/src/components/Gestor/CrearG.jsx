@@ -17,14 +17,14 @@ function List() {
     const [fichas, setFichas] = useState([]); // Estado para almacenar las fichas
 
     useEffect(() => {
-        axios.get(`https://cloudsena-itj7.onrender.com/api/v1/ficha`)
+        axios.get('https://cloudsena-itj7.onrender.com/api/v1/ficha')
             .then(response => setFichas(response.data.fichas))
             .catch(error => console.error('Error fetching fichas:', error));
     }, []);
 
     const handleSubmit = async () => {
         try {
-            axios.post(`https://cloudsena-itj7.onrender.com/api/v1/gestor`, gestor)
+            axios.post('https://cloudsena-itj7.onrender.com/api/v1/gestor', gestor)
                 .then(function (response) {
                     console.log(response.data);
                     alert("Gestor Creado");

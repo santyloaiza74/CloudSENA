@@ -29,17 +29,17 @@ function EditU() {
       })
       .catch(err => console.log(err));
 
-    axios.get(`https://cloudsena-itj7.onrender.com/api/v1/ficha`)
+    axios.get('https://cloudsena-itj7.onrender.com/api/v1/ficha')
       .then(res => setFichas(res.data.fichas));
 
-    axios.get(`https://cloudsena-itj7.onrender.com/api/v1/rol`)
+    axios.get('https://cloudsena-itj7.onrender.com/api/v1/rol')
       .then(res => {
         setRoles(res.data.roles);
         console.log(res.data)
       });
 
 
-    axios.get(`https://cloudsena-itj7.onrender.com/api/v1/gestor`)
+    axios.get('https://cloudsena-itj7.onrender.com/api/v1/gestor')
       .then(res => setGestores(res.data.gestors));
   }, []);
 

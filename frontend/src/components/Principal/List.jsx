@@ -18,7 +18,7 @@ function List() {
 
   useEffect(() => {
     axios
-      .get(`$https://cloudsena-itj7.onrender.com/api/v1/proyecto`)
+      .get('https://cloudsena-itj7.onrender.com/api/v1/proyecto')
       .then((response) => {
         setProyecto(response.data.proyectos);
         setLoading(false);

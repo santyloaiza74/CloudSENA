@@ -18,14 +18,13 @@ function List() {
     const [usuarios, setUsuarios] = useState([]);
 
     useEffect(() => {
-        axios.get(`https://cloudsena-itj7.onrender.com/api/v1/gestor`)
+        axios.get('https://cloudsena-itj7.onrender.com/api/v1/gestor')
             .then(response => setGestores(response.data.gestors))
             .catch(error => console.error('Error fetching gestores:', error));
 
-        axios
-          .get(`${process.env.HOST}/login`)
-          .then((response) => setUsuarios(response.data.users))
-          .catch((error) => console.error("Error fetching usuarios:", error));
+        axios.get('https://cloudsena-itj7.onrender.com/login')
+            .then(response => setUsuarios(response.data.users))
+            .catch(error => console.error('Error fetching usuarios:', error));
     }, []);
 
     const handleInputChange = (e) => {
@@ -37,16 +36,15 @@ function List() {
 
     const handleSubmit = async () => {
         try {
-            axios
-              .post(axios.get(`https://cloudsena-itj7.onrender.com/api/v1/ficha`), ficha)
-              .then(function (response) {
-                console.log(response.data);
-                alert("Ficha Creada");
-              })
-              .catch(function (error) {
-                alert("El Email ya se encuentra registrado");
-                console.log(error.response.data);
-              });
+            axios.post('https://cloudsena-itj7.onrender.com/api/v1/ficha', ficha)
+                .then(function (response) {
+                    console.log(response.data);
+                    alert("Ficha Creada");
+                })
+                .catch(function (error) {
+                    alert("El Email ya se encuentra registrado");
+                    console.log(error.response.data);
+                });
         } catch (error) {
             console.log(error);
         }

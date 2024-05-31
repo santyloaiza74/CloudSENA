@@ -23,7 +23,7 @@ function SubirArchivos() {
             formData.append("files", file);
         });
 
-        axios.post('http://127.0.0.1:3300/api/v1/proyecto/upload', formData)
+        axios.post('https://cloudsena-itj7.onrender.com/api/v1/proyecto/upload', formData)
             .then(response => {
                 console.log(response.data);
             })
