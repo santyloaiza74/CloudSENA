@@ -21,18 +21,21 @@ function Edit() {
   const [usuarios, setUsuarios] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:3300/api/v1/ficha/${id}`)
-      .then(res => {
+    axios
+      .get(`${process.env.HOST}/api/v1/ficha/${id}`)
+      .then((res) => {
         setFicha(res.data.ficha);
         console.log(res.data);
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
 
-    axios.get('http://localhost:3300/api/v1/gestor')
-      .then(res => setGestores(res.data.gestors));
+    axios
+      .get(`${process.env.HOST}/api/v1/gestor`)
+      .then((res) => setGestores(res.data.gestors));
 
-    axios.get('http://localhost:3300/api/v1/login')
-      .then(res => setUsuarios(res.data.users));
+    axios
+      .get(`${process.env.HOST}/api/v1/login`)
+      .then((res) => setUsuarios(res.data.users));
   }, []);
 
   const handleInputChange = (e) => {
@@ -46,7 +49,7 @@ function Edit() {
     e.preventDefault();
 
     try {
-      await axios.put(`http://localhost:3300/api/v1/ficha/${id}`, ficha);
+      await axios.put(`${process.env.HOST}/api/vq/ficha/${id}`, ficha );
       alert('Ficha actualizada');
     } catch (err) {
       console.log(err);

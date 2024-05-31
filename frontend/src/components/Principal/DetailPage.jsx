@@ -25,7 +25,7 @@ function DetailPage() {
   const [showQRModal, setShowQRModal] = useState(false);
 
   useEffect(() => {
-    axios.get(`http://localhost:3300/api/v1/proyecto/${id}`)
+    axios.get(`${process.env.HOST}/api/v1/proyecto/${id}`)
       .then(res => {
         setProjectDetails(res.data.proyecto);
         if (res.data.proyecto.ficha) {
@@ -38,7 +38,7 @@ function DetailPage() {
   }, [id]);
 
   const getFichaName = (fichaId) => {
-    axios.get(`http://localhost:3300/api/v1/ficha/${fichaId}`)
+    axios.get(`${process.env.HOST}/api/v1/ficha/${fichaId}`)
       .then(res => {
         setFichaName(res.data.ficha.nombre);
       })

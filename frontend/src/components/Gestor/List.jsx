@@ -16,7 +16,7 @@ function EditarF() {
 
     useEffect(() => {
         axios
-            .get('http://127.0.0.1:3300/api/v1/gestor')
+            .get(`${process.env.HOST}/api/v1/gestor`)
             .then((response) => {
                 console.log(response.data)
                 if (response.data && response.data.gestors) {

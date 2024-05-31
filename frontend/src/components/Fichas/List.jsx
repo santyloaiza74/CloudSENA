@@ -16,7 +16,7 @@ function EditarF() {
 
     useEffect(() => {
         axios
-            .get('http://127.0.0.1:3300/api/v1/ficha')
+            .get(`{process.env.HOST}api/v1/ficha`)
             .then((response) => {
                 setFicha(response.data.fichas);
                 console.log(response.data)
