@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import validateUser from "../services/login/validate";
 import { Button, Card, Col, Container, Form, Row, Image, Alert } from "react-bootstrap"
 import { useNavigate } from 'react-router-dom'
 import './login.css'
@@ -18,7 +17,7 @@ function Login() {
     }
     const handleSubmit = async () => {
         try {
-            axios.post('http://127.0.0.1:3300/login',login)
+            axios.post('https://cloudsena-itj7.onrender.com/login',login)
             .then(function(response){
                 console.log(response.data)
                 navigate('/')

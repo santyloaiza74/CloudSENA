@@ -16,7 +16,7 @@ function EditarF() {
 
     useEffect(() => {
         axios
-            .get(`${process.env.HOST}/api/v1/gestor`)
+            .get('https://cloudsena-itj7.onrender.com/api/v1/gestor')
             .then((response) => {
                 console.log(response.data)
                 if (response.data && response.data.gestors) {

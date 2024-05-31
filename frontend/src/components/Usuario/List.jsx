@@ -17,7 +17,7 @@ function List() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`${process.env.HOST}/login`)
+        axios.get('https://cloudsena-itj7.onrender.com/login')
             .then((response) => {
                 setUsuario(response.data.users);
                 setSearchResults(response.data.users);

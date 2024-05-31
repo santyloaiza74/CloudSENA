@@ -16,7 +16,7 @@ function EditarF() {
 
     useEffect(() => {
         axios
-            .get(`{process.env.HOST}api/v1/ficha`)
+            .get('https://cloudsena-itj7.onrender.com/api/v1/ficha')
             .then((response) => {
                 setFicha(response.data.fichas);
                 console.log(response.data)

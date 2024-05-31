@@ -22,24 +22,24 @@ function EditU() {
   const [gestores, setGestores] = useState([]);
 
   useEffect(() => {
-    axios.get(`${process.env.HOST}/login/${id}`)
+    axios.get(`https://cloudsena-itj7.onrender.com/login/${id}`)
       .then(res => {
         setUsuario(res.data.user);
         console.log(res.data.user);
       })
       .catch(err => console.log(err));
 
-    axios.get(`${process.env.HOST}/api/v1/ficha`)
+    axios.get('https://cloudsena-itj7.onrender.com/api/v1/ficha')
       .then(res => setFichas(res.data.fichas));
 
-    axios.get(`${process.env.HOST}/api/v1/rol`)
+    axios.get('https://cloudsena-itj7.onrender.com/api/v1/rol')
       .then(res => {
         setRoles(res.data.roles);
         console.log(res.data)
       });
 
 
-    axios.get(`${process.env.HOST}/api/v1/gestor`)
+    axios.get('https://cloudsena-itj7.onrender.com/api/v1/gestor')
       .then(res => setGestores(res.data.gestors));
   }, []);
 
@@ -54,7 +54,7 @@ function EditU() {
     e.preventDefault();
 
     try {
-      await axios.put(`${process.env.HOST}/login/${id}`, usuario);
+      await axios.put(`https://cloudsena-itj7.onrender.com/login/${id}`, usuario);
       alert('Usuario actualizado');
     } catch (err) { 
       console.log(err);
