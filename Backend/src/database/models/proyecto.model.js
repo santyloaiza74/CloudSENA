@@ -2,7 +2,8 @@ const mongoose= require('mongoose')
 
 const proyectoSchema = new mongoose.Schema({
     nombre:{
-        type: String
+        type: String,
+        required: true
     },
     autores:{
         type: String
@@ -12,16 +13,20 @@ const proyectoSchema = new mongoose.Schema({
         ref: 'ficha'
     }],
     fecha:{
-        type:Date
+        type:String,
+        required: true
     },
     documentacion:{
-        type: Array
+        type: Array,
+        required: true
     },
     descripcion:{
-        type: String
+        type: String,
+        required: true
     },
     imagenes:{
-        type: Array
+        type: Array,
+        required: true
     },
     video:{
         type: Array

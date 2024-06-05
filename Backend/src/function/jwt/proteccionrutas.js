@@ -21,7 +21,6 @@ const validateToken=async(req,res,next)=>{
     }
 }
 const verifyIsGestor=async(req,res,next)=>{
-  console.log("si esta entrando")
     try {
         const user = await loginSchema.findById(req.userId);
         const roles = await rolSchema.find({ _id: { $in: user.rol } });

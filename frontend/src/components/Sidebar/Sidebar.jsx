@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   CDBSidebar,
   CDBSidebarContent,
@@ -9,12 +9,19 @@ import {
 } from 'cdbreact';
 import { NavLink } from 'react-router-dom';
 import './Sidebar.css'; // Asegúrate de importar tu archivo de estilos
-import logo1 from './../../img/logo1.png' 
+import logo1 from './../../img/logo1.png';
+
 const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState(false); // Initial state: sidebar closed
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
-      <CDBSidebar textColor="#000000" backgroundColor="#ffffff" className='custom-sidebar'>
-        <CDBSidebarHeader  prefix={<i className="fa fa-bars fa-large" style={{ color: '#39A900' }}></i>}>
+    <div style={{ display: 'flex', height: '100%', overflow: 'scroll initial' }}>
+      <CDBSidebar toggled="true" textColor="#000000" backgroundColor="#ffffff" className='custom-sidebar' visible={isOpen}>
+        <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large" style={{ color: '#39A900' }} onClick={toggleSidebar}></i>}>
           <a className="text-decoration-none" style={{ color: '#000000' }}>
             Menú
           </a>
@@ -29,32 +36,29 @@ const Sidebar = () => {
             </NavLink>
             <NavLink exact to="/fichas" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="table" style={{ color: '#39A900' }}>
-              <span style={{ color: '#000000' }}>Fichas</span>
+                <span style={{ color: '#000000' }}>Fichas</span>
               </CDBSidebarMenuItem>
             </NavLink>
             <NavLink exact to="/users" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="user" style={{ color: '#39A900' }}>
-              <span style={{ color: '#000000' }}>Usuarios</span>
+                <span style={{ color: '#000000' }}>Usuarios</span>
               </CDBSidebarMenuItem>
             </NavLink>
             <NavLink exact to="/gestor" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="users" style={{ color: '#39A900' }}>
-              <span style={{ color: '#000000' }}>Gestores</span>
+                <span style={{ color: '#000000' }}>Gestores</span>
               </CDBSidebarMenuItem>
             </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>
 
         <CDBSidebarFooter style={{ textAlign: 'center', color: '#39A900' }}>
-          <div
-            style={{
-              padding: '20px 5px',
-            }}
-          >
+          <div style={{ padding: '20px 5px' }}>
             Cloud Sena
           </div>
         </CDBSidebarFooter>
       </CDBSidebar>
+
     </div>
   );
 };

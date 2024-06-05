@@ -8,6 +8,7 @@ function EditU() {
   const { id } = useParams();
 
   const [usuario, setUsuario] = useState({
+
     email: '',
     password: '',
     nombre: '',

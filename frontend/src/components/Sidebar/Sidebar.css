@@ -53,7 +53,14 @@ body {
 .sidebar-footer {
   padding: 10px;
   border-top: 1px solid #ddd;
-  height: auto;
+  height: 100%;
+}
+@media screen and (max-width: 600px) {
+  .sidebar-footer {
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    height: 400px;
+  }
 }
 
 /* img{
