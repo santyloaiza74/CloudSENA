@@ -17,7 +17,7 @@ function List() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('https://cloudsena-itj7.onrender.com/login')
+        axios.get('http://127.0.0.1:3300/login')
             .then((response) => {
                 setUsuario(response.data.users);
                 setSearchResults(response.data.users);

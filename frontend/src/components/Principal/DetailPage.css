@@ -1,0 +1,62 @@
+/* DetailPage.css */
+
+.detail-page-container {
+    padding: 20px;
+  }
+  
+  .detail-page-card {
+    border-radius: 1rem;
+    max-width: 900px;
+    width: 100%;
+    margin-left: 80px;
+  }
+  
+  .detail-page-img {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+  }
+  
+  .detail-page-video-container {
+    width: 100%;
+  }
+  
+  .detail-page-video {
+    width: 100%;
+    max-height: 500px;
+  }
+  
+  .Buttonnn {
+    background-color: #39A900;
+    border-color: #39A900;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 5px;
+  }
+  
+  .Buttonnn:hover {
+    background-color: #2e8b00;
+    border-color: #2e8b00;
+  }
+  
+  @media (max-width: 768px) {
+    .detail-page-card {
+      max-width: 100%;
+      margin: 10px;
+    }
+  
+    .detail-page-img {
+      max-height: 200px;
+    }
+  
+    .detail-page-video {
+      max-height: 250px;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .detail-page-card {
+      max-width: 1000px;
+    }
+  }
+  
