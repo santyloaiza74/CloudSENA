@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../Fichas/list.css'; // Asegúrate de tener el archivo CSS correcto
 import logo1 from './../../img/logo1.png';
+import URL from '../../constants/api';
 
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 
@@ -16,7 +17,7 @@ function EditarF() {
 
     useEffect(() => {
         axios
-            .get('http://127.0.0.1:3300/api/v1/gestor')
+            .get(`${URL.API}/api/v1/gestor`)
             .then((response) => {
                 console.log(response.data)
                 if (response.data && response.data.gestors) {

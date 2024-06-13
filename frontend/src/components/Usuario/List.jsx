@@ -4,6 +4,7 @@ import axios from 'axios';
 import './list.css'
 import { CDBBtn, CDBIcon, CDBContainer, CDBInput } from "cdbreact";
 import { useNavigate } from 'react-router-dom';
+import URL from '../../constants/api';
 
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 
@@ -17,7 +18,7 @@ function List() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:3300/login')
+        axios.get(`${URL.API}/login`)
             .then((response) => {
                 setUsuario(response.data.users);
                 setSearchResults(response.data.users);
