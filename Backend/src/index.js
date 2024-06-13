@@ -1,12 +1,11 @@
 const express = require('express')
 const mongoose=require('mongoose')
-const {port } = require('./config/config')
+const {port, hostback } = require('./config/config')
 const routerApi=require('./routes/index')
 const connect=require('./libs/mongoose')
 const createRoles=require('./seeders/rol.seeder')
 const cors = require('cors')
 const helmet =require('helmet')
-
 const app = express()
 
 connect()

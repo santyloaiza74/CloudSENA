@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Card, Button, Form, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import '../EditarProyecto/list.css';
+import URL from '../../constants/api';
 
 function EditU() {
   const { id } = useParams();
@@ -23,24 +24,24 @@ function EditU() {
   const [gestores, setGestores] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://127.0.0.1:3300/login/${id}`)
+    axios.get(`${URL.API}/login/${id}`)
       .then(res => {
         setUsuario(res.data.user);
         console.log(res.data.user);
       })
       .catch(err => console.log(err));
 
-    axios.get('http://127.0.0.1:3300/api/v1/ficha')
+    axios.get(`${URL.API}/api/v1/ficha`)
       .then(res => setFichas(res.data.fichas));
 
-    axios.get('http://127.0.0.1:3300/api/v1/rol')
+    axios.get(`${URL.API}/api/v1/rol`)
       .then(res => {
         setRoles(res.data.roles);
         console.log(res.data)
       });
 
 
-    axios.get('http://127.0.0.1:3300/api/v1/gestor')
+    axios.get(`${URL.API}/api/v1/gestor`)
       .then(res => setGestores(res.data.gestors));
   }, []);
 
@@ -55,7 +56,7 @@ function EditU() {
     e.preventDefault();
 
     try {
-      await axios.put(`http://127.0.0.1:3300/login/${id}`, usuario);
+      await axios.put(`${URL.API}/login/${id}`, usuario);
       alert('Usuario actualizado');
     } catch (err) { 
       console.log(err);

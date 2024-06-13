@@ -8,6 +8,7 @@ const controller = new proyectoController
 const publicDir = path.resolve(__dirname, '../../public');
 const nodemailer = require('nodemailer')
 const crypto = require('crypto')
+const { hostback } = require('../config/config')
 
 // Configuración del transporte SMTP
 
@@ -99,11 +100,11 @@ router.post('/', upload.array('files', 5), async (req, res) => {
         fs.renameSync(path.join(publicDir, file.filename), filePath);
 
         if (ext === '.jpg' || ext === '.jpeg' || ext === '.png') {
-            img.push(`${process.env.HOST}/Img/${file.filename}`);
+            img.push(`${hostback}/Img/${file.filename}`);
         } else if (ext === '.mp4') {
-            video.push(`${process.env.HOST}/Video/${file.filename}`);
+            video.push(`${hostback}/Video/${file.filename}`);
         } else if (ext === '.pdf' || ext === '.docx') {
-            doc.push(`${process.env.HOST}/Doc/${file.filename}`);
+            doc.push(`${hostback}/Doc/${file.filename}`);
         }
     });
 

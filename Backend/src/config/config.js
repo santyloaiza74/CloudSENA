@@ -9,7 +9,10 @@ const config = {
    secretjwt: process.env.SECRET_JWT,
    dbNameCloud: process.env.DB_NAMECLOUD,
    dbUsername: process.env.DB_USERNAME,
-   dbPassword: process.env.DB_PASSWORD
+   dbPassword: process.env.DB_PASSWORD,
+   addressEmail: process.env.ADDRESS_EMAIL,
+   passwordEmail: process.env.PASSWORD_EMAIL,
+   hostback: process.env.HOSTBACK
 }
 
 module.exports = config

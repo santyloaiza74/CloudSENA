@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './list.css';
 import { CDBBtn, CDBIcon } from "cdbreact";
+import URL from '../../constants/api';
 
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 
@@ -17,9 +18,10 @@ function List() {
 
   useEffect(() => {
     axios
-      .get('http://127.0.0.1:3300/api/v1/proyecto')
+      .get(`${URL.API}/api/v1/proyecto`)
       .then((response) => {
         setProyecto(response.data.proyectos);
+        console.log(response.data.proyectos)
         setLoading(false);
       })
       .catch((error) => {
@@ -36,7 +38,6 @@ function List() {
   const endIndex = startIndex + itemsPerPage;
   const currentProjects = filteredProjects.slice(startIndex, endIndex);
   const totalPages = Math.ceil(filteredProjects.length / itemsPerPage);
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -67,7 +68,7 @@ function List() {
             {currentProjects.map(({ _id, nombre, autores, ficha, fecha, imagenes, ruta }) => (
               <Card key={_id} className="custom-card-style">
                 <Card.Body>
-                  <Card.Img crossorigin="anonymous" variant="top" src={imagenes} alt={`${nombre} Image`} />
+                  <Card.Img crossorigin="anonymous" variant="top" src={imagenes[0]} alt={`${nombre} Image`} />
                   <Card.Title>{nombre} </Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">{autores}</Card.Subtitle>
                   <Card.Text>

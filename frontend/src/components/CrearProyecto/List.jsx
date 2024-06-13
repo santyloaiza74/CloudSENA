@@ -4,6 +4,7 @@ import { CDBBtn, CDBIcon, CDBContainer } from "cdbreact";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './cproyectos.css'; // Asegúrate de crear este archivo para las clases CSS adicionales
+import URL from "../../constants/api";
 
 function SubirArchivos() {
     const [projectData, setProjectData] = useState({
@@ -20,7 +21,7 @@ function SubirArchivos() {
     const [fichas, setFichas] = useState([]);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:3300/api/v1/ficha')
+        axios.get(`${URL.API}/api/v1/ficha`)
             .then(response => {
                 setFichas(response.data.fichas);
             })
@@ -77,7 +78,7 @@ function SubirArchivos() {
             formData.append("files", file);
         });
 
-        axios.post('http://127.0.0.1:3300/api/v1/proyecto', formData)
+        axios.post(`${URL.API}/api/v1/proyecto`, formData)
             .then(response => {
                 console.log(response.data);
                 alert("Proyecto creado con exito");

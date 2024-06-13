@@ -1,6 +1,6 @@
 const API_URL_LOGIN='http://127.0.0.1:3300'
 const API_URL='http://127.0.0.1:3300/api/v1'
-
+const API_BACK="https://cloudsena-itj7.onrender.com"
 const URL={
     USER: `${API_URL}/users`,
     LOGIN: `${API_URL_LOGIN}/login`,
@@ -11,6 +11,7 @@ const URL={
     SUBASTAS: `${API_URL}/subastas`,
     VENTAS:`${API_URL}/ventas`,
     REGISTER: `${API_URL_LOGIN}/login/register`,
+    API:`${API_BACK}`
 }
 
 export default URL
