@@ -4,68 +4,46 @@ import {
   CDBNavBrand,
   CDBNavItem,
   CDBNavLink,
-  CDBDropDown,
-  CDBDropDownMenu,
   CDBNavToggle,
   CDBIcon,
   CDBCollapse,
   CDBNavbarNav,
 } from 'cdbreact';
+import './navbar.css';
 
 const Navbar = () => {
-  const [collapse2, setCollapse2] = useState(false);
-
-  const navbarStyle = {
-    backgroundColor: 'white', // Fondo blanco
-    color: '#39A900', // Texto verde
-    marginBottom: '0',
-    width: '100%',
-    borderBottom: '5px solid #39A900', // Borde inferior verde
-    fontFamily: 'sans-serif', // Cambia la fuente según sea necesario
-  };
-
-  const navItemStyle = {
-    marginRight: '30px', // Ajusta el margen derecho según tus preferencias
-    listStyle: 'none',
-    backgroundColor: 'white', // Fondo blanco
-    color: '#39A900', // Texto verde
-    marginBottom: '0',
-
-    // fontFamily: 'Arial', // Agrega la fuente utilizada en Sidebar
-    // fontWeight: 'bold', // Agrega el peso de fuente utilizado en Sidebar
-
-  };
+  const [collapse, setCollapse] = useState(false);
 
   return (
-    <CDBNavbar style={navbarStyle} dark expand="md" scrolling>
+    <CDBNavbar className="navbarStyle" dark expand="md" scrolling>
       <CDBNavBrand href="/">
-        <strong style={{ color: '#39A900', paddingLeft:'30px' }}>Cloud Sena</strong>
+        <strong className="brandStyle">Cloud Sena</strong>
       </CDBNavBrand>
       <CDBNavToggle
         onClick={() => {
-          setCollapse2(!collapse2);
+          setCollapse(!collapse);
         }}
       />
-      <CDBCollapse id="navbarCollapse1" isOpen={collapse2} navbar>
-        <div className="ms-auto d-flex justify-content-end">
-          <CDBNavItem style={navItemStyle}>
-            <CDBNavLink to="#" style={{ color: '#39A900' }}>
+      <CDBCollapse id="navbarCollapse1" isOpen={collapse} navbar>
+        <CDBNavbarNav className="ms-auto d-flex justify-content-end">
+          <CDBNavItem className="navItemStyle">
+            <CDBNavLink to="#" className="navLinkStyle">
               <CDBIcon icon="globe" className="me-2" />
               EN
             </CDBNavLink>
           </CDBNavItem>
-          <CDBNavItem style={navItemStyle}>
-            <CDBNavLink to="/login" style={{ color: '#39A900' }}>
+          <CDBNavItem className="navItemStyle">
+            <CDBNavLink to="/login" className="navLinkStyle">
               <CDBIcon icon="user" className="me-2" />
               Login
             </CDBNavLink>
           </CDBNavItem>
-          <CDBNavItem style={navItemStyle}>
-            <CDBNavLink to="/login/register" style={{ color: '#000' }}>
+          <CDBNavItem className="navItemStyle">
+            <CDBNavLink to="/login/register" className="navLinkStyle">
               Sign Up
             </CDBNavLink>
           </CDBNavItem>
-        </div>
+        </CDBNavbarNav>
       </CDBCollapse>
     </CDBNavbar>
   );

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, Button, Form, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import '../EditarProyecto/list.css';
+import './../CrearProyecto/cproyectos.css'; // Asegúrate de crear este archivo para las clases CSS adicionales
 
 function List() {
     const [ficha, setFicha] = useState({
@@ -18,11 +18,11 @@ function List() {
     const [usuarios, setUsuarios] = useState([]);
 
     useEffect(() => {
-        axios.get('https://cloudsena-itj7.onrender.com/api/v1/gestor')
+        axios.get('http://127.0.0.1:3300/api/v1/gestor')
             .then(response => setGestores(response.data.gestors))
             .catch(error => console.error('Error fetching gestores:', error));
 
-        axios.get('https://cloudsena-itj7.onrender.com/login')
+        axios.get('http://127.0.0.1:3300/login')
             .then(response => setUsuarios(response.data.users))
             .catch(error => console.error('Error fetching usuarios:', error));
     }, []);
@@ -36,7 +36,7 @@ function List() {
 
     const handleSubmit = async () => {
         try {
-            axios.post('https://cloudsena-itj7.onrender.com/api/v1/ficha', ficha)
+            axios.post('http://127.0.0.1:3300/api/v1/ficha', ficha)
                 .then(function (response) {
                     console.log(response.data);
                     alert("Ficha Creada");
@@ -51,16 +51,16 @@ function List() {
     };
 
     return (
-        <Container fluid>
-            <Row>
-                <Col md={{ span: 6, offset: 3 }}>
-                    <Card className='cardddd' style={{ borderRadius: '1rem', maxWidth: '90000px' }}>
-                        <Card.Body className='p-5 d-flex flex-column align-items-center mx-auto w-100'>
-                            <h2 className="fw-bold mb-2 text-uppercase">Crear Ficha</h2>
-                            <p className="text-dark-50 mb-5">Ingrese los siguientes campos</p>
-                            <div className="fields">
+        <Container fluid className="my-4">
+            <Row className="justify-content-center">
+                <Col xs={12} md={8} lg={6}>
+                    <Card className='carddddd' style={{ borderRadius: '1rem' }}>
+                        <Card.Body className='p-4'>
+                            <h2 className="fw-bold mb-2 text-uppercase text-center">Crear Ficha</h2>
+                            <p className="text-dark-50 mb-4 text-center">Ingrese los siguientes campos</p>
+                            <Form onSubmit={handleSubmit}>
                                 <Row>
-                                    <Col md={6}>
+                                    <Col xs={12} md={6}>
                                         <Form.Group className="mb-3" controlId="formNombre">
                                             <Form.Label>Nombre</Form.Label>
                                             <Form.Control
@@ -71,7 +71,7 @@ function List() {
                                         </Form.Group>
 
                                         <Form.Group className="mb-3" controlId="formCodigo">
-                                            <Form.Label>Codigo</Form.Label>
+                                            <Form.Label>Código</Form.Label>
                                             <Form.Control
                                                 name="codigo"
                                                 value={ficha.codigo}
@@ -87,6 +87,7 @@ function List() {
                                                 onChange={handleInputChange}
                                             />
                                         </Form.Group>
+
                                         <Form.Group className="mb-3" controlId="formUsuario">
                                             <Form.Label>Usuario</Form.Label>
                                             <Form.Control as="select"
@@ -102,7 +103,7 @@ function List() {
                                         </Form.Group>
                                     </Col>
 
-                                    <Col md={6}>
+                                    <Col xs={12} md={6}>
                                         <Form.Group className="mb-3" controlId="formFechaInicio">
                                             <Form.Label>Fecha de Inicio</Form.Label>
                                             <Form.Control
@@ -136,14 +137,14 @@ function List() {
                                                 ))}
                                             </Form.Control>
                                         </Form.Group>
-
-                                       
                                     </Col>
                                 </Row>
-                            </div>
-                            <Button variant="primary" type="submit" onClick={handleSubmit}>
-                                Crear
-                            </Button>
+                                <div className="text-center mt-4">
+                                    <Button variant="primary" type="submit" onClick={handleSubmit}>
+                                        Crear
+                                    </Button>
+                                </div>
+                            </Form>
                         </Card.Body>
                     </Card>
                 </Col>

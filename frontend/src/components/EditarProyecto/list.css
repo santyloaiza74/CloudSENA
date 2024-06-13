@@ -74,7 +74,7 @@
   --bs-btn-border-color: #6CAF45;
   --bs-btn-bg: #39A900;
   --bs-btn-hover-color: rgb(0,0,0);;
-  --bs-btn-hover-bg: #fff;
+  /* --bs-btn-hover-bg: #fff; */
   --bs-btn-hover-border-color: #6CAF45;
   --bs-btn-focus-shadow-rgb: 49,132,253;
   --bs-btn-active-color: rgb(0,0,0);

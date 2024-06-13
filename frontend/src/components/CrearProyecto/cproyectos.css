@@ -1,0 +1,20 @@
+.carddddd{
+    max-width: 8000px !important;
+    width: 777px;
+    margin-right: -300px;
+}
+
+@media (max-width: 768px) {
+    .carddddd {
+        margin: 10px;
+        width: 42vh !important;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .Buttonn {
+        width: 100%;
+    }
+}

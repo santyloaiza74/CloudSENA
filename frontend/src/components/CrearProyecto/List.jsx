@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Dropdown, Container, Row, Col, Card } from "react-bootstrap";
 import { CDBBtn, CDBIcon, CDBContainer } from "cdbreact";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './cproyectos.css'; // Asegúrate de crear este archivo para las clases CSS adicionales
 
 function SubirArchivos() {
     const [projectData, setProjectData] = useState({
@@ -12,14 +13,14 @@ function SubirArchivos() {
         fecha: "",
         descripcion: "",
     });
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [documentacionFiles, setDocumentacionFiles] = useState([]);
     const [imagenFiles, setImagenFiles] = useState([]);
     const [videoFiles, setVideoFiles] = useState([]);
     const [fichas, setFichas] = useState([]);
 
     useEffect(() => {
-        axios.get('https://cloudsena-itj7.onrender.com/api/v1/ficha')
+        axios.get('http://127.0.0.1:3300/api/v1/ficha')
             .then(response => {
                 setFichas(response.data.fichas);
             })
@@ -49,17 +50,9 @@ function SubirArchivos() {
             case 'video':
                 setVideoFiles(files);
                 break;
-            // Puedes agregar más casos según sea necesario
             default:
                 break;
         }
-    };
-
-    const handleFichaSelect = (fichaId, fichaNombre) => {
-        setProjectData(prevData => ({
-            ...prevData,
-            ficha: fichaId
-        }));
     };
 
     const handleSubmit = (event) => {
@@ -84,11 +77,11 @@ function SubirArchivos() {
             formData.append("files", file);
         });
 
-        axios.post('https://cloudsena-itj7.onrender.com/api/v1/proyecto', formData)
+        axios.post('http://127.0.0.1:3300/api/v1/proyecto', formData)
             .then(response => {
                 console.log(response.data);
-                alert("Proyecto creado con exito")
-                    navigate('/');
+                alert("Proyecto creado con exito");
+                navigate('/');
             })
             .catch(error => {
                 console.error("Error:", error);
@@ -96,73 +89,67 @@ function SubirArchivos() {
     };
 
     return (
-        <Container fluid>
-            <Row>
-                <Col md={{ span: 6, offset: 3 }}>
-                    <Card className='cardddd' style={{ borderRadius: '1rem', maxWidth: '90000px' }}>
-                        <Card.Body className='p-5 d-flex flex-column align-items-center mx-auto w-100'>
-                            <h2 className="fw-bold mb-2 text-uppercase">Crear Proyecto</h2>
-                            <p className="text-dark-50 mb-5">Ingrese los siguientes campos</p>
-                            <Row>
-                                <Col md={6}>
-                                    {/* Primera columna */}
-                                    <Form.Group controlId="formProjectName">
-                                        <Form.Label>Nombre del Proyecto</Form.Label>
-                                        <Form.Control type="text" name="projectName" value={projectData.projectName} onChange={handleInputChange} placeholder="Nombre del proyecto" />
-                                    </Form.Group>
-                                    <Form.Group controlId="formAutores">
-                                        <Form.Label>Autores</Form.Label>
-                                        <Form.Control type="text" name="autores" value={projectData.autores} onChange={handleInputChange} placeholder="Autores del proyecto" />
-                                    </Form.Group>
-                                    <Form.Group controlId="formFicha">
-                                        <Form.Label>Ficha</Form.Label>
-                                        <Form.Control
-                                            as="select"
-                                            name="ficha"
-                                            value={projectData.ficha}
-                                            onChange={handleInputChange}
-                                        >
-                                            <option value="">Seleccionar Ficha</option>
-                                            {fichas.map(ficha => (
-                                                <option key={ficha._id} value={ficha._id} >{ficha.nombre}</option>
-                                            ))}
-                                        </Form.Control>
-
-                                    </Form.Group>
-                                    {/* Segunda columna */}
-                                    <Form.Group controlId="formDescripcion">
-                                        <Form.Label>Descripción</Form.Label>
-                                        <Form.Control as="textarea" name="descripcion" value={projectData.descripcion} onChange={handleInputChange} placeholder="Descripción del proyecto" />
-                                    </Form.Group>
-                                </Col>
-                                <Col md={6}>
-                                    {/* Tercera columna */}
-                                    <Form.Group controlId="formFecha">
-                                        <Form.Label>Fecha</Form.Label>
-                                        <Form.Control type="date" name="fecha" value={projectData.fecha} onChange={handleInputChange} />
-                                    </Form.Group>
-                                    <Form.Group controlId="formDocumentacion" multiple>
-                                        <Form.Label>Subir Documentación</Form.Label>
-                                        <Form.Control type="file" onChange={(event) => handleFileChange(event, 'documentacion')} />
-                                    </Form.Group>
-                                    <Form.Group controlId="formImagen" multiple>
-                                        <Form.Label>Subir Imágenes</Form.Label>
-                                        <Form.Control type="file" onChange={(event) => handleFileChange(event, 'imagen')} />
-                                    </Form.Group>
-                                    <Form.Group controlId="formVideo" multiple>
-                                        <Form.Label>Subir Video</Form.Label>
-                                        <Form.Control type="file" onChange={(event) => handleFileChange(event, 'video')} />
-                                    </Form.Group>
-                                </Col>
-                            </Row>
-                            <br/>
-                    
-                            <CDBBtn className='Buttonn' type="submit" onClick={handleSubmit}>
-                                            <CDBIcon icon="fa-solid fa-plus" className="ms-1" />
-                                            Crear Proyecto
-                                        </CDBBtn>
+        <Container fluid className="my-4">
+            <Row className="justify-content-center">
+                <Col xs={12} md={8} lg={6}>
+                    <Card className='carddddd' style={{ borderRadius: '1rem' }}>
+                        <Card.Body className='p-4'>
+                            <h2 className="fw-bold mb-2 text-uppercase text-center">Crear Proyecto</h2>
+                            <p className="text-dark-50 mb-4 text-center">Ingrese los siguientes campos</p>
+                            <Form onSubmit={handleSubmit}>
+                                <Row>
+                                    <Col xs={12} md={6}>
+                                        <Form.Group controlId="formProjectName" className="mb-3">
+                                            <Form.Label>Nombre del Proyecto</Form.Label>
+                                            <Form.Control type="text" name="projectName" value={projectData.projectName} onChange={handleInputChange} placeholder="Nombre del proyecto" />
+                                        </Form.Group>
+                                        <Form.Group controlId="formAutores" className="mb-3">
+                                            <Form.Label>Autores</Form.Label>
+                                            <Form.Control type="text" name="autores" value={projectData.autores} onChange={handleInputChange} placeholder="Autores del proyecto" />
+                                        </Form.Group>
+                                        <Form.Group controlId="formFicha" className="mb-3">
+                                            <Form.Label>Ficha</Form.Label>
+                                            <Form.Control as="select" name="ficha" value={projectData.ficha} onChange={handleInputChange}>
+                                                <option value="">Seleccionar Ficha</option>
+                                                {fichas.map(ficha => (
+                                                    <option key={ficha._id} value={ficha._id}>{ficha.nombre}</option>
+                                                ))}
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group controlId="formDescripcion" className="mb-3">
+                                            <Form.Label>Descripción</Form.Label>
+                                            <Form.Control as="textarea" name="descripcion" value={projectData.descripcion} onChange={handleInputChange} placeholder="Descripción del proyecto" />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col xs={12} md={6}>
+                                        <Form.Group controlId="formFecha" className="mb-3">
+                                            <Form.Label>Fecha</Form.Label>
+                                            <Form.Control type="date" name="fecha" value={projectData.fecha} onChange={handleInputChange} />
+                                        </Form.Group>
+                                        <Form.Group controlId="formDocumentacion" className="mb-3">
+                                            <Form.Label>Subir Documentación</Form.Label>
+                                            <Form.Control type="file" multiple onChange={(event) => handleFileChange(event, 'documentacion')} />
+                                        </Form.Group>
+                                        <Form.Group controlId="formImagen" className="mb-3">
+                                            <Form.Label>Subir Imágenes</Form.Label>
+                                            <Form.Control type="file" multiple onChange={(event) => handleFileChange(event, 'imagen')} />
+                                        </Form.Group>
+                                        <Form.Group controlId="formVideo" className="mb-3">
+                                            <Form.Label>Subir Video</Form.Label>
+                                            <Form.Control type="file" multiple onChange={(event) => handleFileChange(event, 'video')} />
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                                <div className="text-center mt-4">
+                                    <center>
+                                    <CDBBtn type="submit" className="Buttonn">
+                                        <CDBIcon icon="fa-solid fa-plus" className="ms-1" />
+                                        Crear Proyecto
+                                    </CDBBtn>
+                                    </center>
+                                </div>
+                            </Form>
                         </Card.Body>
-
                     </Card>
                 </Col>
             </Row>

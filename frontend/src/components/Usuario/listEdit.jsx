@@ -8,6 +8,7 @@ function EditU() {
   const { id } = useParams();
 
   const [usuario, setUsuario] = useState({
+
     email: '',
     password: '',
     nombre: '',
@@ -22,24 +23,24 @@ function EditU() {
   const [gestores, setGestores] = useState([]);
 
   useEffect(() => {
-    axios.get(`https://cloudsena-itj7.onrender.com/login/${id}`)
+    axios.get(`http://127.0.0.1:3300/login/${id}`)
       .then(res => {
         setUsuario(res.data.user);
         console.log(res.data.user);
       })
       .catch(err => console.log(err));
 
-    axios.get('https://cloudsena-itj7.onrender.com/api/v1/ficha')
+    axios.get('http://127.0.0.1:3300/api/v1/ficha')
       .then(res => setFichas(res.data.fichas));
 
-    axios.get('https://cloudsena-itj7.onrender.com/api/v1/rol')
+    axios.get('http://127.0.0.1:3300/api/v1/rol')
       .then(res => {
         setRoles(res.data.roles);
         console.log(res.data)
       });
 
 
-    axios.get('https://cloudsena-itj7.onrender.com/api/v1/gestor')
+    axios.get('http://127.0.0.1:3300/api/v1/gestor')
       .then(res => setGestores(res.data.gestors));
   }, []);
 
@@ -54,7 +55,7 @@ function EditU() {
     e.preventDefault();
 
     try {
-      await axios.put(`https://cloudsena-itj7.onrender.com/login/${id}`, usuario);
+      await axios.put(`http://127.0.0.1:3300/login/${id}`, usuario);
       alert('Usuario actualizado');
     } catch (err) { 
       console.log(err);
