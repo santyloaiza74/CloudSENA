@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './list.css';
 import { CDBBtn, CDBIcon } from "cdbreact";
+import URL from '../../constants/api';
 
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 
@@ -17,7 +18,7 @@ function List() {
 
   useEffect(() => {
     axios
-      .get('http://127.0.0.1:3300/api/v1/proyecto')
+      .get(`${URL.API}/api/v1/proyecto`)
       .then((response) => {
         setProyecto(response.data.proyectos);
         setLoading(false);

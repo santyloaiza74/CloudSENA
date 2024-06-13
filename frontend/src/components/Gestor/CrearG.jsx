@@ -4,6 +4,7 @@ import axios from 'axios';
 import '../EditarProyecto/list.css';
 import { useNavigate } from 'react-router-dom';
 import { CDBBtn, CDBIcon, CDBContainer } from "cdbreact";
+import URL from '../../constants/api';
 
 function List() {
     const [gestor, setGestor] = useState({
@@ -17,14 +18,14 @@ function List() {
     const [fichas, setFichas] = useState([]); // Estado para almacenar las fichas
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:3300/api/v1/ficha')
+        axios.get(`${URL.API}/api/v1/ficha`)
             .then(response => setFichas(response.data.fichas))
             .catch(error => console.error('Error fetching fichas:', error));
     }, []);
 
     const handleSubmit = async () => {
         try {
-            axios.post('http://127.0.0.1:3300/api/v1/gestor', gestor)
+            axios.post(`${URL.API}/api/v1/gestor`, gestor)
                 .then(function (response) {
                     console.log(response.data);
                     alert("Gestor Creado");

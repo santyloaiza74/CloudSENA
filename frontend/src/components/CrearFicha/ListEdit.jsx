@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Card, Button, Form, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import '../EditarProyecto/list.css';
+import URL from '../../constants/api';
 
 function Edit() {
   const { id } = useParams();
@@ -21,17 +22,17 @@ function Edit() {
   const [usuarios, setUsuarios] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:3300/api/v1/ficha/${id}`)
+    axios.get(`${URL.API}/api/v1/ficha/${id}`)
       .then(res => {
         setFicha(res.data.ficha);
         console.log(res.data);
       })
       .catch(err => console.log(err));
 
-    axios.get('http://localhost:3300/api/v1/gestor')
+    axios.get(`${URL.API}/api/v1/gestor`)
       .then(res => setGestores(res.data.gestors));
 
-    axios.get('http://localhost:3300/api/v1/login')
+    axios.get(`${URL.API}/api/v1/login`)
       .then(res => setUsuarios(res.data.users));
   }, []);
 
@@ -46,7 +47,7 @@ function Edit() {
     e.preventDefault();
 
     try {
-      await axios.put(`http://localhost:3300/api/v1/ficha/${id}`, ficha);
+      await axios.put(`${URL.API}/api/v1/ficha/${id}`, ficha);
       alert('Ficha actualizada');
     } catch (err) {
       console.log(err);

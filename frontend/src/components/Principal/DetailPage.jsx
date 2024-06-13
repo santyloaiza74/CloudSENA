@@ -6,6 +6,7 @@ import axios from 'axios';
 import QRCode from 'qrcode.react';
 import { Document, Page } from '@react-pdf/renderer';
 import './DetailPage.css'; // Importa el archivo CSS
+import URL from '../../constants/api';
 
 function DetailPage() {
   const { id } = useParams();
@@ -26,7 +27,7 @@ function DetailPage() {
   const [showQRModal, setShowQRModal] = useState(false);
 
   useEffect(() => {
-    axios.get(`http://localhost:3300/api/v1/proyecto/${id}`)
+    axios.get(`${URL.API}/api/v1/proyecto/${id}`)
       .then(res => {
         setProjectDetails(res.data.proyecto);
         if (res.data.proyecto.ficha) {
@@ -39,7 +40,7 @@ function DetailPage() {
   }, [id]);
 
   const getFichaName = (fichaId) => {
-    axios.get(`http://localhost:3300/api/v1/ficha/${fichaId}`)
+    axios.get(`${URL.API}/api/v1/ficha/${fichaId}`)
       .then(res => {
         setFichaName(res.data.ficha.nombre);
       })

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card, Button, Form, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import './../CrearProyecto/cproyectos.css'; // Asegúrate de crear este archivo para las clases CSS adicionales
-
+import URL from '../../constants/api';
 function List() {
     const [ficha, setFicha] = useState({
         nombre: '',
@@ -18,11 +18,11 @@ function List() {
     const [usuarios, setUsuarios] = useState([]);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:3300/api/v1/gestor')
+        axios.get(`${URL.API}/api/v1/gestor`)
             .then(response => setGestores(response.data.gestors))
             .catch(error => console.error('Error fetching gestores:', error));
 
-        axios.get('http://127.0.0.1:3300/login')
+        axios.get(`${URL.API}/login`)
             .then(response => setUsuarios(response.data.users))
             .catch(error => console.error('Error fetching usuarios:', error));
     }, []);
@@ -36,7 +36,7 @@ function List() {
 
     const handleSubmit = async () => {
         try {
-            axios.post('http://127.0.0.1:3300/api/v1/ficha', ficha)
+            axios.post(`${URL.API}/api/v1/ficha`, ficha)
                 .then(function (response) {
                     console.log(response.data);
                     alert("Ficha Creada");
