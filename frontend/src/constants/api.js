@@ -1,6 +1,6 @@
 const API_URL_LOGIN='http://127.0.0.1:3300'
-const API_URL='http://127.0.0.1:3300/api/v1'
-const API_BACK="https://cloudsena-itj7.onrender.com"
+const API_URL="https://cloudsena-itj7.onrender.com"
+const API_BACK="http://127.0.0.1:3300"
 const URL={
     USER: `${API_URL}/users`,
     LOGIN: `${API_URL_LOGIN}/login`,

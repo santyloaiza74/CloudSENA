@@ -74,7 +74,9 @@ function DetailPage() {
               )}
               {projectDetails.documentacion && (
                 <div className="my-3">
-                  <Button variant="primary" onClick={() => window.open(projectDetails.documentacion, '_blank')}>Ver Documentación</Button>
+                  <Button src={`https://docs.google.com/viewer?url=${projectDetails.documentacion}&embedded=true`} variant="primary" onClick={() => window.open(projectDetails.documentacion, '_blank')}>Ver Documentación</Button>
+                  <iframe src={`https://view.officeapps.live.com/op/embed.aspx?src=${projectDetails.documentacion}`} width="100%" height="500px"></iframe>
+
                 </div>
               )}
               <CDBBtn className="Buttonnn mt-3" onClick={handleShowQRModal}>

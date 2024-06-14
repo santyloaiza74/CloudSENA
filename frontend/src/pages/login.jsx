@@ -3,7 +3,7 @@ import validateUser from "../services/login/validate";
 import { Button, Card, Col, Container, Form, Row, Image, Alert } from "react-bootstrap"
 import { useNavigate } from 'react-router-dom'
 import './login.css'
-import logo1 from './../img/logo1.png'
+import logo1 from "/logo1.png"
 import axios from 'axios'
 import { CDBBtn, CDBIcon, CDBContainer } from "cdbreact";
 
