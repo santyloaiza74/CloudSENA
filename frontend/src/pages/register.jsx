@@ -69,6 +69,7 @@ function Register() {
     };
 
     return (
+        
         <Container fluid>
             <Row>
                 <Col md={{ span: 6, offset: 3 }}>
