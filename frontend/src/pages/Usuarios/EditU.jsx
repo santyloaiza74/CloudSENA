@@ -19,7 +19,7 @@ function usuariosE(){
           </div>
   
           {/* Contenido de la página */}
-          <div style={{ display:'flex', padding: '20px' }}>
+          <div style={{ display:'flex', padding: '20px' }} >
             <CDBContainer>
               <EditU></EditU>
             </CDBContainer>
