@@ -3,9 +3,9 @@ import validateUser from "../services/login/validate";
 import { Button, Card, Col, Container, Form, Row, Image, Alert } from "react-bootstrap"
 import { useNavigate } from 'react-router-dom'
 import './login.css'
-import logo1 from "/logo1.png"
 import axios from 'axios'
 import { CDBBtn, CDBIcon, CDBContainer } from "cdbreact";
+import URL from "../constants/api";
 
 function Login() {
     const [login, setLogin] = useState({
@@ -18,7 +18,7 @@ function Login() {
     }
     const handleSubmit = async () => {
         try {
-            axios.post('http://127.0.0.1:3300/login',login)
+            axios.post(`${URL.API}/login`,login)
             .then(function(response){
                 console.log(response.data)
                 navigate('/')
@@ -59,7 +59,7 @@ function Login() {
 
                         <Card className='bg-light text-dark my-5 mx-auto' style={{ borderRadius: '1rem', maxWidth: '400px' }}>
                             <Card.Body className='p-5 d-flex flex-column align-items-center mx-auto w-100'>
-                                <img src={logo1}></img>
+                                <img src="./logo1.png"></img>
                                 <h2 className="fw-bold mb-2 text-uppercase">Iniciar Sesion</h2>
                                 <p className="text-dark-50 mb-5">Ingrese su Email y su contraseña</p>
 

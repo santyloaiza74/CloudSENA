@@ -3,9 +3,9 @@ import validateUser from "../services/login/validate";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import logo1 from '/logo1.png';
 import './register.css'
 import { CDBBtn, CDBIcon, CDBContainer } from "cdbreact";
+import URL from "../constants/api";
 
 function Register() {
     const [register, setRegister] = useState({
@@ -22,7 +22,7 @@ function Register() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:3300/api/v1/ficha')
+        axios.get(`${URL.API}/api/v1/ficha`)
             .then(response => {
                 setFichas(response.data.fichas);
             })
@@ -30,7 +30,7 @@ function Register() {
                 console.error('Error al obtener las fichas:', error);
             });
 
-        axios.get('http://127.0.0.1:3300/api/v1/gestor')
+        axios.get(`${URL.API}/api/v1/gestor`)
             .then(response => {
                 setGestores(response.data.gestors);
             })
@@ -45,7 +45,7 @@ function Register() {
 
     const handleSubmit = async () => {
         try {
-            axios.post('http://127.0.0.1:3300/login/register', register)
+            axios.post(`${URL.API}/login/register`, register)
                 .then(function (response) {
                     console.log(response.data);
                     alert("Registrado Correctamente, Inicie sesion")
@@ -76,7 +76,7 @@ function Register() {
                     
                     <Card className='bg-light text-dark my-5 mx-autocar' style={{ borderRadius: '1rem', maxWidth: '800px' }}>
                         <Card.Body className='p-5 d-flex flex-column align-items-center mx-auto w-100'>
-                            <img src={logo1} alt="Logo"></img>
+                            <img src="/logo1.png" alt="Logo"></img>
                             <h2 className="fw-bold mb-2 text-uppercase">Registrarse</h2>
                             <p className="text-dark-50 mb-5">Ingrese los siguientes campos</p>
 

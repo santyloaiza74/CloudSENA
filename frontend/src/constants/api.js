@@ -11,7 +11,7 @@ const URL={
     SUBASTAS: `${API_URL}/subastas`,
     VENTAS:`${API_URL}/ventas`,
     REGISTER: `${API_URL_LOGIN}/login/register`,
-    API:`${API_URL}`
+    API:`${API_BACK}`
 }
 
 export default URL
