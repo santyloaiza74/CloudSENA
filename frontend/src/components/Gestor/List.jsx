@@ -87,7 +87,7 @@ function EditarF() {
                         <br />
                     </Form.Group>
                     <center>
-                        <CDBBtn className='Buttonn' onClick={() => handleNavigate()}>
+                        <CDBBtn className='Buttonn' onClick={() => handleNavigate()} style={{width:'100%'}}>
                             <CDBIcon icon="fa-solid fa-plus" className="ms-1" />
                             Crear Gestor
                         </CDBBtn>
