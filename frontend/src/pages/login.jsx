@@ -59,7 +59,7 @@ function Login() {
 
                         <Card className='bg-light text-dark my-5 mx-auto' style={{ borderRadius: '1rem', maxWidth: '400px' }}>
                             <Card.Body className='p-5 d-flex flex-column align-items-center mx-auto w-100'>
-                                <img src="./logo1.png"></img>
+                                <img src="./logo3.svg"></img>
                                 <h2 className="fw-bold mb-2 text-uppercase">Iniciar Sesion</h2>
                                 <p className="text-dark-50 mb-5">Ingrese su Email y su contraseña</p>
 
