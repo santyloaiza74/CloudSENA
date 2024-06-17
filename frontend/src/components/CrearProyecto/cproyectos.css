@@ -21,4 +21,7 @@
     .Buttonn {
         width: 100%;
     }
+    .form-select {
+        width: 319px !important;
+    }
 }

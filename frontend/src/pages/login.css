@@ -46,3 +46,10 @@ img{
   margin-bottom: 10px !important;
   margin-left: 90px !important;
 }
+
+@media screen and (max-width: 768px) {
+
+  .inputtt {
+    margin-left: 0px !important;
+  }
+}
