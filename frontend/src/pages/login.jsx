@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import './login.css'
 import axios from 'axios'
 import { CDBBtn, CDBIcon, CDBContainer } from "cdbreact";
+import URL from "../constants/api";
 
 function Login() {
     const [login, setLogin] = useState({
@@ -17,7 +18,7 @@ function Login() {
     }
     const handleSubmit = async () => {
         try {
-            axios.post('http://127.0.0.1:3300/login',login)
+            axios.post(`${URL.API}/login`,login)
             .then(function(response){
                 console.log(response.data)
                 navigate('/')

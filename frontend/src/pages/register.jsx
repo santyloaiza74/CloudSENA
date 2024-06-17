@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './register.css'
 import { CDBBtn, CDBIcon, CDBContainer } from "cdbreact";
+import URL from "../constants/api";
 
 function Register() {
     const [register, setRegister] = useState({
@@ -21,7 +22,7 @@ function Register() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:3300/api/v1/ficha')
+        axios.get(`${URL.API}/api/v1/ficha`)
             .then(response => {
                 setFichas(response.data.fichas);
             })
@@ -29,7 +30,7 @@ function Register() {
                 console.error('Error al obtener las fichas:', error);
             });
 
-        axios.get('http://127.0.0.1:3300/api/v1/gestor')
+        axios.get(`${URL.API}/api/v1/gestor`)
             .then(response => {
                 setGestores(response.data.gestors);
             })
@@ -44,7 +45,7 @@ function Register() {
 
     const handleSubmit = async () => {
         try {
-            axios.post('http://127.0.0.1:3300/login/register', register)
+            axios.post(`${URL.API}/login/register`, register)
                 .then(function (response) {
                     console.log(response.data);
                     alert("Registrado Correctamente, Inicie sesion")
