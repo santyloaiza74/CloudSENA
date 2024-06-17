@@ -4,7 +4,6 @@ import { CDBBtn, CDBIcon } from "cdbreact";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../CrearProyecto/cproyectos.css'; // Asegúrate de tener el archivo CSS correcto
-import logo1 from './../../img/logo1.png';
 import URL from '../../constants/api';
 
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');

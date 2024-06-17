@@ -9,7 +9,7 @@ import {
 } from 'cdbreact';
 import { NavLink } from 'react-router-dom';
 import './Sidebar.css'; // Asegúrate de importar tu archivo de estilos
-import logo1 from './../../img/logo1.png';
+
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false); // Initial state: sidebar closed
