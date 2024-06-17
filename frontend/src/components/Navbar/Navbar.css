@@ -1,76 +1,109 @@
 /* navbar.css */
-.navbar-nav:not(.sc-eBMEME) {
-  justify-content: flex-end !important;
-}
-.justify-content-around {
-  justify-content: flex-end!important;
-}
-
-.navbarStyle{
-  border-bottom: 5px solid #39A900;
-}
 .navbarStyle {
+  border-bottom: 5px solid #39A900;
   color: #39A900;
   margin-bottom: 0;
   width: 100%;
-  max-width: 200%;
-  border-bottom: 5px solid #39A900;
+
   font-family: sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5 20px;
+  padding-left: 15px;
 }
 
 .brandStyle {
   color: #39A900;
-  padding-left: 30px;
+  padding-bottom: 80px;
+}
+
+.nav-items-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end !important;
 }
 
 .navItemStyle {
-  margin-right: 30px;
+  margin-right: 20px;
   list-style: none;
 }
 
 .navLinkStyle {
   color: #39A900;
-
 }
 
 @media screen and (max-width: 768px) {
-  /* .navbarStyle {
-    flex-direction: column;
-  } */
   .navbarStyle {
-
     color: #39A900;
     margin-bottom: 0;
-    width: 143%;
+    width: 139% !important;
     border-bottom: 5px solid #39A900;
     font-family: sans-serif;
   }
+
   .brandStyle {
     padding-left: 0;
-    text-align: center;
-    width: 220%;
+    text-align: left;
+    width: 220% !important;
   }
+
+  .nav-items-container {
+    flex-direction: row;
+    justify-content: flex-end !important;
+    width: 60% !important;
+  }
+
   .navItemStyle {
-    margin-right: 0;
-    text-align: center;
+    margin-right: 10px;
   }
+
   .navLinkStyle {
-    display: block;
-    width: 100%;
-    padding: 10px 0;
+    padding: 5px 10px;
   }
+  .justify-content-arround {
+    justify-content: flex-end !important;
+  }
+  .w_100{
+    width: 60% !important ;
+  }
+
 }
 
 @media screen and (max-width: 600px) {
-  .navItemStyle {
-    margin-bottom: 10px;
+  .navbarStyle {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 5px;
   }
+
+  .brandStyle {
+    text-align: left;
+    width: auto;
+  }
+
+  .nav-items-container {
+    flex-direction: row;
+    justify-content: flex-end;
+    width: auto;
+  }
+
+  .navItemStyle {
+    margin-right: 5px;
+  }
+
   .navLinkStyle {
-    padding: 10px 0;
-    width: 100%;
-    text-align: center;
+    padding: 5px;
+    text-align: right;
+  }
+  .justify-content-arround {
+    justify-content: flex-end !important;
+  }
+  .w_100{
+    width: 60% !important ;
   }
 }
+
 
 .navbar-nav {
   --bs-nav-link-padding-x: 0;

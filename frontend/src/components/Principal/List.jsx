@@ -65,16 +65,15 @@ function List() {
       ) : (
         <>
           <div className="card-row">
-            {currentProjects.map(({ _id, nombre, autores, ficha, fecha, imagenes, ruta }) => (
+            {currentProjects.map(({ _id, nombre, autores, ficha, fecha, imagenes }) => (
               <Card key={_id} className="custom-card-style">
                 <Card.Body>
-                  <Card.Img variant="top" src={imagenes[0]} alt={`${nombre} Image`} />
+                  <Card.Img variant="top" src={imagenes} alt={`${nombre} Image`} />
                   <Card.Title>{nombre} </Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">{autores}</Card.Subtitle>
                   <Card.Text>
                     <strong>Ficha:</strong> {ficha?.[0]?.nombre}<br />
                     <strong>Fecha:</strong> {fecha}<br />
-                    <strong>Ruta:</strong> {ruta}
                   </Card.Text>
                   <CDBBtn className='Buttonn' onClick={() => handleDetailsClick(_id)}>
                     <CDBIcon icon="fa-solid fa-eye" className="ms-1" /> 

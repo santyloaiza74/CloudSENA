@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, Button, Form, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import '../EditarProyecto/list.css';
+import '../CrearProyecto/cproyectos.css';
 import URL from '../../constants/api';
 
 function Edit() {

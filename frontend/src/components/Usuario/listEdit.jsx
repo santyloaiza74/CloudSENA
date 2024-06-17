@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, Button, Form, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import '../EditarProyecto/list.css';
+import '../CrearProyecto/cproyectos.css';
 import URL from '../../constants/api';
+import { useNavigate } from'react-router-dom';
 
 function EditU() {
   const { id } = useParams();
 
   const [usuario, setUsuario] = useState({
-
     email: '',
     password: '',
     nombre: '',
@@ -18,7 +18,7 @@ function EditU() {
     rol: '',
     gestor: '',
   });
-
+  const navigate = useNavigate();
   const [fichas, setFichas] = useState([]);
   const [roles, setRoles] = useState([]);
   const [gestores, setGestores] = useState([]);
@@ -37,13 +37,12 @@ function EditU() {
     axios.get(`${URL.API}/api/v1/rol`)
       .then(res => {
         setRoles(res.data.roles);
-        console.log(res.data)
+        console.log(res.data);
       });
-
 
     axios.get(`${URL.API}/api/v1/gestor`)
       .then(res => setGestores(res.data.gestors));
-  }, []);
+  }, [id]);
 
   const handleInputChange = (e) => {
     setUsuario({
@@ -58,22 +57,23 @@ function EditU() {
     try {
       await axios.put(`${URL.API}/login/${id}`, usuario);
       alert('Usuario actualizado');
+      navigate('/users');
     } catch (err) { 
       console.log(err);
     }
   };
 
   return (
-    <Container fluid>
-      <Row>
-        <Col md={{ span: 6, offset: 3 }}>
-          <Card className='cardddd' style={{ borderRadius: '1rem', maxWidth: '90000px' }}>
-            <Card.Body className='p-5 d-flex flex-column align-items-center mx-auto w-100'>
-              <h2 className="fw-bold mb-2 text-uppercase">Editar Usuario</h2>
-              <p className="text-dark-50 mb-5">Actualice el rol del Usuario</p>
+    <Container fluid className="my-4">
+      <Row className="justify-content-center">
+        <Col xs={12} md={8} lg={6}>
+          <Card className='carddddd' style={{ borderRadius: '1rem' }}>
+            <Card.Body className='p-4'>
+              <h2 className="fw-bold mb-2 text-uppercase text-center">Editar Usuario</h2>
+              <p className="text-dark-50 mb-4 text-center">Actualice el rol del Usuario</p>
               <Form onSubmit={handleSubmit}>
                 <Row>
-                  <Col md={6}>
+                  <Col xs={12} md={6}>
                     <Form.Group className="mb-3" controlId="formEmail">
                       <Form.Label>Email</Form.Label>
                       <Form.Control
@@ -83,18 +83,6 @@ function EditU() {
                         disabled
                       />
                     </Form.Group>
-
-                    {/* <Form.Group className="mb-3" controlId="formPassword">
-                      <Form.Label>Password</Form.Label>
-                      <Form.Control
-                        name="password"
-                        value={usuario.password}
-                        onChange={handleInputChange}
-                        type="password"
-                        disabled
-                      />
-                    </Form.Group> */}
-
                     <Form.Group className="mb-3" controlId="formNombre">
                       <Form.Label>Nombre</Form.Label>
                       <Form.Control
@@ -104,7 +92,6 @@ function EditU() {
                         disabled
                       />
                     </Form.Group>
-
                     <Form.Group className="mb-3" controlId="formDocumento">
                       <Form.Label>Documento</Form.Label>
                       <Form.Control
@@ -114,11 +101,8 @@ function EditU() {
                         disabled
                       />
                     </Form.Group>
-
-                    
                   </Col>
-
-                  <Col md={6}>
+                  <Col xs={12} md={6}>
                     <Form.Group className="mb-3" controlId="formRol">
                       <Form.Label>Rol</Form.Label>
                       <Form.Select
@@ -127,11 +111,10 @@ function EditU() {
                         onChange={handleInputChange}
                       >
                         {roles.map(r => (
-                          <option key={r._id} value={r._id} selected={usuario.rol === r._id} >{r.name}</option>
+                          <option key={r._id} value={r._id}>{r.name}</option>
                         ))}
                       </Form.Select>
                     </Form.Group>
-
                     <Form.Group className="mb-3" controlId="formGestor">
                       <Form.Label>Gestor</Form.Label>
                       <Form.Select
@@ -141,7 +124,7 @@ function EditU() {
                         disabled
                       >
                         {gestores.map(g => (
-                          <option key={g._id} value={g._id} selected={usuario.gestor === g._id} >{g.nombre}</option>
+                          <option key={g._id} value={g._id}>{g.nombre}</option>
                         ))}
                       </Form.Select>
                     </Form.Group>
@@ -152,21 +135,19 @@ function EditU() {
                         value={usuario.ficha}
                         onChange={handleInputChange}
                         disabled
-                        selected={usuario.ficha}
                       >
                         {fichas.map(f => (
-                          <option key={f._id} value={f._id} selected={usuario.ficha} >{f.nombre}</option>
+                          <option key={f._id} value={f._id}>{f.nombre}</option>
                         ))}
                       </Form.Select>
                     </Form.Group>
                   </Col>
                 </Row>
-                <br />
-                <center>
-                  <Button variant='primary' onClick={handleSubmit}>
+                <div className="text-center mt-4">
+                  <Button variant='primary' type='submit'>
                     Actualizar Usuario
                   </Button>
-                </center>
+                </div>
               </Form>
             </Card.Body>
           </Card>

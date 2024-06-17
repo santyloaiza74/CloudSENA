@@ -74,7 +74,12 @@ function DetailPage() {
               )}
               {projectDetails.documentacion && (
                 <div className="my-3">
-                  <Button variant="primary" onClick={() => window.open(projectDetails.documentacion, '_blank')}>Ver Documentación</Button>
+                  <CDBBtn className="Buttonn" onClick={() => window.open(projectDetails.documentacion, '_blank')}>
+                    <CDBIcon icon="qrcode" />
+                    Documentacion
+                  </CDBBtn>
+
+
                 </div>
               )}
               <CDBBtn className="Buttonnn mt-3" onClick={handleShowQRModal}>

@@ -14,6 +14,7 @@ import pdetail from './pages/Proyectos/Detalles'
 import usuariosE from './pages/Usuarios/EditU'
 import gestors from './pages/Gestores/Gestores'
 import Cgestor from './pages/Gestores/CrearGestor'
+import Egestor from './pages/Gestores/EditarGestor'
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path='/login/:id' Component={usuariosE}></Route>
         <Route path='/gestor' Component={gestors}></Route>
         <Route path='/Cgestor' Component={Cgestor}></Route>
+        <Route path='/editarGestor/:id' Component={Egestor}></Route>
       </Routes>
     </BrowserRouter>
   )
