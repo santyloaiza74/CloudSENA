@@ -12,10 +12,10 @@ function List() {
         documento: '',
         celular: '',
         correo: '',
-        ficha: '', // Nuevo campo para la relación con la ficha
+        ficha: '',
     });
-    const navigate =useNavigate()
-    const [fichas, setFichas] = useState([]); // Estado para almacenar las fichas
+    const navigate = useNavigate();
+    const [fichas, setFichas] = useState([]);
 
     useEffect(() => {
         axios.get(`${URL.API}/api/v1/ficha`)
@@ -48,16 +48,16 @@ function List() {
     };
 
     return (
-        <Container fluid>
-            <Row>
-                <Col md={{ span: 6, offset: 3 }}>
-                    <Card className='cardddd' style={{ borderRadius: '1rem', maxWidth: '90000px' }}>
-                        <Card.Body className='p-5 d-flex flex-column align-items-center mx-auto w-100'>
-                            <h2 className="fw-bold mb-2 text-uppercase">Crear Gestor</h2>
-                            <p className="text-dark-50 mb-5">Ingrese los siguientes campos</p>
-                            <div className="fields">
+        <Container fluid className="my-4">
+            <Row className="justify-content-center">
+                <Col xs={12} md={8} lg={6}>
+                    <Card className='carddddd' style={{ borderRadius: '1rem' }}>
+                        <Card.Body className='p-4'>
+                            <h2 className="fw-bold mb-2 text-uppercase text-center">Crear Gestor</h2>
+                            <p className="text-dark-50 mb-4 text-center">Ingrese los siguientes campos</p>
+                            <Form onSubmit={handleSubmit}>
                                 <Row>
-                                    <Col md={6}>
+                                    <Col xs={12} md={6}>
                                         <Form.Group className="mb-3" controlId="formNombre">
                                             <Form.Label>Nombre</Form.Label>
                                             <Form.Control
@@ -66,7 +66,6 @@ function List() {
                                                 onChange={handleInputChange}
                                             />
                                         </Form.Group>
-
                                         <Form.Group className="mb-3" controlId="formDocumento">
                                             <Form.Label>Documento</Form.Label>
                                             <Form.Control
@@ -76,8 +75,7 @@ function List() {
                                             />
                                         </Form.Group>
                                     </Col>
-
-                                    <Col md={6}>
+                                    <Col xs={12} md={6}>
                                         <Form.Group className="mb-3" controlId="formCelular">
                                             <Form.Label>Celular</Form.Label>
                                             <Form.Control
@@ -86,7 +84,6 @@ function List() {
                                                 onChange={handleInputChange}
                                             />
                                         </Form.Group>
-
                                         <Form.Group className="mb-3" controlId="formCorreo">
                                             <Form.Label>Correo</Form.Label>
                                             <Form.Control
@@ -95,10 +92,8 @@ function List() {
                                                 onChange={handleInputChange}
                                             />
                                         </Form.Group>
-
-                                        
                                     </Col>
-                                    
+                                    <Col xs={12}>
                                         <Form.Group className="mb-3" controlId="formFicha">
                                             <Form.Label>Ficha</Form.Label>
                                             <Form.Control as="select"
@@ -112,15 +107,15 @@ function List() {
                                                 ))}
                                             </Form.Control>
                                         </Form.Group>
-                                        
-                                        
+                                    </Col>
                                 </Row>
-                            </div>
-                            <br/>
-                            <CDBBtn className='Buttonn' type="submit" onClick={handleSubmit}>
-                                            <CDBIcon icon="fa-solid fa-plus" className="ms-1" />
-                                            Crear Gestor
-                                        </CDBBtn>
+                                <div className="text-center mt-4">
+                                    <CDBBtn className='Buttonn' type="submit" onClick={handleSubmit}>
+                                        <CDBIcon icon="fa-solid fa-plus" className="ms-1" />
+                                        Crear Gestor
+                                    </CDBBtn>
+                                </div>
+                            </Form>
                         </Card.Body>
                     </Card>
                 </Col>

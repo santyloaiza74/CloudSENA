@@ -12,9 +12,16 @@
 
     .form-group {
         margin-bottom: 1rem;
+        width: 20px !important;
+    }
+    .form-control {
+        width: 100% !important;
     }
 
     .Buttonn {
         width: 100%;
+    }
+    .form-select {
+        width: 319px !important;
     }
 }

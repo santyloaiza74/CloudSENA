@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Button, Spinner, Row, Col, Pagination } from 'react-bootstrap';
+import { Card, Spinner, Row, Col, Pagination, Form } from 'react-bootstrap';
 import { CDBBtn, CDBIcon } from "cdbreact";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../Fichas/list.css'; // Asegúrate de tener el archivo CSS correcto
+import '../CrearProyecto/cproyectos.css'; // Asegúrate de tener el archivo CSS correcto
 import logo1 from './../../img/logo1.png';
 import URL from '../../constants/api';
 
@@ -11,6 +11,8 @@ axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 
 function EditarF() {
     const [gestores, setGestores] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState(true);
     const itemsPerPage = 8; // Define la cantidad deseada de elementos por página
     const [currentPage, setCurrentPage] = useState(1);
@@ -19,10 +21,10 @@ function EditarF() {
         axios
             .get(`${URL.API}/api/v1/gestor`)
             .then((response) => {
-                console.log(response.data)
+                console.log(response.data);
                 if (response.data && response.data.gestors) {
                     setGestores(response.data.gestors);
-                    
+                    setSearchResults(response.data.gestors);
                 }
                 setLoading(false);
             })
@@ -32,10 +34,17 @@ function EditarF() {
             });
     }, []);
 
-    const totalPages = Math.ceil(gestores.length / itemsPerPage);
+    useEffect(() => {
+        const filteredResults = gestores.filter(({ nombre }) => (
+            nombre?.toLowerCase().includes(searchTerm.toLowerCase())
+        ));
+        setSearchResults(filteredResults);
+    }, [searchTerm, gestores]);
+
+    const totalPages = Math.ceil(searchResults.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const currentItems = gestores.slice(startIndex, endIndex);
+    const currentItems = searchResults.slice(startIndex, endIndex);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -55,6 +64,10 @@ function EditarF() {
         navigate(`/editarGestor/${id}`);
     };
 
+    const handleNavigate = () => {
+        navigate('/Cgestor');
+    }
+
     return (
         <div className="list-container">
             {loading ? (
@@ -63,12 +76,23 @@ function EditarF() {
                 </Spinner>
             ) : (
                 <div>
+                    <Form.Group controlId="searchForm">
+                        <Form.Control
+                            className='buscarp'
+                            type="text"
+                            placeholder="Buscar gestor..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                        <br />
+                    </Form.Group>
                     <center>
-                        <CDBBtn className='Buttonn' href='/Cgestor'>
+                        <CDBBtn className='Buttonn' onClick={() => handleNavigate()} style={{width:'100%'}}>
                             <CDBIcon icon="fa-solid fa-plus" className="ms-1" />
                             Crear Gestor
                         </CDBBtn>
                     </center>
+                    
                     <Row>
                         {currentItems.map(({ _id, nombre, documento, celular, correo, ficha }) => (
                             <Col key={_id} md={6}>

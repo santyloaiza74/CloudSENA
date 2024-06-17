@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Button, Spinner, Row, Col, Pagination } from 'react-bootstrap';
-import { CDBBtn, CDBIcon, CDBContainer } from "cdbreact";
+import { Card, Spinner, Row, Col, Pagination, Form } from 'react-bootstrap';
+import { CDBBtn, CDBIcon } from "cdbreact";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import './list.css'; // Asegúrate de tener el archivo CSS correcto
-import logo1 from './../../img/logo1.png';
 import URL from '../../constants/api';
 
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 
 function EditarF() {
     const [ficha, setFicha] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState(true);
     const itemsPerPage = 8; // Define la cantidad deseada de elementos por página
     const [currentPage, setCurrentPage] = useState(1);
@@ -20,7 +21,7 @@ function EditarF() {
             .get(`${URL.API}/api/v1/ficha`)
             .then((response) => {
                 setFicha(response.data.fichas);
-                console.log(response.data)
+                setSearchResults(response.data.fichas);
                 setLoading(false);
             })
             .catch((error) => {
@@ -29,10 +30,17 @@ function EditarF() {
             });
     }, []);
 
-    const totalPages = Math.ceil(ficha.length / itemsPerPage);
+    useEffect(() => {
+        const filteredResults = ficha.filter(({ nombre }) => (
+            nombre?.toLowerCase().includes(searchTerm.toLowerCase())
+        ));
+        setSearchResults(filteredResults);
+    }, [searchTerm, ficha]);
+
+    const totalPages = Math.ceil(searchResults.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const currentItems = ficha.slice(startIndex, endIndex);
+    const currentItems = searchResults.slice(startIndex, endIndex);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -48,12 +56,14 @@ function EditarF() {
 
     const navigate = useNavigate();
 
-const handleEdit = (id) => {
-    navigate(`/editarFicha/${id}`);
-};  
+    const handleEdit = (id) => {
+        navigate(`/editarFicha/${id}`);
+    };
+    const handleNavigate = () => {
+        navigate('/ficha');
+    }
 
     return (
-
         <div className="list-container">
             {loading ? (
                 <Spinner animation="border" role="status">
@@ -61,27 +71,34 @@ const handleEdit = (id) => {
                 </Spinner>
             ) : (
                 <div>
+                    <Form.Group controlId="searchForm">
+                        <Form.Control
+                            className='buscarp'
+                            type="text"
+                            placeholder="Buscar ficha..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                        <br />
+                    </Form.Group>
                     <center>
-                        <CDBBtn className='Buttonn' href='/ficha'>
+                        
+                        <CDBBtn className='Buttonn' onClick={() => handleNavigate()} style={{width:'100%'}}>
                             <CDBIcon icon="fa-solid fa-plus" className="ms-1" />
                             Crear Fichas
                         </CDBBtn>
                     </center>
+                    
                     <Row>
                         {currentItems.map(({ _id, nombre, fecha_inicio, fecha_fin }) => (
                             <Col key={_id} md={6}>
                                 <Card className="mb-3">
-                                    {/* <Card.Img variant="top" src={logo1} alt={`${nombre} Image`} /> */}
                                     <Card.Body>
                                         <Card.Title>{nombre}</Card.Title>
                                         <Card.Text>
                                             <strong>Fecha Inicio:</strong> {fecha_inicio}<br />
                                             <strong>Fecha Fin:</strong> {fecha_fin}<br />
                                         </Card.Text>
-                                        <CDBBtn className='Buttonn'>
-                                            <CDBIcon icon="fa-solid fa-eye" className="ms-1" />
-                                            Ver Detalles
-                                        </CDBBtn>
                                         <CDBBtn className='Buttonn' onClick={() => handleEdit(_id)}>
                                             <CDBIcon icon="fa-solid fa-edit" className="ms-1" />
                                             Editar
