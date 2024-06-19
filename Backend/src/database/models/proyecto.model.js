@@ -1,38 +1,41 @@
-const mongoose= require('mongoose')
+const mongoose = require('mongoose');
 
 const proyectoSchema = new mongoose.Schema({
-    nombre:{
+    nombre: {
         type: String,
         required: true
     },
-    autores:{
+    autores: {
         type: String
     },
-    ficha:[{
+    ficha: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'ficha'
+        ref: 'ficha' // Asegúrate de que el nombre del modelo 'Ficha' sea correcto
     }],
-    fecha:{
-        type:String,
-        required: true
-    },
-    documentacion:{
-        type: Array,
-        required: true
-    },
-    descripcion:{
+    fecha: {
         type: String,
         required: true
     },
-    imagenes:{
+    documentacion: {
         type: Array,
         required: true
     },
-    video:{
+    descripcion: {
+        type: String,
+        required: true
+    },
+    imagenes: {
+        type: Array,
+        required: true
+    },
+    video: {
         type: Array
+    },
+    confirmationCode: {
+        type: String
     }
-  });
-  
-const Proyecto = mongoose.model('proyecto', proyectoSchema);
+});
 
-module.exports= Proyecto  
+const Proyecto = mongoose.model('Proyecto', proyectoSchema);
+
+module.exports = Proyecto;

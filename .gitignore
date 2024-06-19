@@ -6,3 +6,4 @@ Backend/public
 .gitignore
 Backend/src/routes/nodemailer.js
 frontend/.env
+Backend

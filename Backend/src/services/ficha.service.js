@@ -5,7 +5,7 @@ class fichaService{
         this.model= fichaSchema
     }
     async get(){
-        const fichas=await this.model.find()
+        const fichas=await this.model.find().populate("gestor")
         return fichas
     }
     async post(ficha){
@@ -13,7 +13,7 @@ class fichaService{
         return fichas
     }
     async getOne(id){
-        const ficha=await this.model.findById(id)
+        const ficha=await this.model.findById(id).populate("gestor")
         return ficha
     }
     async delete(id){

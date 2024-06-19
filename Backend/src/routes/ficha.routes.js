@@ -22,9 +22,8 @@ router.post('/', async (req, res) => {
     }
     const fechaInicio = new Date(fecha_inicio);
     const fechaFin = new Date(fecha_fin);
-
-    const fechaInicioFormatoString = fechaInicio.toISOString().substring(0, 10);
-    const fechaFinFormatoString = fechaFin.toISOString().substring(0, 10);
+    const fechaInicioFormatoString = `${fechaInicio.getDate()}/${fechaInicio.getMonth() + 1}/${fechaInicio.getFullYear()}`;
+    const fechaFinFormatoString = `${fechaFin.getDate()}/${fechaFin.getMonth() + 1}/${fechaFin.getFullYear()}`;
 
     const ficha = new fichaSchema({
         nombre: nombre,
