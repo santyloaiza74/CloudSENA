@@ -34,8 +34,8 @@
 @media screen and (max-width: 600px) {
   .custom-card-style {
     width: 90vw !important;
-    height: 40vh !important;
-    
+    height: auto !important;
+    max-height: 69vh !important;
   }
   .card-row {
     display: flex;
