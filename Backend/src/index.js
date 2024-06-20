@@ -1,26 +1,22 @@
-const express = require('express')
-const mongoose=require('mongoose')
-const {port, hostback } = require('./config/config')
-const routerApi=require('./routes/index')
-const connect=require('./libs/mongoose')
-const createRoles=require('./seeders/rol.seeder')
-const cors = require('cors')
-const helmet =require('helmet')
-const app = express()
+const express = require("express");
+const { port, hostback } = require("./config/config");
+const routerApi = require("./routes/index");
+const connect = require("./libs/mongoose");
+const createRoles = require("./seeders/seeder");
+const cors = require("cors");
+const helmet = require("helmet");
+const app = express();
 
-connect()
-createRoles()
-app.use(express.urlencoded({extended: false}))
-app.use(express.json())
+connect();
+createRoles;
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
-app.use(express.static('public'))
-app.use(cors())
-app.use(helmet())
-routerApi(app)
-
-
+app.use(express.static("public"));
+app.use(cors());
+app.use(helmet());
+routerApi(app);
 
 app.listen(port, () => {
-    console.log(`APP corriendo por el puerto ${port}`
-    )
-})
+  console.log(`APP corriendo por el puerto ${port}`);
+});

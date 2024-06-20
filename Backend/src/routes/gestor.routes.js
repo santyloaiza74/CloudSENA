@@ -1,39 +1,49 @@
-const router = require('express').Router();
-const gestorController = require('../controllers/gestor.controller');
-const gestorSchema = require('../database/models/gestor.model');
-const { validateToken, verifyRole } = require('../function/jwt/proteccionrutas');
+const router = require("express").Router();
+const gestorController = require("../controllers/gestor.controller");
+const gestorSchema = require("../database/models/gestor.model");
+const {
+  validateToken,
+  verifyRole,
+} = require("../function/jwt/proteccionrutas");
 
 const controller = new gestorController();
 
-// Ruta GET accesible por todos
-router.get('/', async (req, res) => {
-    const gestors = await controller.index();
-    res.json({ gestors });
+router.get("/", async (req, res) => {
+  const gestors = await controller.index();
+  res.json({ gestors });
 });
 
-// Ruta POST accesible por admin y superadmin
-router.post('/', validateToken, verifyRole('admin'), verifyRole('superadmin'), async (req, res) => {
+router.post(
+  "/",
+  validateToken,
+  verifyRole("admin"),
+  verifyRole("superadmin"),
+  async (req, res) => {
     const { nombre, documento, celular, correo, ficha } = req.body;
     const gestor = new gestorSchema({
-        nombre: nombre,
-        documento: documento,
-        celular: celular,
-        correo: correo,
-        ficha: [ficha]
+      nombre: nombre,
+      documento: documento,
+      celular: celular,
+      correo: correo,
+      ficha: [ficha],
     });
     await controller.create(gestor);
     res.status(201).json({ gestor });
+  }
+);
+
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const gestor = await controller.getById(id);
+  res.json({ gestor });
 });
 
-// Ruta GET por ID accesible por todos
-router.get('/:id', async (req, res) => {
-    const { id } = req.params;
-    const gestor = await controller.getById(id);
-    res.json({ gestor });
-});
-
-// Ruta PUT accesible por admin y superadmin
-router.put('/:id', validateToken, verifyRole('admin'), verifyRole('superadmin'), async (req, res) => {
+router.put(
+  "/:id",
+  validateToken,
+  verifyRole("admin"),
+  verifyRole("superadmin"),
+  async (req, res) => {
     const { id } = req.params;
     const { nombre, documento, celular, correo } = req.body;
     const values = {};
@@ -42,22 +52,28 @@ router.put('/:id', validateToken, verifyRole('admin'), verifyRole('superadmin'),
     if (celular) values.celular = celular;
     if (correo) values.correo = correo;
     try {
-        const gestor = await controller.update(id, values);
-        res.status(200).json({ gestor });
+      const gestor = await controller.update(id, values);
+      res.status(200).json({ gestor });
     } catch (error) {
-        res.status(404).json({ message: error.message });
+      res.status(404).json({ message: error.message });
     }
-});
+  }
+);
 
-// Ruta DELETE accesible por admin y superadmin
-router.delete('/:id', validateToken, verifyRole('admin'), verifyRole('superadmin'), async (req, res) => {
+router.delete(
+  "/:id",
+  validateToken,
+  verifyRole("admin"),
+  verifyRole("superadmin"),
+  async (req, res) => {
     const { id } = req.params;
     try {
-        const gestor = await controller.remove(id);
-        res.status(200).json({ gestor });
+      const gestor = await controller.remove(id);
+      res.status(200).json({ gestor });
     } catch (error) {
-        res.status(404).json({ message: error.message });
+      res.status(404).json({ message: error.message });
     }
-});
+  }
+);
 
 module.exports = router;
