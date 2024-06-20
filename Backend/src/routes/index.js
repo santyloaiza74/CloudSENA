@@ -4,7 +4,6 @@ const fichaRouter=require('./ficha.routes')
 const gestorRouter=require('./gestor.routes')
 const proyectoRouter=require('./proyecto.routes')
 const rolRouter=require('./rol.routes')
-const {validateToken}=require('../function/jwt/proteccionrutas')
 function routerApi(app){
     const router = Router()
 

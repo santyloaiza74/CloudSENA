@@ -1,24 +1,28 @@
-const router = require('express').Router()
-const fichaController = require('../controllers/ficha.controller')
-const fichaSchema = require('../database/models/ficha.model')
-const controller = new fichaController
+const router = require('express').Router();
+const fichaController = require('../controllers/ficha.controller');
+const fichaSchema = require('../database/models/ficha.model');
+const { validateToken, verifyRole } = require('../function/jwt/proteccionrutas');
 
+const controller = new fichaController();
+
+// Ruta GET accesible por todos
 router.get('/', async (req, res) => {
-    const fichas = await controller.index()
-    res.json({ fichas })
-})
+    const fichas = await controller.index();
+    res.json({ fichas });
+});
 
-router.post('/', async (req, res) => {
+// Ruta POST accesible por admin y superadmin
+router.post('/', validateToken, verifyRole('admin'), verifyRole('superadmin'), async (req, res) => {
     const { nombre, codigo, fecha_fin, fecha_inicio, tipo, gestor } = req.body;
-    const codigodup = await fichaSchema.findOne({ codigo })
+    const codigodup = await fichaSchema.findOne({ codigo });
     if (codigodup) {
-        return res.status(400).json({ message: "El código ya se encuentra registrado" })
+        return res.status(400).json({ message: "El código ya se encuentra registrado" });
     }
     if (!fecha_fin) {
-        return res.status(404).json({ message: "La fecha de fin debe ser obligatoria" })
+        return res.status(404).json({ message: "La fecha de fin debe ser obligatoria" });
     }
     if (!fecha_inicio) {
-        return res.status(404).json({ message: "La fecha de inicio debe ser obligatoria" })
+        return res.status(404).json({ message: "La fecha de inicio debe ser obligatoria" });
     }
     const fechaInicio = new Date(fecha_inicio);
     const fechaFin = new Date(fecha_fin);
@@ -43,41 +47,44 @@ router.post('/', async (req, res) => {
     }
 });
 
-
+// Ruta GET por ID accesible por todos
 router.get('/:id', async (req, res) => {
-    const { id } = req.params
-    const ficha = await controller.getById(id)
-    res.json({ ficha })
-})
+    const { id } = req.params;
+    const ficha = await controller.getById(id);
+    res.json({ ficha });
+});
 
-router.put('/:id', async (req, res) => {
-    const { id } = req.params
-    const { nombre, codigo, fecha_fin, fecha_inicio, tipo } = req.body
-    const codigodup = await fichaSchema.findOne({ codigo })
+// Ruta PUT accesible por admin y superadmin
+router.put('/:id', validateToken, verifyRole('admin'), verifyRole('superadmin'), async (req, res) => {
+    const { id } = req.params;
+    const { nombre, codigo, fecha_fin, fecha_inicio, tipo } = req.body;
+    const codigodup = await fichaSchema.findOne({ codigo });
     if (codigodup) {
-        return res.status(400).json({ message: "El código ya se encuentra registrado" })
+        return res.status(400).json({ message: "El código ya se encuentra registrado" });
     }
-    const values = {}
-    if (nombre) values.nombre = nombre
-    if (codigo) values.codigo = codigo
-    if (fecha_fin) values.fecha_fin = fecha_fin
-    if (fecha_inicio) values.fecha_inicio = fecha_inicio
-    if (tipo) values.tipo = tipo
+    const values = {};
+    if (nombre) values.nombre = nombre;
+    if (codigo) values.codigo = codigo;
+    if (fecha_fin) values.fecha_fin = fecha_fin;
+    if (fecha_inicio) values.fecha_inicio = fecha_inicio;
+    if (tipo) values.tipo = tipo;
     try {
-        const ficha = await controller.update(id, values)
-        res.status(200).json({ ficha })
+        const ficha = await controller.update(id, values);
+        res.status(200).json({ ficha });
     } catch (error) {
-        res.status(404).json({ message: error.message })
+        res.status(404).json({ message: error.message });
     }
-})
+});
 
-router.delete('/:id', async (req, res) => {
-    const { id } = req.params
+// Ruta DELETE accesible por admin y superadmin
+router.delete('/:id', validateToken, verifyRole('admin'), verifyRole('superadmin'), async (req, res) => {
+    const { id } = req.params;
     try {
-        const ficha = await controller.remove(id)
-        res.status(200).json({ ficha })
+        const ficha = await controller.remove(id);
+        res.status(200).json({ ficha });
     } catch (error) {
-        res.status(404).json({ message: error.message })
+        res.status(404).json({ message: error.message });
     }
-})
-module.exports = router
+});
+
+module.exports = router;
