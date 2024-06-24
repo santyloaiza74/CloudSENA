@@ -1,5 +1,5 @@
 const gestorSchema = require("../database/models/gestor.model");
-
+const loginSchema = require("../database/models/login.model");
 class gestorService {
   constructor() {
     this.model = gestorSchema;
@@ -10,7 +10,7 @@ class gestorService {
   }
   async post(gestor) {
     const gestors = await this.model.create(gestor);
-    return gestors;
+    return gestors
   }
   async getOne(id) {
     const gestor = await this.model.findById(id).populate("ficha");

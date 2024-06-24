@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const gestorController = require("../controllers/gestor.controller");
 const gestorSchema = require("../database/models/gestor.model");
+const loginSchema = require("../database/models/login.model");
+const rolSchema = require("../database/models/roles.model");
 const {
   validateToken,
   verifyRole,
@@ -9,8 +11,12 @@ const {
 const controller = new gestorController();
 
 router.get("/", async (req, res) => {
-  const gestors = await controller.index();
-  res.json({ gestors });
+  try {
+    const gestors = await controller.index();
+    res.json({ gestors });
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener los gestores." });
+  }
 });
 
 router.post(
@@ -20,6 +26,15 @@ router.post(
   verifyRole("superadmin"),
   async (req, res) => {
     const { nombre, documento, celular, correo, ficha } = req.body;
+    const role = await rolSchema.findOne({ name: "gestor" });
+    const rolid = [role._id];
+    const user= new loginSchema({
+      email: correo,
+      password: documento,
+      nombre: nombre,
+      documento: documento,
+      rol: rolid,
+    })
     const gestor = new gestorSchema({
       nombre: nombre,
       documento: documento,
@@ -27,15 +42,24 @@ router.post(
       correo: correo,
       ficha: [ficha],
     });
-    await controller.create(gestor);
-    res.status(201).json({ gestor });
+    try {
+      await controller.create(gestor);
+      loginSchema.create(user);
+      res.status(201).json({ gestor, user });
+    } catch (error) {
+      res.status(500).json({ error: "Error al guardar el gestor." });
+    }
   }
 );
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  const gestor = await controller.getById(id);
-  res.json({ gestor });
+  try {
+    const gestor = await controller.getById(id);
+    res.json({ gestor });
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener el gestor." });
+  }
 });
 
 router.put(

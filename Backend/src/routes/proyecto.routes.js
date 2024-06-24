@@ -81,8 +81,12 @@ const limits = {
 const upload = multer({ storage, limits });
 
 router.get("/", async (req, res) => {
-  const proyectos = await controller.index();
-  res.json({ proyectos });
+  try {
+    const proyectos = await controller.index();
+    res.json({ proyectos });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 router.post(
@@ -150,22 +154,29 @@ router.post(
         imagenes: img,
         video: video,
       });
-
-      await controller.create(proyecto);
-      img.length = 0;
-      video.length = 0;
-      doc.length = 0;
-      res
-        .status(201)
-        .json({ proyecto, message: "Archivos subidos exitosamente." });
+      try {
+        await controller.create(proyecto);
+        img.length = 0;
+        video.length = 0;
+        doc.length = 0;
+        res
+          .status(201)
+          .json({ proyecto, message: "Archivos subidos exitosamente." });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
     }
   }
 );
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  const proyecto = await controller.getById(id);
-  res.json({ proyecto });
+  try {
+    const proyecto = await controller.getById(id);
+    res.json({ proyecto });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 router.put(

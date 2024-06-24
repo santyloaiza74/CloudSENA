@@ -9,8 +9,12 @@ const {
 const controller = new fichaController();
 
 router.get("/", async (req, res) => {
-  const fichas = await controller.index();
-  res.json({ fichas });
+  try {
+    const fichas = await controller.index();
+    res.json({ fichas });
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener las fichas" });
+  }
 });
 
 router.post(
@@ -62,8 +66,12 @@ router.post(
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  const ficha = await controller.getById(id);
-  res.json({ ficha });
+  try {
+    const ficha = await controller.getById(id);
+    res.json({ ficha });
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener la ficha" });
+  }
 });
 
 router.put(

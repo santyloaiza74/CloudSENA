@@ -12,8 +12,12 @@ const {
 const controller = new LoginController();
 
 router.get("/", async (req, res) => {
-  const users = await controller.index();
-  res.json({ users });
+  try {
+    const users = await controller.index();
+    res.json({ users });
+  } catch (error) {
+    res.status(404).json({message:"Errror al obtener usuarios"});
+  }
 });
 
 router.post("/register", async (req, res) => {
@@ -40,14 +44,22 @@ router.post("/register", async (req, res) => {
     gestor: [gestor],
     rol: rolid,
   });
-  await controller.create(user);
-  res.status(201).json({ user });
+  try {
+    await controller.create(user);
+    res.status(201).json({ user });
+  } catch (error) {
+    res.status(500).json({ error: "Error al guardar el usuario." });
+  }
 });
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  const user = await controller.getOne(id);
-  res.json({ user });
+  try {
+    const user = await controller.getOne(id);
+    res.json({ user });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
 });
 
 router.put(
