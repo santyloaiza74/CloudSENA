@@ -76,7 +76,7 @@ function Register() {
                     
                     <Card className='bg-light text-dark my-5 mx-autocar' style={{ borderRadius: '1rem', maxWidth: '800px' }}>
                         <Card.Body className='p-5 d-flex flex-column align-items-center mx-auto w-100'>
-                            <img src="./../../dist/assets/logo1.png" alt="Logo"></img>
+                            <img src="/logo1.png" alt="Logo"></img>
                             <h2 className="fw-bold mb-2 text-uppercase">Registrarse</h2>
                             <p className="text-dark-50 mb-5">Ingrese los siguientes campos</p>
 
