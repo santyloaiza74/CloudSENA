@@ -53,8 +53,8 @@ router.get("/:id", async (req, res) => {
 router.put(
   "/:id",
   validateToken,
-  verifyRole("gestor"),
-  verifyRole("admin"),
+  verifyRole("gestor") ||
+  verifyRole("admin") ||
   verifyRole("superadmin"),
   async (req, res) => {
     const { id } = req.params;
@@ -91,8 +91,7 @@ router.put(
 router.delete(
   "/:id",
   validateToken,
-  verifyRole("gestor"),
-  verifyRole("admin"),
+  verifyRole("admin") ||
   verifyRole("superadmin"),
   async (req, res) => {
     const { id } = req.params;

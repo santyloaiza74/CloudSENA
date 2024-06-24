@@ -88,9 +88,9 @@ router.get("/", async (req, res) => {
 router.post(
   "/",
   validateToken,
-  verifyRole("aprendiz"),
-  verifyRole("gestor"),
-  verifyRole("admin"),
+  verifyRole("aprendiz") ||
+  verifyRole("gestor") ||
+  verifyRole("admin") ||
   verifyRole("superadmin"),
   upload.array("files", 5),
   async (req, res) => {
@@ -171,9 +171,9 @@ router.get("/:id", async (req, res) => {
 router.put(
   "/:id",
   validateToken,
-  verifyRole("aprendiz"),
-  verifyRole("gestor"),
-  verifyRole("admin"),
+  verifyRole("aprendiz") ||
+  verifyRole("gestor") ||
+  verifyRole("admin") ||
   verifyRole("superadmin"),
   async (req, res) => {
     const { id } = req.params;
@@ -279,7 +279,7 @@ router.post(
       await sendEmail(email, subject, text);
       return res
         .status(200)
-        .json({ message: "Código de confirmación enviado con éxito" });
+        .json({ message: "Código de confirmación enviado con éxito a "+email });
     } catch (error) {
       res
         .status(500)
@@ -291,9 +291,9 @@ router.post(
 router.delete(
   "/:id",
   validateToken,
-  verifyRole("aprendiz"),
-  verifyRole("gestor"),
-  verifyRole("admin"),
+  verifyRole("aprendiz") ||
+  verifyRole("gestor") ||
+  verifyRole("admin") ||
   verifyRole("superadmin"),
   async (req, res) => {
     const { id } = req.params;

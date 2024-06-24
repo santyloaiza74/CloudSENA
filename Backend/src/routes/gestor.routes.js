@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 router.post(
   "/",
   validateToken,
-  verifyRole("admin"),
+  verifyRole("admin") ||
   verifyRole("superadmin"),
   async (req, res) => {
     const { nombre, documento, celular, correo, ficha } = req.body;
@@ -41,7 +41,7 @@ router.get("/:id", async (req, res) => {
 router.put(
   "/:id",
   validateToken,
-  verifyRole("admin"),
+  verifyRole("admin") ||
   verifyRole("superadmin"),
   async (req, res) => {
     const { id } = req.params;
@@ -63,7 +63,7 @@ router.put(
 router.delete(
   "/:id",
   validateToken,
-  verifyRole("admin"),
+  verifyRole("admin") ||
   verifyRole("superadmin"),
   async (req, res) => {
     const { id } = req.params;
