@@ -6,7 +6,7 @@ const rolSchema = require("../../database/models/roles.model");
 const validateToken = async (req, res, next) => {
   // Asegúrate de usar la clave correcta para los encabezados
   const accessToken = req.headers["authorization"] || req.query.accesstoken;
-
+  console.log(accessToken)
   if (!accessToken) {
     console.log("Token no encontrado en encabezados o parámetros de consulta");
     return res.status(404).json({ message: "No hay token" });
@@ -19,11 +19,11 @@ const validateToken = async (req, res, next) => {
     // Verificar el token
     const userverify = jwt.verify(token, secretjwt);
     req.userId = userverify.id;
-
+    console.log(req.userId);
     // Buscar usuario por ID
-    const user = await loginSchema.findById(req.userId, { password: 0 });
+    const user =await loginSchema.findById(req.userId);
     if (!user) {
-      console.log("Usuario no encontrado");
+      console.log("Usuario no encontrado",user);
       return res.status(404).json({ message: "El usuario no se encontró" });
     }
 
@@ -37,24 +37,35 @@ const validateToken = async (req, res, next) => {
 };
 
 
+const rolesPriorities = {
+  "superadmin": 4,
+  "admin": 3,
+  "gestor": 2,
+  "aprendiz": 1
+};
+
 const verifyRole = (requiredRole) => {
   return (req, res, next) => {
     if (!req.userRoles) {
-      return res
-        .status(500)
-        .json({ message: "Roles del usuario no encontrados" });
+      return res.status(500).json({ message: "Roles del usuario no encontrados" });
     }
 
-    const hasRole = req.userRoles.some((role) => role.name === requiredRole);
-    if (hasRole) {
+    const userHighestRole = req.userRoles.reduce((highestRole, role) => {
+      const rolePriority = rolesPriorities[role.name];
+      return rolePriority > rolesPriorities[highestRole.name] ? role : highestRole;
+    }, { name: 'aprendiz' });
+
+    const requiredRolePriority = rolesPriorities[requiredRole];
+    const userRolePriority = rolesPriorities[userHighestRole.name];
+
+    if (userRolePriority >= requiredRolePriority) {
       next();
     } else {
-      return res
-        .status(403)
-        .json({ message: `Debe tener permiso de ${requiredRole}` });
+      return res.status(403).json({ message: `Debe tener permiso de ${requiredRole}` });
     }
   };
 };
+
 
 module.exports = {
   validateToken,

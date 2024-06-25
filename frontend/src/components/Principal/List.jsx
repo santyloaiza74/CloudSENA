@@ -6,7 +6,7 @@ import './list.css';
 import { CDBBtn, CDBIcon } from "cdbreact";
 import URL from '../../constants/api';
 
-axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('token')}`;
 
 function List() {
   const [proyecto, setProyecto] = useState([]);

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import '../CrearProyecto/cproyectos.css'; // Asegúrate de tener el archivo CSS correcto
 import URL from '../../constants/api';
 
-axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('token')}`;
 
 function EditarF() {
     const [gestores, setGestores] = useState([]);

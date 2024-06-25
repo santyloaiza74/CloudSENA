@@ -7,7 +7,7 @@ import QRCode from 'qrcode.react';
 import { Document, Page } from '@react-pdf/renderer';
 import './DetailPage.css'; // Importa el archivo CSS
 import URL from '../../constants/api';
-axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('token')}`;
 function DetailPage() {
   const { id } = useParams();
 

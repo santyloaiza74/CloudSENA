@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './cproyectos.css'; // Asegúrate de crear este archivo para las clases CSS adicionales
 import URL from "../../constants/api";
-axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('token')}`;
 function SubirArchivos() {
     const [projectData, setProjectData] = useState({
         projectName: "",

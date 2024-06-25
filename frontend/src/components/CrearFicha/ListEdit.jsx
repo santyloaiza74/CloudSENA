@@ -4,7 +4,7 @@ import { Card, Button, Form, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import '../CrearProyecto/cproyectos.css';
 import URL from '../../constants/api';
-axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('token')}`;
 
 function Edit() {
   const { id } = useParams();

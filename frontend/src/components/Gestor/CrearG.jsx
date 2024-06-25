@@ -5,7 +5,7 @@ import '../EditarProyecto/list.css';
 import { useNavigate } from 'react-router-dom';
 import { CDBBtn, CDBIcon, CDBContainer } from "cdbreact";
 import URL from '../../constants/api';
-axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('token')}`;
 function List() {
     const [gestor, setGestor] = useState({
         nombre: '',
