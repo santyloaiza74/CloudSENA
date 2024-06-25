@@ -82,12 +82,6 @@ router.put(
   async (req, res) => {
     const { id } = req.params;
     const { nombre, codigo, fecha_fin, fecha_inicio, tipo } = req.body;
-    const codigodup = await fichaSchema.findOne({ codigo });
-    if (codigodup) {
-      return res
-        .status(400)
-        .json({ message: "El código ya se encuentra registrado" });
-    }
     const values = {};
     if (nombre) values.nombre = nombre;
     if (codigo) values.codigo = codigo;

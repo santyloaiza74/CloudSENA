@@ -6,7 +6,6 @@ import './login.css'
 import axios from 'axios'
 import { CDBBtn, CDBIcon } from "cdbreact";
 import URL from "../constants/api";
-
 function Login() {
     const [login, setLogin] = useState({
         email: '',
@@ -21,6 +20,8 @@ function Login() {
             axios.post(`${URL.API}/login`,login)
             .then(function(response){
                 console.log(response.data)
+                const token = response.data.token
+                localStorage.setItem('token', token)
                 navigate('/')
             })
             .catch(function(error){

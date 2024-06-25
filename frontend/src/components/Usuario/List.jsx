@@ -6,7 +6,7 @@ import { CDBBtn, CDBIcon, CDBContainer, CDBInput } from "cdbreact";
 import { useNavigate } from 'react-router-dom';
 import URL from '../../constants/api';
 
-axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 
 function List() {
     const [usuario, setUsuario] = useState([]);

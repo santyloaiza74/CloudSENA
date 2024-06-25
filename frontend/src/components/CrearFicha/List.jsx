@@ -3,6 +3,7 @@ import { Card, Button, Form, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import './../CrearProyecto/cproyectos.css'; // Asegúrate de crear este archivo para las clases CSS adicionales
 import URL from '../../constants/api';
+axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 function List() {
     const [ficha, setFicha] = useState({
         nombre: '',

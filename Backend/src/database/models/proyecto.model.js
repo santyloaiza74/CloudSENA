@@ -33,6 +33,9 @@ const proyectoSchema = new mongoose.Schema({
   video: {
     type: Array,
   },
+  confirmationCode:{
+    type: String
+  }
 });
 
 const Proyecto = mongoose.model("proyecto", proyectoSchema);

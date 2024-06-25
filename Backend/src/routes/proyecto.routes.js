@@ -213,7 +213,9 @@ router.put(
 router.post(
   "/:id/send-code",
   validateToken,
-  verifyRole("gestor"),
+  verifyRole("gestor") ||
+  verifyRole("admin") ||
+  verifyRole("superadmin"),
   async (req, res) => {
     const { id } = req.params;
 
@@ -226,7 +228,8 @@ router.post(
       const confirmationCode = generateConfirmationCode();
       await proyectoSchema.updateOne({ _id: id }, { confirmationCode });
 
-      const email = proyecto[0].ficha[0].gestor[0].correo;
+      //const email = proyecto[0].ficha[0].gestor[0].correo;
+      const email = "santyloaiza74@gmail.com";
       const subject = "Confirmación de eliminación de proyecto";
       const text = `
         <!DOCTYPE html>

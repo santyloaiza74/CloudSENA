@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Card, Container, Row, Col, Button, Modal } from 'react-bootstrap';
+import { Card, Container, Row, Col, Button, Modal, FormGroup, Form} from 'react-bootstrap';
 import { CDBBtn, CDBIcon } from "cdbreact";
 import axios from 'axios';
 import QRCode from 'qrcode.react';
 import { Document, Page } from '@react-pdf/renderer';
 import './DetailPage.css'; // Importa el archivo CSS
 import URL from '../../constants/api';
-
+axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 function DetailPage() {
   const { id } = useParams();
 
@@ -21,11 +21,12 @@ function DetailPage() {
     documentacion: '',
     video: '',
   });
-
+  const [codigo, setCodigo] = useState('')
+  console.log(codigo);
   const [fichaName, setFichaName] = useState('');
   const [currentURL, setCurrentURL] = useState('');
   const [showQRModal, setShowQRModal] = useState(false);
-
+  const [showDeletemodal, setShowDeletemodal] = useState(false);
   useEffect(() => {
     axios.get(`${URL.API}/api/v1/proyecto/${id}`)
       .then(res => {
@@ -46,9 +47,32 @@ function DetailPage() {
       })
       .catch(err => console.log(err));
   };
+  const sendCorreo = () => {
+    axios.post(`${URL.API}/api/v1/proyecto/${id}/send-code`)
+     .then(res => console.log(res),
+    )
+     .catch(err => console.log(err));
+  }
+  const deleteProyecto = () =>{
+    axios.delete(`${URL.API}/api/v1/proyecto/${id}?confirmationCode=${codigo}`)
+     .then(res => {
+      console.log(res);
+      alert("Proyecto Eliminado con Exito");
+     })
+     .catch(err => console.log(err));
+  }
+  const handleInputChange = (e) => {
+    const {value} = e.target
+    setCodigo(value)
+  };
 
   const handleCloseQRModal = () => setShowQRModal(false);
   const handleShowQRModal = () => setShowQRModal(true);
+  const handleshowdeletemodal = () => {
+    setShowDeletemodal(true);
+    sendCorreo();
+  }
+  const handleClosedeletemodal = () => setShowDeletemodal(false);
 
   return (
     <Container fluid className="detail-page-container">
@@ -86,6 +110,9 @@ function DetailPage() {
                 <CDBIcon icon="qrcode" />
                 Generar QR
               </CDBBtn>
+              <CDBBtn className="buttonn mt-3" onClick={handleshowdeletemodal}>
+                Eliminar
+              </CDBBtn>
             </Card.Body>
           </Card>
         </Col>
@@ -102,6 +129,28 @@ function DetailPage() {
           <CDBBtn className="Buttonn" onClick={handleCloseQRModal}>
             <CDBIcon icon="times" />
             Cerrar
+          </CDBBtn>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showDeletemodal} onHide={handleClosedeletemodal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Eliminar Proyecto</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-center">
+          <p>Se envio un correo al gestor con el codigo de eliminacion</p>
+          <FormGroup>
+            <Form.Label>Ingrese el codigo:</Form.Label>
+            <Form.Control  type="text" name="codigo" onChange={handleInputChange} placeholder="Nombre del proyecto" />
+          </FormGroup>
+        </Modal.Body>
+        <Modal.Footer>
+          <CDBBtn className="Buttonn" onClick={handleClosedeletemodal}>
+            <CDBIcon icon="times" />
+            Cerrar
+          </CDBBtn>
+          <CDBBtn className="Buttonn" onClick={deleteProyecto}>
+            <CDBIcon icon="check" />
+            Eliminar
           </CDBBtn>
         </Modal.Footer>
       </Modal>
