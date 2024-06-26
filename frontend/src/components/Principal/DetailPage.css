@@ -35,7 +35,25 @@
     font-family: Arial, Helvetica, sans-serif;
     border-radius: 5px;
   }
-  
+  .Buton{
+    background: #e21c1c !important;
+    border-color: #e21c1c !important;
+    transition: #ffff !important;
+    margin-bottom: 15px !important;
+    float: right;
+  }
+  .Type{
+    box-shadow: 0px 0px 4px #39a900;
+    border: 2px solid #39a900;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+  }
+  .Type::placeholder {
+    text-align: center; 
+}
+ 
   .Buttonnn:hover {
     background-color: #2e8b00;
     border-color: #2e8b00;

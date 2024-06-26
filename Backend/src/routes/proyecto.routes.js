@@ -228,7 +228,8 @@ router.post(
       const confirmationCode = generateConfirmationCode();
       await proyectoSchema.updateOne({ _id: id }, { confirmationCode });
 
-      //const email = proyecto[0].ficha[0].gestor[0].correo;
+      //const email = proyecto[0].ficha[0].email;
+      //console.log(email);
       const email = "santyloaiza74@gmail.com";
       const subject = "Confirmación de eliminación de proyecto";
       const text = `

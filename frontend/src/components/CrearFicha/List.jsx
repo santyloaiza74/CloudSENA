@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, Button, Form, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import './../CrearProyecto/cproyectos.css'; // Asegúrate de crear este archivo para las clases CSS adicionales
@@ -12,12 +13,11 @@ function List() {
         fecha_inicio: '',
         fecha_fin: '',
         gestor: '',
-        usuario: '',
     });
 
     const [gestores, setGestores] = useState([]);
     const [usuarios, setUsuarios] = useState([]);
-
+    const navigate = useNavigate();
     useEffect(() => {
         axios.get(`${URL.API}/api/v1/gestor`)
             .then(response => setGestores(response.data.gestors))
@@ -41,6 +41,7 @@ function List() {
                 .then(function (response) {
                     console.log(response.data);
                     alert("Ficha Creada");
+                    navigate('/fichas');
                 })
                 .catch(function (error) {
                     alert("El Email ya se encuentra registrado");
@@ -88,20 +89,6 @@ function List() {
                                                 onChange={handleInputChange}
                                             />
                                         </Form.Group>
-
-                                        <Form.Group className="mb-3" controlId="formUsuario">
-                                            <Form.Label>Usuario</Form.Label>
-                                            <Form.Control as="select"
-                                                name="usuario"
-                                                value={ficha.usuario}
-                                                onChange={handleInputChange}
-                                            >
-                                                <option>Seleccione Usuario</option>
-                                                {usuarios.map(u => (
-                                                    <option key={u._id} value={u._id}>{u.nombre}</option>
-                                                ))}
-                                            </Form.Control>
-                                        </Form.Group>
                                     </Col>
 
                                     <Col xs={12} md={6}>
@@ -141,7 +128,7 @@ function List() {
                                     </Col>
                                 </Row>
                                 <div className="text-center mt-4">
-                                    <Button variant="primary" type="submit" onClick={handleSubmit}>
+                                    <Button variant="primary" onClick={handleSubmit}>
                                         Crear
                                     </Button>
                                 </div>

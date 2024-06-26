@@ -93,7 +93,7 @@ function EditarF() {
                     </center>
                     
                     <Row>
-                        {currentItems.map(({ _id, nombre, documento, celular, correo, ficha }) => (
+                        {currentItems.map(({ _id, nombre, documento, celular, correo}) => (
                             <Col key={_id} md={6}>
                                 <Card className="mb-3" style={{ minWidth: '17rem' }}>
                                     <Card.Body>
@@ -102,7 +102,6 @@ function EditarF() {
                                             <strong>Documento:</strong> {documento}<br />
                                             <strong>Celular:</strong> {celular}<br />
                                             <strong>Correo:</strong> {correo}<br />
-                                            <strong>Ficha:</strong> {ficha?.[0]?.nombre}<br />
                                         </Card.Text>
                                         <CDBBtn className='Buttonn' onClick={() => handleEdit(_id)}>
                                             <CDBIcon icon="fa-solid fa-edit" className="ms-1" />

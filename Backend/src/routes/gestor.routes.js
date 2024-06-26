@@ -11,12 +11,8 @@ const {
 const controller = new gestorController();
 
 router.get("/", async (req, res) => {
-  try {
     const gestors = await controller.index();
     res.json({ gestors });
-  } catch (error) {
-    res.status(500).json({ error: "Error al obtener los gestores." });
-  }
 });
 
 router.post(
@@ -25,7 +21,7 @@ router.post(
   verifyRole("admin") ||
   verifyRole("superadmin"),
   async (req, res) => {
-    const { nombre, documento, celular, correo, ficha } = req.body;
+    const { nombre, documento, celular, correo} = req.body;
     const role = await rolSchema.findOne({ name: "gestor" });
     const rolid = [role._id];
     const user= new loginSchema({
@@ -40,7 +36,6 @@ router.post(
       documento: documento,
       celular: celular,
       correo: correo,
-      ficha: [ficha],
     });
     try {
       await controller.create(gestor);

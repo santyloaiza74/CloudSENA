@@ -1,11 +1,10 @@
 const gestorSchema = require("../database/models/gestor.model");
-const loginSchema = require("../database/models/login.model");
 class gestorService {
   constructor() {
     this.model = gestorSchema;
   }
   async get() {
-    const gestors = await this.model.find().populate("ficha");
+    const gestors = await this.model.find()
     return gestors;
   }
   async post(gestor) {
@@ -13,7 +12,7 @@ class gestorService {
     return gestors
   }
   async getOne(id) {
-    const gestor = await this.model.findById(id).populate("ficha");
+    const gestor = await this.model.findById(id)
     return gestor;
   }
   async delete(id) {

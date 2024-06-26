@@ -13,7 +13,7 @@ class proyectoService {
     return proyectos;
   }
   async getOne(id) {
-    const proyecto = await this.model.findById(id);
+    const proyecto = await this.model.findById(id).populate("ficha");
     return proyecto;
   }
   async delete(id) {

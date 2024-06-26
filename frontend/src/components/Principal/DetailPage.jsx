@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Card, Container, Row, Col, Button, Modal, FormGroup, Form} from 'react-bootstrap';
 import { CDBBtn, CDBIcon } from "cdbreact";
 import axios from 'axios';
@@ -22,17 +22,17 @@ function DetailPage() {
     video: '',
   });
   const [codigo, setCodigo] = useState('')
-  console.log(codigo);
   const [fichaName, setFichaName] = useState('');
   const [currentURL, setCurrentURL] = useState('');
   const [showQRModal, setShowQRModal] = useState(false);
   const [showDeletemodal, setShowDeletemodal] = useState(false);
+  const navigate = useNavigate()
   useEffect(() => {
     axios.get(`${URL.API}/api/v1/proyecto/${id}`)
       .then(res => {
         setProjectDetails(res.data.proyecto);
         if (res.data.proyecto.ficha) {
-          getFichaName(res.data.proyecto.ficha);
+          getFichaName(res.data.proyecto.ficha[0]._id);
         }
       })
       .catch(err => console.log(err));
@@ -58,6 +58,7 @@ function DetailPage() {
      .then(res => {
       console.log(res);
       alert("Proyecto Eliminado con Exito");
+      navigate('/');
      })
      .catch(err => console.log(err));
   }
@@ -79,7 +80,9 @@ function DetailPage() {
       <Row className="justify-content-center">
         <Col xs={12} lg={8}>
           <Card className="shadow-sm detail-page-card">
-            <Card.Body className="p-5 d-flex flex-column align-items-center mx-auto w-100">
+            
+            <Card.Body className="p-5 d-flex flex-column  mx-auto w-100">
+              <center>
               <h2 className="fw-bold mb-2 text-uppercase">{projectDetails.nombre}</h2>
               <p className="text-dark-50 mb-5">Información detallada del proyecto</p>
               {projectDetails.imagenes.length > 0 && (
@@ -91,28 +94,35 @@ function DetailPage() {
                 <strong>Fecha:</strong> {projectDetails.fecha}<br />
                 <strong>Descripción:</strong> {projectDetails.descripcion}
               </Card.Text>
+              </center>
               {projectDetails.video && (
                 <div className="detail-page-video-container my-3">
                   <video className="detail-page-video" src={projectDetails.video} controls></video>
                 </div>
               )}
               {projectDetails.documentacion && (
-                <div className="my-3">
-                  <CDBBtn className="Buttonn" onClick={() => window.open(projectDetails.documentacion, '_blank')}>
-                    <CDBIcon icon="qrcode" />
-                    Documentacion
+                
+                <div>
+                  <center>
+                  <CDBBtn className="Buttonnn" onClick={() => window.open(projectDetails.documentacion, '_blank')}>
+                    <CDBIcon icon="fa-regular fa-file" />
+                     Documentacion
                   </CDBBtn>
-
-
+                  </center>
                 </div>
               )}
-              <CDBBtn className="Buttonnn mt-3" onClick={handleShowQRModal}>
+              <center>
+              <CDBBtn className="Buttonnn" onClick={handleShowQRModal}>
                 <CDBIcon icon="qrcode" />
                 Generar QR
               </CDBBtn>
-              <CDBBtn className="buttonn mt-3" onClick={handleshowdeletemodal}>
+              </center>
+              <div>
+              <CDBBtn className="Buton" onClick={handleshowdeletemodal}>
+                <CDBIcon icon='times'></CDBIcon>
                 Eliminar
               </CDBBtn>
+              </div>
             </Card.Body>
           </Card>
         </Col>
@@ -140,7 +150,7 @@ function DetailPage() {
           <p>Se envio un correo al gestor con el codigo de eliminacion</p>
           <FormGroup>
             <Form.Label>Ingrese el codigo:</Form.Label>
-            <Form.Control  type="text" name="codigo" onChange={handleInputChange} placeholder="Nombre del proyecto" />
+            <Form.Control className='Type' type="text" name="codigo" onChange={handleInputChange} placeholder="Codigo" />
           </FormGroup>
         </Modal.Body>
         <Modal.Footer>
@@ -148,7 +158,7 @@ function DetailPage() {
             <CDBIcon icon="times" />
             Cerrar
           </CDBBtn>
-          <CDBBtn className="Buttonn" onClick={deleteProyecto}>
+          <CDBBtn className="Buton" onClick={deleteProyecto}>
             <CDBIcon icon="check" />
             Eliminar
           </CDBBtn>

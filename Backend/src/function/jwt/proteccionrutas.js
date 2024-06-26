@@ -6,7 +6,6 @@ const rolSchema = require("../../database/models/roles.model");
 const validateToken = async (req, res, next) => {
   // Asegúrate de usar la clave correcta para los encabezados
   const accessToken = req.headers["authorization"] || req.query.accesstoken;
-  console.log(accessToken)
   if (!accessToken) {
     console.log("Token no encontrado en encabezados o parámetros de consulta");
     return res.status(404).json({ message: "No hay token" });
@@ -19,7 +18,6 @@ const validateToken = async (req, res, next) => {
     // Verificar el token
     const userverify = jwt.verify(token, secretjwt);
     req.userId = userverify.id;
-    console.log(req.userId);
     // Buscar usuario por ID
     const user =await loginSchema.findById(req.userId);
     if (!user) {

@@ -22,6 +22,7 @@ function EditarF() {
             .then((response) => {
                 setFicha(response.data.fichas);
                 setSearchResults(response.data.fichas);
+                console.log(response.data.fichas);
                 setLoading(false);
             })
             .catch((error) => {
