@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const proyectoController = require("../controllers/proyecto.controller");
 const proyectoSchema = require("../database/models/proyecto.model");
+const gestorSchema = require('../database/models/gestor.model');
 const multer = require("multer");
 const fs = require("node:fs");
 const path = require("path");
@@ -221,6 +222,7 @@ router.post(
 
     try {
       const proyecto = await controller.getById(id);
+      console.log(proyecto);
       if (!proyecto) {
         return res.status(404).json({ message: "Proyecto no encontrado" });
       }
@@ -228,9 +230,9 @@ router.post(
       const confirmationCode = generateConfirmationCode();
       await proyectoSchema.updateOne({ _id: id }, { confirmationCode });
 
-      //const email = proyecto[0].ficha[0].email;
-      //console.log(email);
-      const email = "santyloaiza74@gmail.com";
+      const objectG= proyecto.ficha
+      const  gestor = await gestorSchema.findOne({id: objectG.gestor});
+      const email = gestor.correo;
       const subject = "Confirmación de eliminación de proyecto";
       const text = `
         <!DOCTYPE html>
