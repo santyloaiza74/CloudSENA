@@ -72,6 +72,8 @@ router.put(
     if (correo) values.correo = correo;
     try {
       const gestor = await controller.update(id, values);
+      const user= await loginSchema.findOne({documento: gestor.documento})
+      const newuser= await loginSchema.findByIdAndUpdate(user.id, values);
       res.status(200).json({ gestor });
     } catch (error) {
       res.status(404).json({ message: error.message });
@@ -88,6 +90,8 @@ router.delete(
     const { id } = req.params;
     try {
       const gestor = await controller.remove(id);
+      const user= await loginSchema.findOne({documento: gestor.documento})
+      const newuser= await loginSchema.findByIdAndDelete(user.id);
       res.status(200).json({ gestor });
     } catch (error) {
       res.status(404).json({ message: error.message });
